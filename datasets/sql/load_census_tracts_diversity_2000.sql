@@ -1,0 +1,73 @@
+BEGIN; 
+
+DROP TABLE IF EXISTS census_tracts_2000_diversity;
+
+CREATE TABLE census_tracts_2000_diversity ( 
+GIS_Join_Match_Code text,
+State_Name text,
+State_Code integer,
+County_Name text,
+County_Code integer,
+Census_Tract_Code integer,
+Total integer,
+Male integer,
+Female integer,
+Male_Under_5_years integer,
+Male_5_to_9_years integer,
+Male_10_to_14_years integer,
+Male_15_to_17_years integer,
+Male_18_and_19_years integer,
+Male_20_years integer,
+Male_21_years integer,
+Male_22_to_24_years integer,
+Male_25_to_29_years integer,
+Male_30_to_34_years integer,
+Male_35_to_39_years integer,
+Male_40_to_44_years integer,
+Male_45_to_49_years integer,
+Male_50_to_54_years integer,
+Male_55_to_59_years integer,
+Male_60_and_61_years integer,
+Male_62_to_64_years integer,
+Male_65_and_66_years integer,
+Male_67_to_69_years integer,
+Male_70_to_74_years integer,
+Male_75_to_79_years integer,
+Male_80_to_84_years integer,
+Male_85_years_and_over integer,
+Female_Under_5_years integer,
+Female_5_to_9_years integer,
+Female_10_to_14_years integer,
+Female_15_to_17_years integer,
+Female_18_and_19_years integer,
+Female_20_years integer,
+Female_21_years integer,
+Female_22_to_24_years integer,
+Female_25_to_29_years integer,
+Female_30_to_34_years integer,
+Female_35_to_39_years integer,
+Female_40_to_44_years integer,
+Female_45_to_49_years integer,
+Female_50_to_54_years integer,
+Female_55_to_59_years integer,
+Female_60_and_61_years integer,
+Female_62_to_64_years integer,
+Female_65_and_66_years integer,
+Female_67_to_69_years integer,
+Female_70_to_74_years integer,
+Female_75_to_79_years integer,
+Female_80_to_84_years integer,
+Female_85_years_and_over integer,
+White_alone integer,
+Black_alone integer,
+American_Indian_alone integer,
+Asian_alone integer,
+Hawaiian_PI_alone integer,
+SOR_alone integer
+);
+
+\COPY census_tracts_2000_diversity FROM 'E:\git\SOLAP\datasets\census_tracts_2000_diversity.csv' WITH CSV HEADER ENCODING 'LATIN-1';
+
+ALTER TABLE census_tracts_2000_diversity ADD gid SERIAL;
+
+END;
