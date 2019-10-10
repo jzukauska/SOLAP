@@ -28,7 +28,7 @@ const DraggableGrid = ({ children }) => {
   useEffect(() => {
     new Muuri(draggableRef.current, {
       items: '.draggable-grid-item',
-      dragEnabled: true,
+      dragEnabled: false,
       dragAxis: 'x',
       dragStartPredicate: (item, e) => {
         // If the item is the map don't allow dragging

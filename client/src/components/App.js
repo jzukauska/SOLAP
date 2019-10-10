@@ -1,5 +1,7 @@
 import React from 'react'
 
+import FilterContextProvider from './FilterContextProvider'
+
 import { Grommet, Box } from 'grommet'
 
 import Navbar from './Navbar'
@@ -55,10 +57,12 @@ const theme = {
 const App = () => {
   return (
     <Grommet theme={theme} full>
-      <Box direction="column" fill>
-        <Navbar />
-        <MapView />
-      </Box>
+      <FilterContextProvider>
+        <Box direction="column" fill>
+          <Navbar />
+          <MapView />
+        </Box>
+      </FilterContextProvider>
     </Grommet>
   )
 }
