@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { FilterConsumer } from './FilterContextProvider'
 
 import { Box } from 'grommet'
 import { Button } from 'grommet'
@@ -12,13 +13,11 @@ const MapFilterContainer = styled.div`
   overflow: auto;
 `
 
-const MapFilter = ({ filterContext }) => {
+const MapFilter = ({ width }) => {
   const [tblData, setTblData] = useState([
     { id: 1, val: 'ex' },
     { id: 2, val: 'ex2' }
   ])
-
-  const { filterFields, filterValues, handleInputChange } = filterContext
 
   // const addTableData = data => {
   //   data.id = tblData.length + 1
@@ -30,29 +29,33 @@ const MapFilter = ({ filterContext }) => {
   }
 
   return (
-    <MapFilterContainer>
-      <FilterTable
-        tblData={tblData}
-        deleteData={deleteData}
-        filterValues={filterValues}
-      />
+    <FilterConsumer>
+      {({ filterFields, filterValues, handleInputChange }) => (
+        <MapFilterContainer>
+          <FilterTable
+            tblData={tblData}
+            deleteData={deleteData}
+            filterValues={filterValues}
+          />
 
-      <FilterAccordion
-        filterFields={filterFields}
-        filterValues={filterValues}
-        handleInputChange={handleInputChange}
-      />
+          <FilterAccordion
+            filterFields={filterFields}
+            filterValues={filterValues}
+            handleInputChange={handleInputChange}
+          />
 
-      <Box
-        background="light"
-        pad="large"
-        justify="center"
-        align="center"
-        direction="row"
-      >
-        <Button label="Update Map" onClick={() => this.setState({})} />
-      </Box>
-    </MapFilterContainer>
+          <Box
+            background="light"
+            pad="large"
+            justify="center"
+            align="center"
+            direction="row"
+          >
+            <Button label="Update Map" onClick={() => this.setState({})} />
+          </Box>
+        </MapFilterContainer>
+      )}
+    </FilterConsumer>
   )
 }
 

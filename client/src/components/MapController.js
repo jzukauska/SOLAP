@@ -2,11 +2,12 @@ import React, { useState, useRef, useEffect } from 'react'
 
 import OLMap from './OpenLayers/OLMap'
 
-const Map = ({ view, layers }) => {
+const MapController = ({ view, layers }) => {
   const [mapInstance, setMapInstance] = useState(null)
   const mapRef = useRef()
 
   useEffect(() => {
+    // BUG: Somehow this creates a new map on viewport width change
     const redrawMap = () => {
       mapInstance.updateSize()
     }
@@ -15,7 +16,7 @@ const Map = ({ view, layers }) => {
     return () => {
       window.removeEventListener('resize', redrawMap)
     }
-  })
+  }, [])
 
   useEffect(() => {
     setMapInstance(OLMap(mapRef.current, view, layers))
@@ -24,4 +25,4 @@ const Map = ({ view, layers }) => {
   return <div ref={mapRef} data-nodrag="true" style={{ height: '100%' }} />
 }
 
-export default Map
+export default MapController

@@ -1,5 +1,4 @@
 import React from 'react'
-import { FilterConsumer } from './FilterContextProvider'
 import useWindowSize from '../helpers/useWindowSize'
 
 import DraggableGrid from './DraggableGrid'
@@ -13,22 +12,15 @@ const filterWidth = '250'
 
 const MapView = () => {
   const [width] = useWindowSize()
-
   return (
-    <FilterConsumer>
-      {filterContext => {
-        return (
-          <DraggableGrid>
-            <MapFilter width={filterWidth} filterContext={filterContext} />
-            <MapController
-              view={View}
-              layers={[Layer]}
-              width={`${width - filterWidth}`}
-            />
-          </DraggableGrid>
-        )
-      }}
-    </FilterConsumer>
+    <DraggableGrid>
+      <MapFilter width={filterWidth} />
+      <MapController
+        view={View}
+        layers={[Layer]}
+        width={`${width - filterWidth}`}
+      />
+    </DraggableGrid>
   )
 }
 
