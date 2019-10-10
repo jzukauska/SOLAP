@@ -73,6 +73,7 @@ const FilterAccordion = ({ filterFields, filterValues, handleInputChange }) => {
         />
       )
     } else {
+      // Add an accordion and recursively call this component again
       return (
         <Accordion key={field.name}>
           <AccordionPanel key={field.name} label={formatName(field.name)}>
