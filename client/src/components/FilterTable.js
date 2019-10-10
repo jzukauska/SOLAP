@@ -9,13 +9,7 @@ import {
   TableCell,
   TableRow,
   Button,
-  Text,
-  AccordionPanel,
-  RadioButtonGroup,
-  RangeSelector,
-  Stack,
-  Select,
-  RangeInput
+  Select
 } from 'grommet'
 
 const FilterTable = ({ tblData, deleteData, filterData }) => {
@@ -55,11 +49,7 @@ const FilterTable = ({ tblData, deleteData, filterData }) => {
                 />
               </TableCell>
               <TableCell>
-                <Button
-                  label="X"
-                  hidden="true"
-                  onClick={() => deleteData(data.id)}
-                />
+                <Button label="X" hidden onClick={() => deleteData(data.id)} />
               </TableCell>
             </TableRow>
           ))

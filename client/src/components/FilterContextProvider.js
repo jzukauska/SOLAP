@@ -1,50 +1,26 @@
 import React, { Component } from 'react'
-
-const filterData = {
-  boundary: {
-    name: 'Boundary',
-    options: [
-      {
-        name: 'Year',
-        min: 2000,
-        max: 2010,
-        step: 1,
-        type: 'RangeInput',
-        value: 0
-      },
-      {
-        name: 'Area',
-        type: 'Select',
-        value: null
-      }
-    ]
-  },
-  population: {
-    name: 'population',
-    options: [
-      {
-        name: 'demographic',
-        options: [
-          {
-            name: 'populationBySex',
-            type: 'radio',
-            value: null
-          },
-          {
-            name: 'populationByAge',
-            type: 'radio',
-            value: null
-          }
-        ]
-      }
-    ]
-  }
-}
+import filterFields from '../filterFields'
 
 const FilterContext = React.createContext()
 
 export default class FilterContextProvider extends Component {
-  state = filterData
+  state = {
+    filterFields,
+    filterValues: {
+      year: 0,
+      area: ''
+    }
+  }
+
+  handleInputChange = e => {
+    console.log(e.target.name, e.option || e.target.value)
+    this.setState({
+      filterValues: {
+        ...this.state.filterValues,
+        [e.target.name]: e.option || e.target.value
+      }
+    })
+  }
 
   changeYear = year => {
     console.log(year)
@@ -64,7 +40,9 @@ export default class FilterContextProvider extends Component {
     return (
       <FilterContext.Provider
         value={{
-          filterData: this.state,
+          filterFields: this.state.filterFields,
+          filterValues: this.state.filterValues,
+          handleInputChange: this.handleInputChange,
           changeYear: this.changeYear
         }}
       >
