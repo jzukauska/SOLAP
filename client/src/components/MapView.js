@@ -6,7 +6,9 @@ import MapFilter from './MapFilter'
 import MapController from './MapController'
 
 import View from './OpenLayers/DefaultView'
-import Layer from './OpenLayers/DefaultLayer'
+import Default from './OpenLayers/DefaultLayer'
+import MNCountiesLayer from './OpenLayers/MNCountiesLayer'
+import AlcoholLayer from './OpenLayers/AlcoholLayer'
 
 const filterWidth = '250'
 
@@ -17,7 +19,7 @@ const MapView = () => {
       <MapFilter width={filterWidth} />
       <MapController
         view={View}
-        layers={[Layer]}
+        layers={[Default, MNCountiesLayer, AlcoholLayer]}
         width={`${width - filterWidth}`}
       />
     </DraggableGrid>

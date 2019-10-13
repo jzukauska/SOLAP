@@ -6,5 +6,5 @@ const MinneapolisMercator = fromLonLat(MinneapolisLngLat)
 
 export default new View({
   center: MinneapolisMercator,
-  zoom: 10
+  zoom: 6
 })

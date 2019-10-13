@@ -16,6 +16,7 @@ const MapController = ({ view, layers }) => {
     return () => {
       window.removeEventListener('resize', redrawMap)
     }
+    // eslint-disable-next-line
   }, [])
 
   useEffect(() => {
