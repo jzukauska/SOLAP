@@ -13,7 +13,7 @@ const filterFields = [
         name: 'area',
         type: 'select',
         placeholder: 'Select an area',
-        selectOptions: ['National', 'States', 'PUMAs/Country groups']
+        fieldOptions: ['National', 'States', 'PUMAs/Country groups']
       }
     ]
   },
@@ -26,12 +26,12 @@ const filterFields = [
           {
             name: 'populationBySex',
             type: 'radio',
-            radioOptions: ['Total Females', 'Total Males']
+            fieldOptions: ['Total Females', 'Total Males']
           },
           {
             name: 'populationByAge',
             type: 'radio',
-            radioOptions: ['0-18', '19-26', '26-49', '50+']
+            fieldOptions: ['0-18', '19-26', '26-49', '50+']
           }
         ]
       }

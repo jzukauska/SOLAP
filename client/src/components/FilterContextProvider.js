@@ -6,10 +6,7 @@ const FilterContext = React.createContext()
 export default class FilterContextProvider extends Component {
   state = {
     filterFields,
-    filterValues: {
-      year: 0,
-      area: ''
-    }
+    filterValues: {}
   }
 
   handleInputChange = e => {
@@ -17,21 +14,34 @@ export default class FilterContextProvider extends Component {
     this.setState({
       filterValues: {
         ...this.state.filterValues,
-        [e.target.name]: e.option || e.target.value
+        [e.target.name]: {
+          ...this.state.filterValues[e.target.name],
+          value: e.option || e.target.value,
+          colors: null
+        }
       }
     })
   }
 
-  changeYear = year => {
-    console.log(year)
-    const newState = { ...this.state }
-    newState.boundary.options[0].value = year
-    this.setState(newState)
+  clearFilter = name => {
+    this.setState({
+      filterValues: {
+        ...this.state.filterValues,
+        [name]: null
+      }
+    })
   }
 
-  changeBoundaryArea = name => {
-    const newState = { ...this.state }
-    newState.boundary.options[1].value = name
+  handleColorChange = (name, colorsArr) => {
+    this.setState({
+      filterValues: {
+        ...this.state.filterValues,
+        [name]: {
+          ...this.state.filterValues[name],
+          colors: colorsArr
+        }
+      }
+    })
   }
 
   render() {
@@ -42,8 +52,7 @@ export default class FilterContextProvider extends Component {
         value={{
           filterFields: this.state.filterFields,
           filterValues: this.state.filterValues,
-          handleInputChange: this.handleInputChange,
-          changeYear: this.changeYear
+          handleInputChange: this.handleInputChange
         }}
       >
         {children}

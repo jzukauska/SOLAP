@@ -30,12 +30,20 @@ const MapFilter = ({ width }) => {
 
   return (
     <FilterConsumer>
-      {({ filterFields, filterValues, handleInputChange }) => (
+      {({
+        filterFields,
+        filterValues,
+        handleInputChange,
+        handleColorChange,
+        clearFilter
+      }) => (
         <MapFilterContainer>
           <FilterTable
             tblData={tblData}
             deleteData={deleteData}
             filterValues={filterValues}
+            handleColorChange={handleColorChange}
+            clearFilter={clearFilter}
           />
 
           <FilterAccordion

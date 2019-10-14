@@ -12,14 +12,16 @@ import {
   Select
 } from 'grommet'
 
-const FilterTable = ({ tblData, deleteData, filterData }) => {
+const FilterTable = ({
+  tblData,
+  deleteData,
+  filterValues,
+  handleColorChange,
+  clearFilter
+}) => {
   const [value, setValue] = useState('')
 
-  // filterData.map(data => {
-  // then map over data.options
-  // check if value !== null
-  // return value
-  // else return null
+  // Object.entries(filterValues).map(([name, obj]) => {
   // })
 
   return (

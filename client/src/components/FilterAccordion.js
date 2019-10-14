@@ -9,6 +9,8 @@ import {
   Text
 } from 'grommet'
 
+import { capitalize } from '../helpers/utils'
+
 const renderFieldBasedOnType = (field, value, onChange) => {
   switch (field.type) {
     case 'range':
@@ -27,7 +29,7 @@ const renderFieldBasedOnType = (field, value, onChange) => {
         <Select
           name={field.name}
           placeholder={field.placeholder}
-          options={field.selectOptions}
+          options={field.fieldOptions}
           value={value}
           onChange={onChange}
         />
@@ -36,7 +38,7 @@ const renderFieldBasedOnType = (field, value, onChange) => {
       return (
         <RadioButtonGroup
           name={field.name}
-          options={field.radioOptions}
+          options={field.fieldOptions}
           value={value}
           onChange={onChange}
         />
@@ -46,13 +48,11 @@ const renderFieldBasedOnType = (field, value, onChange) => {
   }
 }
 
-const formatName = name => name.charAt(0).toUpperCase() + name.slice(1)
-
 const Filter = ({ field, value, onChange }) => {
   return (
     <React.Fragment key={field.name}>
       <Text>
-        {formatName(field.name)}: {value === 0 ? 'Pick a year' : value}
+        {capitalize(field.name)}: {value === 0 ? 'Pick a year' : value}
       </Text>
       {renderFieldBasedOnType(field, value, onChange)}
     </React.Fragment>
@@ -63,7 +63,8 @@ const FilterAccordion = ({ filterFields, filterValues, handleInputChange }) => {
   return filterFields.map(field => {
     // Base case for recursive component
     if (!field.options) {
-      const value = filterValues[field.name]
+      // Doesn't evaluate to boolean
+      const value = filterValues[field.name] && filterValues[field.name].value
       return (
         <Filter
           key={field.name}
@@ -76,7 +77,7 @@ const FilterAccordion = ({ filterFields, filterValues, handleInputChange }) => {
       // Add an accordion and recursively call this component again
       return (
         <Accordion key={field.name}>
-          <AccordionPanel key={field.name} label={formatName(field.name)}>
+          <AccordionPanel key={field.name} label={capitalize(field.name)}>
             <Box pad="xsmall" background="light-2">
               <FilterAccordion
                 filterFields={field.options}
