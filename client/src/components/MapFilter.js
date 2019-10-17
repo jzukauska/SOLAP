@@ -14,42 +14,39 @@ const MapFilterContainer = styled.div`
 `
 
 const MapFilter = ({ width }) => {
-
   return (
     <FilterConsumer>
       {({
         filterFields,
         filterValues,
         handleInputChange,
-        handleRangeChange,
         handleColorChange,
         clearFilter
       }) => (
-          <MapFilterContainer>
-            <FilterTable
-              filterValues={filterValues}
-              handleColorChange={handleColorChange}
-              clearFilter={clearFilter}
-            />
+        <MapFilterContainer>
+          <FilterTable
+            filterValues={filterValues}
+            handleColorChange={handleColorChange}
+            clearFilter={clearFilter}
+          />
 
-            <FilterAccordion
-              filterFields={filterFields}
-              filterValues={filterValues}
-              handleInputChange={handleInputChange}
-              handleRangeChange={handleRangeChange}
-            />
+          <FilterAccordion
+            filterFields={filterFields}
+            filterValues={filterValues}
+            handleInputChange={handleInputChange}
+          />
 
-            <Box
-              background="light"
-              pad="large"
-              justify="center"
-              align="center"
-              direction="row"
-            >
-              <Button label="Update Map" onClick={() => this.setState({})} />
-            </Box>
-          </MapFilterContainer>
-        )}
+          <Box
+            background="light"
+            pad="large"
+            justify="center"
+            align="center"
+            direction="row"
+          >
+            <Button label="Update Map" onClick={() => this.setState({})} />
+          </Box>
+        </MapFilterContainer>
+      )}
     </FilterConsumer>
   )
 }

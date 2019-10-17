@@ -17,32 +17,16 @@ export default class FilterContextProvider extends Component {
         [e.target.name]: {
           ...this.state.filterValues[e.target.name],
           value: e.option || e.target.value,
-          colors: ""
-        }
-      }
-    })
-  }
-
-  handleRangeChange = e => {
-    console.log(e.target.name, e.option || e.target.value)
-    this.setState({
-      filterValues: {
-        ...this.state.filterValues,
-        [e.target.name]: {
-          ...this.state.filterValues[e.target.name],
-          values: e.option || e.target.value,
-          colors: ""
+          colors: ''
         }
       }
     })
   }
 
   clearFilter = name => {
+    const { [name]: _, ...filterValues } = this.state.filterValues
     this.setState({
-      filterValues: {
-        ...this.state.filterValues,
-        [name]: null
-      }
+      filterValues
     })
   }
 
@@ -67,7 +51,6 @@ export default class FilterContextProvider extends Component {
           filterFields: this.state.filterFields,
           filterValues: this.state.filterValues,
           handleInputChange: this.handleInputChange,
-          handleRangeChange: this.handleRangeChange,
           handleColorChange: this.handleColorChange,
           clearFilter: this.clearFilter
         }}

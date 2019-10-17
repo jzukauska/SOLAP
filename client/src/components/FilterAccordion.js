@@ -13,7 +13,7 @@ import {
 
 import { capitalize } from '../helpers/utils'
 
-const renderFieldBasedOnType = (field, value, onChange, onRangeChange) => {
+const renderFieldBasedOnType = (field, value, onChange) => {
   switch (field.type) {
     case 'range':
       return (
@@ -52,9 +52,7 @@ const renderFieldBasedOnType = (field, value, onChange, onRangeChange) => {
             <Box direction="row" justify="between">
               {[0, 15, 30, 45, 60, 75].map(val => (
                 <Box key={val} pad="xsmall" border={false}>
-                  <Text style={{ fontFamily: 'monospace' }}>
-                    {val}
-                  </Text>
+                  <Text style={{ fontFamily: 'monospace' }}>{val}</Text>
                 </Box>
               ))}
             </Box>
@@ -62,8 +60,12 @@ const renderFieldBasedOnType = (field, value, onChange, onRangeChange) => {
               name={field.name}
               min={field.min}
               max={field.max}
+              size="full"
+              round="small"
               values={value || [5, 25]}
-              onChange={onRangeChange}
+              onChange={numArr =>
+                onChange({ target: { value: numArr, name: field.name } })
+              }
             />
           </Stack>
         </Box>
@@ -73,18 +75,18 @@ const renderFieldBasedOnType = (field, value, onChange, onRangeChange) => {
   }
 }
 
-const Filter = ({ field, value, onChange, onRangeChange }) => {
+const Filter = ({ field, value, onChange }) => {
   return (
     <React.Fragment key={field.name}>
       <Text>
         {capitalize(field.name)}: {value === 0 ? 'Pick a year' : value}
       </Text>
-      {renderFieldBasedOnType(field, value, onChange, onRangeChange)}
+      {renderFieldBasedOnType(field, value, onChange)}
     </React.Fragment>
   )
 }
 
-const FilterAccordion = ({ filterFields, filterValues, handleInputChange, handleRangeChange }) => {
+const FilterAccordion = ({ filterFields, filterValues, handleInputChange }) => {
   return filterFields.map(field => {
     // Base case for recursive component
     if (!field.options) {
@@ -96,7 +98,6 @@ const FilterAccordion = ({ filterFields, filterValues, handleInputChange, handle
           field={field}
           value={value}
           onChange={handleInputChange}
-          onRangeChange={handleRangeChange}
         />
       )
     } else {
