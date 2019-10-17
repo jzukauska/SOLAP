@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import { Box } from 'grommet'
+import { SwatchesPicker } from 'react-color'
 import {
   DropButton,
   Heading,
@@ -8,57 +9,58 @@ import {
   TableBody,
   TableCell,
   TableRow,
-  Button,
-  Select
+  Button
 } from 'grommet'
+import { object } from 'prop-types'
 
 const FilterTable = ({
-  tblData,
-  deleteData,
   filterValues,
   handleColorChange,
   clearFilter
 }) => {
-  const [value, setValue] = useState('')
-
-  // Object.entries(filterValues).map(([name, obj]) => {
-  // })
 
   return (
     <Table>
       <TableBody>
-        {tblData.length > 0 ? (
-          tblData.map(data => (
-            <TableRow key={data.id}>
-              <TableCell scope="row">{data.val}</TableCell>
-              <TableCell scope="row">
-                <DropButton
-                  label="Settings"
-                  dropContent={
-                    <Box pad="small">
-                      <Box direction="row" justify="between" align="center">
-                        <Heading level={4} margin="small">
-                          Edit Symbology
-                        </Heading>
+        {Object.entries(filterValues).map(([name, obj]) => {
+          if (obj !== null) {
+            return (
+              <TableRow key={name}>
+                <TableCell scope="row">{obj.value}</TableCell>
+                <TableCell scope="row">
+                  <DropButton
+                    label="Settings"
+                    dropContent={
+                      <Box pad="small">
+                        <Box direction="row" justify="between" align="center">
+                          <Heading level={4} margin="small">
+                            Edit Symbology for {name}
+                          </Heading>
+                        </Box>
+                        <Box direction="row" justify="between" align="center">
+                        </Box>
+                        < SwatchesPicker color={obj.colors} onChangeComplete={(e) => handleColorChange(name, e)} />
                       </Box>
-                      <Select
-                        options={['color 1', 'color 2', 'color 3']}
-                        value={value}
-                        onChange={({ option }) => setValue(option)}
-                      />
-                    </Box>
-                  }
-                />
-              </TableCell>
-              <TableCell>
-                <Button label="X" hidden onClick={() => deleteData(data.id)} />
-              </TableCell>
-            </TableRow>
-          ))
-        ) : (
-          <TableRow></TableRow>
-        )}
+                    }
+                  />
+                </TableCell>
+                <TableCell>
+                  {console.log("name: ", name)}
+                  {console.log("value: ", obj.value)}
+                  {console.log("color: ", obj.colors)}
+                  <Button label="X" hidden
+                    onClick={() => clearFilter(name)}
+                  />
+                </TableCell>
+              </TableRow>)
+          }
+          else
+            return (
+              null
+            )
+        })}
       </TableBody>
+
     </Table>
   )
 }

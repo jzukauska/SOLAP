@@ -6,12 +6,14 @@ import {
   RangeInput,
   Select,
   RadioButtonGroup,
-  Text
+  Text,
+  RangeSelector,
+  Stack
 } from 'grommet'
 
 import { capitalize } from '../helpers/utils'
 
-const renderFieldBasedOnType = (field, value, onChange) => {
+const renderFieldBasedOnType = (field, value, onChange, onRangeChange) => {
   switch (field.type) {
     case 'range':
       return (
@@ -43,23 +45,46 @@ const renderFieldBasedOnType = (field, value, onChange) => {
           onChange={onChange}
         />
       )
+    case 'rangeSelector':
+      return (
+        <Box pad="xsmall" background="light-2">
+          <Stack>
+            <Box direction="row" justify="between">
+              {[0, 15, 30, 45, 60, 75].map(val => (
+                <Box key={val} pad="xsmall" border={false}>
+                  <Text style={{ fontFamily: 'monospace' }}>
+                    {val}
+                  </Text>
+                </Box>
+              ))}
+            </Box>
+            <RangeSelector
+              name={field.name}
+              min={field.min}
+              max={field.max}
+              values={value || [5, 25]}
+              onChange={onRangeChange}
+            />
+          </Stack>
+        </Box>
+      )
     default:
       throw new Error(`${field.type} is not a supported field type`)
   }
 }
 
-const Filter = ({ field, value, onChange }) => {
+const Filter = ({ field, value, onChange, onRangeChange }) => {
   return (
     <React.Fragment key={field.name}>
       <Text>
         {capitalize(field.name)}: {value === 0 ? 'Pick a year' : value}
       </Text>
-      {renderFieldBasedOnType(field, value, onChange)}
+      {renderFieldBasedOnType(field, value, onChange, onRangeChange)}
     </React.Fragment>
   )
 }
 
-const FilterAccordion = ({ filterFields, filterValues, handleInputChange }) => {
+const FilterAccordion = ({ filterFields, filterValues, handleInputChange, handleRangeChange }) => {
   return filterFields.map(field => {
     // Base case for recursive component
     if (!field.options) {
@@ -71,6 +96,7 @@ const FilterAccordion = ({ filterFields, filterValues, handleInputChange }) => {
           field={field}
           value={value}
           onChange={handleInputChange}
+          onRangeChange={handleRangeChange}
         />
       )
     } else {

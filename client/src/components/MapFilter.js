@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { FilterConsumer } from './FilterContextProvider'
 
 import { Box } from 'grommet'
@@ -14,19 +14,6 @@ const MapFilterContainer = styled.div`
 `
 
 const MapFilter = ({ width }) => {
-  const [tblData, setTblData] = useState([
-    { id: 1, val: 'ex' },
-    { id: 2, val: 'ex2' }
-  ])
-
-  // const addTableData = data => {
-  //   data.id = tblData.length + 1
-  //   setTblData([...tblData, data])
-  // }
-
-  const deleteData = id => {
-    setTblData(tblData.filter(data => data.id !== id))
-  }
 
   return (
     <FilterConsumer>
@@ -34,35 +21,35 @@ const MapFilter = ({ width }) => {
         filterFields,
         filterValues,
         handleInputChange,
+        handleRangeChange,
         handleColorChange,
         clearFilter
       }) => (
-        <MapFilterContainer>
-          <FilterTable
-            tblData={tblData}
-            deleteData={deleteData}
-            filterValues={filterValues}
-            handleColorChange={handleColorChange}
-            clearFilter={clearFilter}
-          />
+          <MapFilterContainer>
+            <FilterTable
+              filterValues={filterValues}
+              handleColorChange={handleColorChange}
+              clearFilter={clearFilter}
+            />
 
-          <FilterAccordion
-            filterFields={filterFields}
-            filterValues={filterValues}
-            handleInputChange={handleInputChange}
-          />
+            <FilterAccordion
+              filterFields={filterFields}
+              filterValues={filterValues}
+              handleInputChange={handleInputChange}
+              handleRangeChange={handleRangeChange}
+            />
 
-          <Box
-            background="light"
-            pad="large"
-            justify="center"
-            align="center"
-            direction="row"
-          >
-            <Button label="Update Map" onClick={() => this.setState({})} />
-          </Box>
-        </MapFilterContainer>
-      )}
+            <Box
+              background="light"
+              pad="large"
+              justify="center"
+              align="center"
+              direction="row"
+            >
+              <Button label="Update Map" onClick={() => this.setState({})} />
+            </Box>
+          </MapFilterContainer>
+        )}
     </FilterConsumer>
   )
 }

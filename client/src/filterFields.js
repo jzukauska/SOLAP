@@ -30,8 +30,15 @@ const filterFields = [
           },
           {
             name: 'populationByAge',
-            type: 'radio',
-            fieldOptions: ['0-18', '19-26', '26-49', '50+']
+            type: 'rangeSelector',
+            min: 0,
+            max: 80
+          },
+          {
+            name: 'MartialStatus',
+            type: 'select',
+            placeholder: 'Select a martial status',
+            fieldOptions: ['Married', 'Single', 'Widowed', 'Divorced']
           }
         ]
       }
