@@ -43,7 +43,7 @@ const MapFilter = ({ width }) => {
             align="center"
             direction="row"
           >
-            <Button label="Update Map" onClick={() => this.setState({})} />
+            <Button label="Update Map" onClick={() => {}} />
           </Box>
         </MapFilterContainer>
       )}
