@@ -186,6 +186,7 @@ class PG_Raster():
     
                 if self.geoserver_coverage_response.status_code == 500:
                     print("Error Creating singleband Raster")
+                    print(self.geoserver_coverage_response.text)
                 else:
                     print('Geoserver coverage for %s created from %s' % (self.mnemonics, self.raster_table))
     
