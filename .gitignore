@@ -9,3 +9,4 @@ datasets/shapefiles/continental_us_tract_2010.dbf
 datasets/shapefiles/continental_us_tract_2010.prj
 datasets/shapefiles/continental_us_tract_2010.shp
 datasets/shapefiles/continental_us_tract_2010.shx
+pythonTools/LoadingRasters/testing.py

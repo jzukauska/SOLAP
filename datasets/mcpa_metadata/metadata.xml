@@ -1,0 +1,475 @@
+<?xml version="1.0"?>
+<metadata>
+    <idinfo>
+        <citation>
+            <citeinfo>
+                <pubinfo>
+                    <publish>Minnesota Pollution Control Agency</publish>
+                </pubinfo>
+                <origin>Minnesota Pollution Control Agency</origin>
+                <title>MPCA Agency Interests</title>
+                <pubdate>20160831</pubdate>
+                <onlink>https://gisdata.mn.gov/dataset/env-mpca-agency-interests</onlink>
+            </citeinfo>
+        </citation>
+        <spdom>
+            <bounding>
+                <westbc>-97.23</westbc>
+                <eastbc>-89.0</eastbc>
+                <northbc>49.37</northbc>
+                <southbc>43.5</southbc>
+            </bounding>
+        </spdom>
+        <accconst>None</accconst>
+        <useconst>None</useconst>
+        <descript>
+            <abstract>Facility, site and project locations from the Minnesota Pollution Control Agency's enterprise database.These features represent locations associated with waste water, storm water, hazardous waste, feedlot, solid waste, tanks, remediation, and other agency programs. The ai_program_list attribute provides a list of programs with activities at the site. Agency Interests can represent anything from a facility to a construction project.</abstract>
+            <supplinf>Minnesota</supplinf>
+            <purpose>The locations of agency interests provide information and context to support decisions on past land use, remediation, best management practices, maintaining environmental quality, and agency operations.</purpose>
+        </descript>
+        <keywords>
+            <theme>
+                <themekey>Minnesota Pollution Control Agency, Pollution Control Agency, facilities, permits, licenses, registrations,farming, environment, health, location, structure</themekey>
+            </theme>
+            <place>
+                <placekey>Minnesota</placekey>
+            </place>
+        </keywords>
+        <status>
+            <progress>Complete</progress>
+        </status>
+        <ptcontac>
+            <cntinfo>
+                <cntperp>
+                    <cntorg>Minnesota Pollution Control Agency</cntorg>
+                    <cntper>Data Desk</cntper>
+                </cntperp>
+                <cntaddr>
+                    <addrtype>Mailling and Physical</addrtype>
+                    <address>520 Lafayette Rd N</address>
+                    <city>St. Paul</city>
+                    <state>MN</state>
+                    <postal>55155</postal>
+                </cntaddr>
+                <cntemail>datadesk.mpca@state.mn.us</cntemail>
+            </cntinfo>
+        </ptcontac>
+    </idinfo>
+    <metainfo>
+        <metd>20160906</metd>
+        <metstdn>Minnesota Geographic Metadata Guidelines</metstdn>
+        <metstdv>1.2</metstdv>
+        <metextns>
+            <onlink>http://www.mngeo.state.mn.us/committee/standards/mgmg/metadata.htm</onlink>
+        </metextns>
+        <metc>
+            <cntinfo>
+                <cntperp>
+                    <cntorg>Minnesota Pollution Control Agency</cntorg>
+                    <cntper>David Fawcett</cntper>
+                </cntperp>
+                <cntpos>Spatial Database Administrator</cntpos>
+                <cntaddr>
+                    <addrtype>mailing and physical</addrtype>
+                    <address>520 Lafayette Rd N</address>
+                    <city>St. Paul</city>
+                    <state>MN</state>
+                    <postal>55155</postal>
+                </cntaddr>
+                <cntvoice>651-757-2350</cntvoice>
+                <cntemail>david.fawcett@state.mn.us</cntemail>
+            </cntinfo>
+        </metc>
+    </metainfo>
+    <dataqual>
+        <lineage>
+            <procstep>
+                <procdesc>This dataset is regularly extracted from the MPCA's enterprise database, and reflect our knowledge of these features at the time of export. (master file subject_item data)</procdesc>
+            </procstep>
+        </lineage>
+    </dataqual>
+    <eainfo>
+        <detailed>
+            <enttyp>
+                <enttypl>mpca_agency_interests</enttypl>
+            </enttyp>
+            <attr>
+                <attrlabl>OBJECTID</attrlabl>
+                <attrdef>dataset instance feature ID</attrdef>
+                <attrdefs>ESRI</attrdefs>
+            </attr>
+            <attr>
+                <attrlabl>ITEM_ID</attrlabl>
+                <attrdef>The unique ID that defines an item. master_ai_id + '-' + subject_item_category_code + subject_item_id</attrdef>
+            </attr>
+            <attr>
+                <attrlabl>AI_ID</attrlabl>
+                <attrdef>agency_interest_id - the site's system ID</attrdef>
+            </attr>
+            <attr>
+                <attrlabl>INT_DOC_ID</attrlabl>
+                <attrdef>int_doc_id  a document ID - a zero value represents the master file, the master version of this feature that is shared by all MPCA's programs.</attrdef>
+            </attr>
+            <attr>
+                <attrlabl>SI_TYPE</attrlabl>
+                <attrdef>subject_item_type_code</attrdef>
+            </attr>
+            <attr>
+                <attrlabl>SI_CAT</attrlabl>
+                <attrdef>subject_item_category_code</attrdef>
+            </attr>
+            <attr>
+                <attrlabl>SI_ID</attrlabl>
+                <attrdef>subject_item_id</attrdef>
+            </attr>
+            <attr>
+                <attrlabl>SI_CAT_DESC</attrlabl>
+                <attrdef>subject item category description</attrdef>
+            </attr>
+            <attr>
+                <attrlabl>SI_TYPE_DESC</attrlabl>
+                <attrdef>subject item type description</attrdef>
+            </attr>
+            <attr>
+                <attrlabl>DESCRIPTION</attrlabl>
+            </attr>
+            <attr>
+                <attrlabl>SI_DESIGNATION</attrlabl>
+                <attrdef>subject item designation</attrdef>
+            </attr>
+            <attr>
+                <attrlabl>NAME</attrlabl>
+                <attrdef>The site's name</attrdef>
+            </attr>
+            <attr>
+                <attrlabl>PROGRAM</attrlabl>
+                <attrdef>MPCA program description</attrdef>
+            </attr>
+            <attr>
+                <attrlabl>PROGRAM_LIST</attrlabl>
+                <attrdef>list of programs associated with the agency interest (comma-delimited)</attrdef>
+                <attrdomv>
+                    <edom>
+                        <edomv>AT</edomv>
+                        <edomvd>Aboveground Tank</edomvd>
+                    </edom>
+                </attrdomv>
+                <attrdomv>
+                    <edom>
+                        <edomv>AQ</edomv>
+                        <edomvd>Air Quality</edomvd>
+                    </edom>
+                </attrdomv>
+                <attrdomv>
+                    <edom>
+                        <edomv>BV</edomv>
+                        <edomvd>Brownfields</edomvd>
+                    </edom>
+                </attrdomv>
+                <attrdomv>
+                    <edom>
+                        <edomv>CL</edomv>
+                        <edomvd>Closed Landfill</edomvd>
+                    </edom>
+                </attrdomv>
+                <attrdomv>
+                    <edom>
+                        <edomv>CS</edomv>
+                        <edomvd>Construction Stormwater</edomvd>
+                    </edom>
+                </attrdomv>
+                <attrdomv>
+                    <edom>
+                        <edomv>ER</edomv>
+                        <edomvd>Emergency Management</edomvd>
+                    </edom>
+                </attrdomv>
+                <attrdomv>
+                    <edom>
+                        <edomv>EV</edomv>
+                        <edomvd>Environmental Review</edomvd>
+                    </edom>
+                </attrdomv>
+                <attrdomv>
+                    <edom>
+                        <edomv>FE</edomv>
+                        <edomvd>Feedlots</edomvd>
+                    </edom>
+                </attrdomv>
+                <attrdomv>
+                    <edom>
+                        <edomv>HW</edomv>
+                        <edomvd>Hazardous Waste</edomvd>
+                    </edom>
+                </attrdomv>
+                <attrdomv>
+                    <edom>
+                        <edomv>IR</edomv>
+                        <edomvd>Integrated Remediation</edomvd>
+                    </edom>
+                </attrdomv>
+                <attrdomv>
+                    <edom>
+                        <edomv>IS</edomv>
+                        <edomvd>Industrial Stormwater</edomvd>
+                    </edom>
+                </attrdomv>
+                <attrdomv>
+                    <edom>
+                        <edomv>PR</edomv>
+                        <edomvd>Petroleum Remediation</edomvd>
+                    </edom>
+                </attrdomv>
+                <attrdomv>
+                    <edom>
+                        <edomv>RR</edomv>
+                        <edomvd>RCRA Remediation</edomvd>
+                    </edom>
+                </attrdomv>
+                <attrdomv>
+                    <edom>
+                        <edomv>SA</edomv>
+                        <edomvd>Site Assessment</edomvd>
+                    </edom>
+                </attrdomv>
+                <attrdomv>
+                    <edom>
+                        <edomv>SF</edomv>
+                        <edomvd>Superfund</edomvd>
+                    </edom>
+                </attrdomv>
+                <attrdomv>
+                    <edom>
+                        <edomv>SS</edomv>
+                        <edomvd>Subsurface Treatment Systems</edomvd>
+                    </edom>
+                </attrdomv>
+                <attrdomv>
+                    <edom>
+                        <edomv>SW</edomv>
+                        <edomvd>Solid Waste</edomvd>
+                    </edom>
+                </attrdomv>
+                <attrdomv>
+                    <edom>
+                        <edomv>UT</edomv>
+                        <edomvd>Underground Tanks</edomvd>
+                    </edom>
+                </attrdomv>
+                <attrdomv>
+                    <edom>
+                        <edomv>WW</edomv>
+                        <edomvd>Wastewater</edomvd>
+                    </edom>
+                </attrdomv>
+            </attr>
+            <attr>
+                <attrlabl>ADDRESS</attrlabl>
+                <attrdef>Street address</attrdef>
+            </attr>
+            <attr>
+                <attrlabl>CITY</attrlabl>
+                <attrdef>address city</attrdef>
+            </attr>
+            <attr>
+                <attrlabl>STATE</attrlabl>
+                <attrdef>address state</attrdef>
+            </attr>
+            <attr>
+                <attrlabl>ZIP</attrlabl>
+                <attrdef>address zip code</attrdef>
+            </attr>
+            <attr>
+                <attrlabl>COUNTY_CODE</attrlabl>
+                <attrdef>fips code for county - derived from feature location</attrdef>
+            </attr>
+            <attr>
+                <attrlabl>COUNTY</attrlabl>
+                <attrdef>county name - derived from feature location</attrdef>
+            </attr>
+            <attr>
+                <attrlabl>CTU_CODE</attrlabl>
+                <attrdef>city, township or unorganized code - derived from feature location</attrdef>
+            </attr>
+            <attr>
+                <attrlabl>CTU_NAME</attrlabl>
+                <attrdef>city, township or unorganized name - derived from feature location</attrdef>
+            </attr>
+            <attr>
+                <attrlabl>CONG_DIST</attrlabl>
+                <attrdef>congressional district code - derived from feature location</attrdef>
+            </attr>
+            <attr>
+                <attrlabl>HOUSE_DIST</attrlabl>
+                <attrdef>MN house district - derived from feature location</attrdef>
+            </attr>
+            <attr>
+                <attrlabl>SENATE_DIST</attrlabl>
+                <attrdef>MN senate district - derived from feature location</attrdef>
+            </attr>
+            <attr>
+                <attrlabl>HUC8</attrlabl>
+                <attrdef>USGS 8-digit watershed code - derived from feature location</attrdef>
+            </attr>
+            <attr>
+                <attrlabl>HUC8_NAME</attrlabl>
+                <attrdef>name of MN DNR major watershed associated with the USGS 8-digit watershed</attrdef>
+            </attr>
+            <attr>
+                <attrlabl>HUC10</attrlabl>
+                <attrdef>USGS 10-digit watershed code - derived from feature location</attrdef>
+            </attr>
+			<attr>
+                <attrlabl>HUC10_NAME</attrlabl>
+                <attrdef>USGS 10-digit watershed name - derived from feature location</attrdef>
+            </attr>
+            <attr>
+                <attrlabl>HUC12</attrlabl>
+                <attrdef>USGS 12-digit watershed code - derived from feature location</attrdef>
+            </attr>
+            <attr>
+                <attrlabl>HUC12_NAME</attrlabl>
+                <attrdef>USGS 12-digit watershed name - derived from feature location</attrdef>
+            </attr>
+            <attr>
+                <attrlabl>DWSMA_CODE</attrlabl>
+                <attrdef>MDH's drinking water source management area code - derived from feature location (comma-delimited list if multiple)</attrdef>
+            </attr>
+            <attr>
+                <attrlabl>DWSMA_NAME</attrlabl>
+                <attrdef>MDH's drinking water source management area name - derived from feature location (comma-delimited list if multiple)</attrdef>
+            </attr>
+            <attr>
+                <attrlabl>LOC_DESC</attrlabl>
+                <attrdef>location description</attrdef>
+            </attr>
+            <attr>
+                <attrlabl>TRDSQQ</attrlabl>
+                <attrdef>PLS - township, range, range direction, section quarter quarter section code - as reported in the Tempo application</attrdef>
+            </attr>
+            <attr>
+                <attrlabl>PLS_TWSP</attrlabl>
+                <attrdef>PLS township - as reported in the Tempo application</attrdef>
+            </attr>
+            <attr>
+                <attrlabl>RANGE</attrlabl>
+                <attrdef>PLS range - as reported in the Tempo application</attrdef>
+            </attr>
+            <attr>
+                <attrlabl>RANGE_DIR</attrlabl>
+                <attrdef>PLS range direction - as reported in the Tempo application</attrdef>
+            </attr>
+            <attr>
+                <attrlabl>SECTION</attrlabl>
+                <attrdef>PLS section - as reported in the Tempo application</attrdef>
+            </attr>
+            <attr>
+                <attrlabl>QUARTERS</attrlabl>
+                <attrdef>PLS quarters - as reported in the Tempo application</attrdef>
+            </attr>
+            <attr>
+                <attrlabl>LATITUDE</attrlabl>
+                <attrdef>decimal degrees - standardized coordinates (WGS84)</attrdef>
+            </attr>
+            <attr>
+                <attrlabl>LONGITUDE</attrlabl>
+                <attrdef>decimal degrees - standardized coordinates (WGS84)</attrdef>
+            </attr>
+            <attr>
+                <attrlabl>METHOD_CODE</attrlabl>
+                <attrdef>code representing the method used to derive the location coordinates (collection method code)</attrdef>
+            </attr>
+            <attr>
+                <attrlabl>METHOD_DESC</attrlabl>
+                <attrdef>Description of the method used to derive the location coordinates</attrdef>
+            </attr>
+            <attr>
+                <attrlabl>VERIFIED</attrlabl>
+                <attrdef>location verified flag - this location was verified by MPCA staff</attrdef>
+            </attr>
+            <attr>
+                <attrlabl>COLLECTION_DATE</attrlabl>
+                <attrdef>date on which the location coordinates were collected</attrdef>
+            </attr>
+            <attr>
+                <attrlabl>TMSP_CREATED</attrlabl>
+                <attrdef>time stamp of creation</attrdef>
+            </attr>
+            <attr>
+                <attrlabl>USER_CREATED</attrlabl>
+                <attrdef>user name of creator</attrdef>
+            </attr>
+            <attr>
+                <attrlabl>TMSP_UPDT</attrlabl>
+                <attrdef>time stamp of last update</attrdef>
+            </attr>
+            <attr>
+                <attrlabl>USER_UPDT</attrlabl>
+                <attrdef>user name last update</attrdef>
+            </attr>
+            <attr>
+                <attrlabl>STATUS</attrlabl>
+                <attrdef>agency interest status - taken from the master file  AISI subject item</attrdef>
+            </attr>
+            <attr>
+                <attrlabl>STATUS_DATE</attrlabl>
+                <attrdef>The date the status was confirmed</attrdef>
+            </attr>
+            <attr>
+                <attrlabl>SPATIAL_ID</attrlabl>
+                <attrdef>the Delta spatial ID (stored in GIS_ID for migrated subject items, deprecated)</attrdef>
+            </attr>
+            <attr>
+                <attrlabl>SHAPE</attrlabl>
+                <attrdef>Feature geometry</attrdef>
+                <attrdefs>ESRI</attrdefs>
+            </attr>
+        </detailed>
+    </eainfo>
+    <distinfo>
+        <distliab>Limitations: Although extensive effort has been made to produce error-free and complete data, all geographic information has limitations due to the scale, resolution, date and interpretation of the original source materials.  Users should consult available data documentation (metadata) for this particular data to determine limitations and the precision to which the data depict distance, direction, location or other geographic characteristics.  Data may be subject to change without prior notification.
+
+No warranty: Data is provided "as is," without any warranty whatsoever, including but not limited to any warranty as to performance, merchantability or fitness for any particular purpose.
+
+Liability: The entire risk as to the results of the use of this data is assumed by the user.  MPCA is not responsible for any interpretation or conclusions made by those who acquire or use it.  MPCA shall not be liable for any direct, indirect, special, incidental, compensatory or consequential damages or third-party claims resulting from the use of this data, even if MnGeo has been advised of the possibility of such potential loss or damage.  In states that do not allow the exclusion or limitation of incidental or consequential damages, this data may not be used.
+
+Redistribution conditions: In obtaining this data from MPCA it is understood that you and/or your organization have the right to use it for any purpose.  If you modify it, you are encouraged to apply responsible best practices by documenting those changes in a metadata record.  If you transmit or provide the data to another user, it is your responsibility to provide appropriate content, limitation, warranty and liability information as you see fit.</distliab>
+        <distrib>
+            <cntinfo>
+                <cntperp>
+                    <cntorg>Minnesota Pollution Control Agency</cntorg>
+                    <cntper>David Fawcett</cntper>
+                </cntperp>
+                <cntpos>Spatial Database Administrator</cntpos>
+                <cntaddr>
+                    <addrtype>mailing and physical</addrtype>
+                    <address>520 Lafayette Rd N</address>
+                    <city>St. Paul</city>
+                    <state>MN</state>
+                    <postal>55155</postal>
+                </cntaddr>
+                <cntvoice>651-757-2350</cntvoice>
+                <cntemail>david.fawcett@state.mn.us</cntemail>
+            </cntinfo>
+        </distrib>
+    </distinfo>
+    <spref>
+        <horizsys>
+            <planar>
+                <gridsys>
+                    <gridsysn>Universal Transverse Mercator</gridsysn>
+                    <utm>
+                        <utmzone>15</utmzone>
+                    </utm>
+                </gridsys>
+                <planci>
+                    <plandu>meters</plandu>
+                </planci>
+            </planar>
+            <geodetic>
+                <horizdn>NAD83</horizdn>
+                <ellips>GRS80</ellips>
+            </geodetic>
+        </horizsys>
+    </spref>
+</metadata>
