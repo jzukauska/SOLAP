@@ -135,7 +135,7 @@ class PG_Raster():
         self.pg_connection.close()
         
             
-    def CreateGeoserverDatasets(self, geoserver_workspace, geoserver_url, mnemonics_csv):
+    def CreateGeoserverDatasets(self, geoserver_dict, geoserver_workspace, geoserver_url, mnemonics_csv):
             """
             This function creates the xml datasets for the a postgresql raster table. The GeoServer class is used for
             creating the xml and posting data to geoserver.
@@ -148,7 +148,7 @@ class PG_Raster():
     
             from GeoServer import GeoServer
             self.geoserver_url = geoserver_url
-            self.tpg = GeoServer(self.geoserver_url)
+            self.tpg = GeoServer(self.geoserver_url, geoserver_dict)
             self.geoserver_workspace = geoserver_workspace
     
             if len(mnemonics_csv) == 1:
@@ -181,6 +181,7 @@ class PG_Raster():
     
                 #  Create Coverage
                 #  We are using minus 1 because rastestats is a list of lists.
+                #
                 self.CreateGeoserverCoverage(self.schema_mosaic_table, self.numbands-1, self.schema_mosaic_table)
     
                 if self.geoserver_coverage_response.status_code == 500:
@@ -188,73 +189,73 @@ class PG_Raster():
                 else:
                     print('Geoserver coverage for %s created from %s' % (self.mnemonics, self.raster_table))
     
-            elif self.numbands > 1:
-                print('Generating multiple views for multibanded raster')
-    
-                #  Initial cleanup and dataset (views, mosaic tables) generation
-                if type(mnemonics_csv) != list:
-                    self.CSVParser(mnemonics_csv)
-    
-                #  All views are named by <mnemonic>
-                self.CreateViewsFromMultibandRaster()
-    
-                #  All Mosaic tables are named <mnemonic>_mosaic
-                self.CreateMosaicFromMultibandRaster()
-    
-                workspace_url = r'http://%s/geoserver/rest/workspaces/%s' % (self.geoserver_url, self.geoserver_workspace)
-                #  print workspace_url
-    
-                self.tpg.ServerDirectory(self.schema)
-    
-                self.workspace_exists = self.tpg.DoesUrlExist(workspace_url)
-                if self.workspace_exists == 404 or self.workspace_exists == 401:
-                    #  Create a Geoserver Workspace
-                    print('Creating new workspace')
-                    self.CreateGeoserverWorkspace()
-    
-                if len(self.mnemonics) > 1:
-                    for bandnumber, mnemonic in enumerate(self.mnemonics):
-                        self.datasets_description = [r[2] for r in self.raster_mnemonic_description]
-                        self.data_description = self.datasets_description[bandnumber]
-    
-                        #  Create GeoSever XML files
-                        #  mnemonic = mnemonic.upper()
-                        mnemonic_xml = '%s.%s' % (self.schema, mnemonic)
-                        self.MosaicXML = self.tpg.CreateMosaicXML(mnemonic_xml, self.epsg)
-                        self.schema_mnemonic_table = '%s.%s_mosaic' % (self.schema, mnemonic)
-                        self.MappingXML = self.tpg.CreateMappingXML(self.schema_mnemonic_table)
-    
-                        #  Determine Server Directory file names
-                        self.tpg.WriteXMLtoGeoserver(self.schema,self.MosaicXML,mnemonic_xml)
-                        self.raster_table_mapping = '%s.mapping' % (mnemonic_xml)
-                        self.tpg.WriteXMLtoGeoserver(self.schema,self.MappingXML,self.raster_table_mapping)
-    
-                        # Create CoverageStore
-                        self.CreateGeoserverCoverageStore(mnemonic_xml)
-    
-                        if self.geoserver_coveragestore_response.status_code == 201 or self.geoserver_coveragestore_response.status_code == 200:
-                            #  Create Coverage
-                            self.CreateGeoserverCoverage(mnemonic, bandnumber, self.schema_mnemonic_table)
-    
-                            if self.geoserver_coverage_response.status_code == 500:
-                                print("Error", self.geoserver_coverage_response.text)
-                                a = {"prj4_text" :self.prj4_txt}
-                                b = {"Raster X size" : self.x}
-                                c = {"Raster Y size" : self.y}
-                                d = {"Raster X scale" : self.x_scale}
-                                e = {"Raster Y scale" : self.y_scale}
-    
-                                raise(self.RasterErrors.geoserver_coverage(a,b,c,d,e))
-    
-                            else:
-                                print('Geoserver coverage for band #%s: %s created from %s' % (bandnumber+1, mnemonic, self.raster_table) )
-                                #CreateStyle(self, variable_mnemonic, store_workspace)
-                        else:
-                            print("Error creating Geoserver CoverageStore")
-                            print(self.geoserver_coveragestore_response.text)
-    
-                else:
-                    print('ERROR no mnemonics, check your csv')
+#            elif self.numbands > 1:
+#                print('Generating multiple views for multibanded raster')
+#    
+#                #  Initial cleanup and dataset (views, mosaic tables) generation
+#                if type(mnemonics_csv) != list:
+#                    self.CSVParser(mnemonics_csv)
+#    
+#                #  All views are named by <mnemonic>
+#                self.CreateViewsFromMultibandRaster()
+#    
+#                #  All Mosaic tables are named <mnemonic>_mosaic
+#                self.CreateMosaicFromMultibandRaster()
+#    
+#                workspace_url = r'http://%s/geoserver/rest/workspaces/%s' % (self.geoserver_url, self.geoserver_workspace)
+#                #  print workspace_url
+#    
+#                self.tpg.ServerDirectory(self.schema)
+#    
+#                self.workspace_exists = self.tpg.DoesUrlExist(workspace_url)
+#                if self.workspace_exists == 404 or self.workspace_exists == 401:
+#                    #  Create a Geoserver Workspace
+#                    print('Creating new workspace')
+#                    self.CreateGeoserverWorkspace()
+#    
+#                if len(self.mnemonics) > 1:
+#                    for bandnumber, mnemonic in enumerate(self.mnemonics):
+#                        self.datasets_description = [r[2] for r in self.raster_mnemonic_description]
+#                        self.data_description = self.datasets_description[bandnumber]
+#    
+#                        #  Create GeoSever XML files
+#                        #  mnemonic = mnemonic.upper()
+#                        mnemonic_xml = '%s.%s' % (self.schema, mnemonic)
+#                        self.MosaicXML = self.tpg.CreateMosaicXML(mnemonic_xml, self.epsg)
+#                        self.schema_mnemonic_table = '%s.%s_mosaic' % (self.schema, mnemonic)
+#                        self.MappingXML = self.tpg.CreateMappingXML(self.schema_mnemonic_table)
+#    
+#                        #  Determine Server Directory file names
+#                        self.tpg.WriteXMLtoGeoserver(self.schema,self.MosaicXML,mnemonic_xml)
+#                        self.raster_table_mapping = '%s.mapping' % (mnemonic_xml)
+#                        self.tpg.WriteXMLtoGeoserver(self.schema,self.MappingXML,self.raster_table_mapping)
+#    
+#                        # Create CoverageStore
+#                        self.CreateGeoserverCoverageStore(mnemonic_xml)
+#    
+#                        if self.geoserver_coveragestore_response.status_code == 201 or self.geoserver_coveragestore_response.status_code == 200:
+#                            #  Create Coverage
+#                            self.CreateGeoserverCoverage(mnemonic, bandnumber, self.schema_mnemonic_table)
+#    
+#                            if self.geoserver_coverage_response.status_code == 500:
+#                                print("Error", self.geoserver_coverage_response.text)
+#                                a = {"prj4_text" :self.prj4_txt}
+#                                b = {"Raster X size" : self.x}
+#                                c = {"Raster Y size" : self.y}
+#                                d = {"Raster X scale" : self.x_scale}
+#                                e = {"Raster Y scale" : self.y_scale}
+#    
+#                                raise(self.RasterErrors.geoserver_coverage(a,b,c,d,e))
+#    
+#                            else:
+#                                print('Geoserver coverage for band #%s: %s created from %s' % (bandnumber+1, mnemonic, self.raster_table) )
+#                                #CreateStyle(self, variable_mnemonic, store_workspace)
+#                        else:
+#                            print("Error creating Geoserver CoverageStore")
+#                            print(self.geoserver_coveragestore_response.text)
+#    
+#                else:
+#                    print('ERROR no mnemonics, check your csv')
     
     def CreateMosaicTable(self):
             """ This function will generate the mosaic table.
@@ -286,6 +287,58 @@ class PG_Raster():
             self.cur.execute(insert_statement)
             self.pg_connection.commit()
             self.ClosePostgreSQLConnection()
+    
+    def CreateGeoserverWorkspace(self):
+        """
+
+        :return:
+        """
+
+        #404 for workspace that does not exist  (http://docs.geoserver.org/latest/en/user/rest/api/workspaces.html)
+        #Sometime error 401 shows up, thinking it has to do with geoserver removing a directory.
+        #No workspace found creating a new workspace on Geoserver
+        self.workspace_XML = self.tpg.CreateWorkspaceXML(self.geoserver_workspace)
+        workspace_url = r'http://%s/geoserver/rest/workspaces/' % (self.geoserver_url)
+        self.geoserver_response = self.tpg.PostToGeoserver(workspace_url, self.workspace_XML)
+        if self.geoserver_response.status_code ==  200 or self.geoserver_response.status_code == 201:
+            pass
+        else:
+            print('No workspace created. Geoserver response: %s' % (self.geoserver_response.status_code))
+            print(self.geoserver_response.text)
+
+    def CreateGeoserverCoverageStore(self, tablename):
+        """
+
+        :param tablename:
+        :return:
+        """
+
+        coveragestore_url = r'http://%s/geoserver/rest/workspaces/%s/coveragestores' % (self.geoserver_url, self.geoserver_workspace)
+
+        self.coveragestore_name = tablename.split('.')[-1].upper()
+        coveragestore_path =  'file:data/%s/%s.xml' % (self.schema, tablename)
+
+        #modified coveragestore_path (file:gli/gli.fruit_har.xml)
+        self.coveragestore_XML = self.tpg.CreateStoreXML(self.coveragestore_name, "Something goes here", self.geoserver_workspace,coveragestore_path)
+        self.geoserver_coveragestore_response = self.tpg.PostToGeoserver(coveragestore_url,self.coveragestore_XML)
+
+    def CreateGeoserverCoverage(self,tablename, band, schema_mosaic):
+        """ Creates Coverage which automatically creates the layer.
+
+        :param tablename:
+        :param band:
+        :param schema_mosaic:
+        :return:
+        """
+
+        coverage_url = r'http://%s/geoserver/rest/workspaces/%s/coveragestores/%s/coverages' % (self.geoserver_url, self.geoserver_workspace, self.coveragestore_name)
+        #print coverage_url
+        try:
+            raster_metadata = [self.prj4_txt, self.x, self.y, self.x_scale, self.y_scale]
+            self.coverage_XML = self.tpg.CreateCoverageXML(self.coveragestore_name, self.geoserver_workspace, tablename, schema_mosaic, self.epsg, self.rasterstats[band], raster_metadata, self.raster_extent)
+            self.geoserver_coverage_response = self.tpg.PostToGeoserver(coverage_url,self.coverage_XML)
+        except:
+            raise
     
     def CommandParser(self, statement):
         """
@@ -331,6 +384,7 @@ class PG_Raster():
             else:
                 print("missing flag %s" % (self.rasterFlags[f]["flag"]))
         if verified == 5:
+            self.GenerateRasterStatistics()
             return 1
         else:
             return 0
@@ -372,3 +426,81 @@ class PG_Raster():
 
         self.status = proc.returncode
         return 'Finished uploading'
+    
+    def GenerateRasterStatistics(self):
+        """ input vrt_file is a vrt or GeoTIFF
+
+        :return:
+        """
+
+        print("Generating Statistics")
+        from osgeo import gdal
+        raster = gdal.Open(self.vrt_file)
+
+        #Get Spatial Extent information
+        from osgeo import osr
+        SpatialRef = osr.SpatialReference()
+        if int(self.epsg) == 4326:
+            SpatialRef.ImportFromEPSG(int(self.epsg))
+            self.prj4_txt = 'GEOGCS["WGS 84", DATUM["WGS_1984", SPHEROID["WGS 84", 6378137.0, 298.257223563, AUTHORITY["EPSG","7030"]], AUTHORITY["EPSG","6326"]], PRIMEM["Greenwich", 0.0], UNIT["degree", 0.017453292519943295], AXIS["Longitude", EAST], AXIS["Latitude", NORTH], AUTHORITY["EPSG","4326"]]'
+        
+
+        #self.prj4_txt = raster.GetProjection()
+        #Removed divide by 2, remove multiply by 2
+        self.x = raster.RasterXSize
+        self.y = raster.RasterYSize
+        self.geo_info = raster.GetGeoTransform()
+        self.x_scale = self.geo_info[1]
+        self.y_scale = self.geo_info[5]
+
+        import subprocess
+        proc = subprocess.Popen(["gdalinfo", "%s"%self.vrt_file], stdout=subprocess.PIPE)
+        gdal_output,err = proc.communicate()
+        self.raster_extent = self.GetRasterCorners(gdal_output.decode('utf-8'))
+
+        self.rasterstats = []
+        self.numbands = raster.RasterCount
+        self.rasterstats_fields = ['min', 'max', 'mean', 'stdev', 'nodata']
+        for band in range(raster.RasterCount):
+            band += 1
+            rast = raster.GetRasterBand(band)
+            stats = rast.GetStatistics(True, True)
+            nodata = rast.GetNoDataValue()
+        #print nodata
+        if not nodata:
+            stats.extend([0])
+        else:
+            stats.extend([nodata])
+            #            stats.extend([rast.GetNoDataValue()])
+            self.rasterstats.append(stats)
+
+
+        if self.numbands > 1:
+            self.raster_files = raster.GetFileList()
+
+        return
+
+    def GetRasterCorners(self, out):
+        """ Return the TopLeft and Bottom Right Corners of a raster as a list.
+
+        :param out:
+        :return:
+        """
+
+        corners = ["Upper Left", "Lower Right"]
+        box = []
+        for corner in corners:
+            
+            corner_index = out.find(corner)
+            ul = out[out.find(corner):out[corner_index:].find('\n')+corner_index]
+            breakers = ['(', ',', ')']
+            a = []
+            for b in breakers:
+                a.append(ul.find(b))
+
+            x_coord = ul[a[0]+1:a[1]]
+            y_coord = ul[a[1]+2:a[2]]
+            box.append(x_coord.strip())
+            box.append(y_coord.strip())
+
+        return box
