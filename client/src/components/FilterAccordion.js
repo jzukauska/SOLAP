@@ -8,7 +8,8 @@ import {
   RadioButtonGroup,
   Text,
   RangeSelector,
-  Stack
+  Stack,
+  CheckBox
 } from 'grommet'
 
 import { capitalize } from '../helpers/utils'
@@ -69,6 +70,14 @@ const renderFieldBasedOnType = (field, value, onChange) => {
             />
           </Stack>
         </Box>
+      )
+    case 'checkBox':
+      return (
+        <CheckBox
+          name={field.name}
+          checked={value}
+          onChange={onChange}
+        />
       )
     default:
       throw new Error(`${field.type} is not a supported field type`)

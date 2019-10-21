@@ -24,6 +24,10 @@ const filterFields = [
         name: 'demographic',
         options: [
           {
+            name: 'totalPopulation',
+            type: 'checkBox'
+          },
+          {
             name: 'populationBySex',
             type: 'radio',
             fieldOptions: ['Total Females', 'Total Males']
@@ -40,6 +44,7 @@ const filterFields = [
             placeholder: 'Select a martial status',
             fieldOptions: ['Married', 'Single', 'Widowed', 'Divorced']
           }
+
         ]
       }
     ]
