@@ -13,11 +13,14 @@ listOfVariables = ["Current lack of health insurance among adults aged 18-64 Yea
 geographicVariables = ["City", "Census Tract"]
 
 dataDirectory = r"E:\data\500_cities_datasets"
-
 datasets = glob.glob(r"{}\*.csv".format(dataDirectory))
+engine = create_engine('postgresql://david:haynes@localhost:5432/research')
 
+year = 2016
 for d in datasets:
     df = pandas.read_csv(d)
     
     theData = df[df.Measure.isin(listOfVariables) & df.GeographicLevel.isin(geographicVariables)]
+    theData.to_sql('health_behaviours_{}'.format(year), engine)
+    year += 1
     break
