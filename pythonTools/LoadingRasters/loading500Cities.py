@@ -9,11 +9,18 @@ Loading 500 Cities data
 import pandas, glob, os
 from sqlalchemy import create_engine
 
-listOfVariables = ["Current lack of health insurance among adults aged 18-64 Years"]
+listOfVariables = ["Current lack of health insurance among adults aged 18-64 Years",\
+                   "Binge drinking among adults aged >=18 Years",\
+                   "Current smoking among adults aged >=18 Years",\
+                   "No leisure-time physical activity among adults aged >=18 Years",\
+                   "Visits to doctor for routine checkup within the past Year among adults aged >=18 Years",\
+                   "Physical health not good for >=14 days among adults aged >=18 Years",\
+                   "Mental health not good for >=14 days among adults aged >=18 Years",\
+                   "Obesity among adults aged >=18 Years"]
 geographicVariables = ["City", "Census Tract"]
 
 dataDirectory = r"E:\data\500_cities_datasets"
-datasets = glob.glob(r"{}\*.csv".format(dataDirectory))
+datasets = glob.glob(os.path.join(dataDirectory,"*.csv") )
 engine = create_engine('postgresql://david:haynes@localhost:5432/research')
 
 year = 2016
