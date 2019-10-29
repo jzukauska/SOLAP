@@ -1,0 +1,120 @@
+[
+    {
+        "Age Demographics": {
+            "header": "Demographics",
+            "datatype": "polygon",
+            "functions": ["choropleth"],
+            "variables": [
+                            {
+                                "Female" :{
+                                    "Year": [2000,2010]
+                                },
+                                "Male" :{
+                                    "Year": [2000,2010]
+                                },
+                                "Both" :{
+                                    "Year": [2000,2010]
+                                },                                
+                            },
+                            {
+                                "Population_Age": ["Male_Under_5_years","Male_5_to_9_years","Male_10_to_14_years","Male_15_to_17_years","Male_18_and_19_years","Male_20_years","Male_21_years","Male_22_to_24_years","Male_25_to_29_years","Male_30_to_34_years","Male_35_to_39_years","Male_40_to_44_years","Male_45_to_49_years","Male_50_to_54_years","Male_55_to_59_years","Male_60_and_61_years","Male_62_to_64_years","Male_65_and_66_years","Male_67_to_69_years","Male_70_to_74_years","Male_75_to_79_years","Male_80_to_84_years","Male_85_years_and_over", "Male_Under_5_years","Male_5_to_9_years","Male_10_to_14_years","Male_15_to_17_years","Male_18_and_19_years","Male_20_years","Male_21_years","Male_22_to_24_years","Male_25_to_29_years","Male_30_to_34_years","Male_35_to_39_years","Male_40_to_44_years","Male_45_to_49_years","Male_50_to_54_years","Male_55_to_59_years","Male_60_and_61_years","Male_62_to_64_years","Male_65_and_66_years","Male_67_to_69_years","Male_70_to_74_years","female_75_to_79_years","female_80_to_84_years","female_85_years_and_over"]
+                            }                        
+                        ]
+        }
+    },
+        {
+        "Race Demographics": {
+            "header": "Demographics",
+            "datatype": "polygon",
+            "functions": ["choropleth"],
+            "variables": [
+                            {
+                                "White" :{
+                                    "Year": [2000,2010]
+                                },
+                                "Black" :{
+                                    "Year": [2000,2010]
+                                },
+                                "American Indian" :{
+                                    "Year": [2000,2010]
+                                },
+                                "Asian" :{
+                                    "Year": [2000,2010]
+                                },
+                                "Hawaiian & Pacific Islander" :{
+                                    "Year": [2000,2010]
+                                },
+                                "Some Other Race" :{
+                                    "Year": [2000,2010]
+                                },                          
+                            },
+                        ]
+        }
+    },
+    {
+        "Health Behaviors":{
+            "datatype": "polygon",
+            "functions": ["choropleth"],
+            "variables": [
+                            {
+                                "Lack of Insurance": {
+                                    "Year": [2016,2017,2018], "table_name": "health_behaviors", "attribute":""
+                                }
+                            }
+                        ]
+        }
+
+    },
+    {
+        "Neighborhood":{
+
+            "datatype": "point",
+            "functions": ["count","heatmap"],
+            "variables": [
+                            {
+                                "Alcohol Retailors": {
+                                    "Year": [2019], "table_name": "alcohol_outlet"
+                                }
+                            },
+                            {
+                                "Tobacco Retailors": {
+                                    "Year": [2019]
+                                }
+                            },
+                            {
+                                "Religious Sites": {
+                                    "Year": [2019]
+                                }
+                            },
+                            {
+                                "YMCA": {
+                                    "Year": [2019]
+                                }
+                            },
+                            {
+                                "Veterans Facilities (VFW)": {
+                                    "Year": [2019]
+                                }
+                            },
+                            {
+                                "American Legions": {
+                                    "Year": [2019]
+                                }
+                            },
+                            {
+                                "Traffic Stops": {
+                                    "Year": [2016,2017,2018,2019]
+                                }
+                            },
+                        ]
+
+        }
+        
+    },
+    {
+        "Environment":
+    },
+    {
+        "Indices": 
+    }
+]
