@@ -11,7 +11,6 @@ import {
   TableRow,
   Button
 } from 'grommet'
-import { object } from 'prop-types'
 
 const FilterTable = ({
   filterValues,
@@ -45,9 +44,6 @@ const FilterTable = ({
                   />
                 </TableCell>
                 <TableCell>
-                  {console.log("name: ", name)}
-                  {console.log("value: ", obj.value)}
-                  {console.log("color: ", obj.colors)}
                   <Button label="X" hidden
                     onClick={() => clearFilter(name)}
                   />
