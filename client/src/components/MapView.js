@@ -10,7 +10,7 @@ import Default from './OpenLayers/DefaultLayer'
 import MNCountiesLayer from './OpenLayers/MNCountiesLayer'
 import AlcoholLayer from './OpenLayers/AlcoholLayer'
 
-const filterWidth = '250'
+const filterWidth = '900'
 
 const MapView = () => {
   const [width] = useWindowSize()

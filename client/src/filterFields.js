@@ -1,23 +1,5 @@
 const filterFields = [
-  {
-    name: 'Boundary',
-    options: [
-      {
-        name: 'year',
-        min: 2000,
-        max: 2010,
-        step: 1,
-        type: 'range'
-      },
-      {
-        name: 'area',
-        type: 'select',
-        placeholder: 'Select an area',
-        fieldOptions: ['National', 'States', 'PUMAs/Country groups']
-      }
-    ]
-  },
-  {
+    {
     name: 'population',
     options: [
       {
@@ -48,6 +30,33 @@ const filterFields = [
         ]
       }
     ]
+  },
+  {
+    name: 'Health',
+    options:[
+
+    ]
+  },
+  {
+    name: 'Income',
+    options:[
+      
+    ]
+  },
+  {
+
+    name: 'Time Period',
+    type: 'select',
+    placeholder: 'Select Available Time Period',
+    fieldOptions: ['2000', '2005', '2010']
+  },
+
+
+  {
+    name: 'Geographic Area',
+    type: 'select',
+    placeholder: 'Select a Geographic Area',
+    fieldOptions: ['National', 'States', 'PUMAs/Country groups']
   }
 ]
 
