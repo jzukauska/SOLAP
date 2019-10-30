@@ -1,6 +1,45 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# SOLAP Visualization Tool
 
-## Available Scripts
+## Overview of Technologies
+
+UI Library: [React](https://reactjs.org/)
+Component Library: [Grommet](https://v2.grommet.io/)
+Map Library: [OpenLayers](https://openlayers.org/)
+
+## Code Structure
+
+This project uses the component-based architecture that is support by React.
+
+### Styling
+
+A CSS-in-JS approach is implemented for styling components. [Styled Components](https://www.styled-components.com/) is the specific library used for the implementation. Using componenets from Grommet gives you some default styling however it is a common usecase to override some of the Grommet component styling. Styled components let us do this.
+
+### Map Design
+
+The components to render the map were built to be as extensible as possible. The outermost parent component for the map is called `MapView.js`. `MapView` renders the `MapFilter`, the interactive filters to the left of the map, and the `MapContoller`, the controller for the open layers map.
+The `MapController` takes in a few different data points as props:
+
+- An OpenLayers view
+- OpenLayers Layers array
+- Width
+
+The interface looks like this:
+
+```jsx
+<MapController
+  view={View}
+  layers={[Default, MNCountiesLayer, AlcoholLayerHeatmap]}
+  width={`${width - filterWidth}`}
+/>
+```
+
+The `view` prop is the base map powered by open maps. The OpenLayers library gives us a contructor to use that renders that default view.
+The `layers` prop is an array of map layers. Layers at the beginning of the array are rendered first. Any layers added to this array are stacked on top of the previous one. OpenLayers, again, gives us contructors to use to create a layer from WMS data and render that layer on top of a view.
+The `width` prop is passed in to indicate how wide the map can be. Currently the MapController is not using this prop but you may find it useful if you wanted start resizing the map or resizing the filters sidebar.
+
+## React Readme
+
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 In the project directory, you can run:
 
