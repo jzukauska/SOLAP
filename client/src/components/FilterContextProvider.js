@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import filterFields from '../filterFields'
+import filterFields from '../filterFields.json'
 
 const FilterContext = React.createContext()
 

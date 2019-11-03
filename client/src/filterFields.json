@@ -1,0 +1,242 @@
+[
+  {
+    "name": "population",
+    "options": [
+      {
+        "name": "demographic",
+        "options": [
+          {
+            "name": "totalPopulation",
+            "type": "checkBox",
+            "dataType": "polygon",
+            "functions": [
+              "choropleth"
+            ]
+          },
+          {
+            "name": "populationBySex",
+            "type": "radio",
+            "dataType": "polygon",
+            "functions": [
+              "choropleth"
+            ],
+            "fieldOptions": [
+              {
+                "label": "Total Females",
+                "value": "Female",
+                "Year": [
+                  2000,
+                  2010
+                ]
+              },
+              {
+                "label": "Total Males",
+                "value": "Male",
+                "Year": [
+                  2000,
+                  2010
+                ]
+              }
+            ]
+          },
+          {
+            "name": "populationByAge",
+            "type": "rangeSelector",
+            "dataType": "polygon",
+            "functions": [
+              "choropleth"
+            ],
+            "min": 0,
+            "max": 80
+          },
+          {
+            "name": "MartialStatus",
+            "type": "select",
+            "placeholder": "Select a martial status",
+            "fieldOptions": [
+              "Married",
+              "Single",
+              "Widowed",
+              "Divorced"
+            ]
+          },
+          {
+            "name": "populationByRace",
+            "type": "radio",
+            "dataType": "polygon",
+            "functions": [
+              "choropleth"
+            ],
+            "fieldOptions": [
+              {
+                "label": "White",
+                "value": "White",
+                "Year": [
+                  2000,
+                  2010
+                ]
+              },
+              {
+                "label": "Black",
+                "value": "Black",
+                "Year": [
+                  2000,
+                  2010
+                ]
+              },
+              {
+                "label": "American Indian",
+                "value": "American Indian",
+                "Year": [
+                  2000,
+                  2010
+                ]
+              },
+              {
+                "label": "Asian",
+                "value": "Asian",
+                "Year": [
+                  2000,
+                  2010
+                ]
+              },
+              {
+                "label": "Hawaiian & Pacific Islander",
+                "value": "Hawaiian & Pacific Islander",
+                "Year": [
+                  2000,
+                  2010
+                ]
+              },
+              {
+                "label": "Other",
+                "value": "Some Other Race",
+                "Year": [
+                  2000,
+                  2010
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Neighborhood",
+        "options": [
+          {
+            "name": "Neighborhood",
+            "type": "radio",
+            "dataType": "point",
+            "functions": [
+              "count",
+              "heatmap"
+            ],
+            "fieldOptions": [
+              {
+                "label": "Alchohol Retailors",
+                "value": "Alchohol Retailors",
+                "Year": [
+                  2019
+                ]
+              },
+              {
+                "label": "Tabacco Retailors",
+                "value": "Tabacco Retailors",
+                "Year": [
+                  20019
+                ]
+              },
+              {
+                "label": "Religious Sites",
+                "value": "Religious Sites",
+                "Year": [
+                  20019
+                ]
+              },
+              {
+                "label": "YMCA",
+                "value": "YMCA",
+                "Year": [
+                  20019
+                ]
+              },
+              {
+                "label": "Veterans Facilities (VFW)",
+                "value": "Veterans Facilities (VFW)",
+                "Year": [
+                  2019
+                ]
+              },
+              {
+                "label": "American Legions",
+                "value": "American Legions",
+                "Year": [
+                  2019
+                ]
+              },
+              {
+                "label": "Traffic Stops",
+                "value": "Traffic Stope",
+                "Year": [
+                  2016,
+                  2017,
+                  2018,
+                  2019
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Health",
+    "options": [
+      {
+        "name": "Lack Of Insurance",
+        "type": "radio",
+        "dataType": "polygon",
+        "functions": [
+          "choropleth"
+        ],
+        "fieldOptions": [
+          {
+            "label": "Lack of Insurance",
+            "value": "Lack of Insurance",
+            "Year": [
+              2016,
+              2017,
+              2018
+            ],
+            "table_name": "health_behaviors"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Income",
+    "options": []
+  },
+  {
+    "name": "Time Period",
+    "type": "select",
+    "placeholder": "Select Available Time Period",
+    "fieldOptions": [
+      "2000",
+      "2005",
+      "2010"
+    ]
+  },
+  {
+    "name": "Geographic Area",
+    "type": "select",
+    "placeholder": "Select a Geographic Area",
+    "fieldOptions": [
+      "National",
+      "States",
+      "PUMAs/Country groups"
+    ]
+  }
+]
