@@ -61,6 +61,7 @@ const renderFieldBasedOnType = (field, value, onChange) => {
               name={field.name}
               min={field.min}
               max={field.max}
+              step={field.step}
               size="full"
               round="small"
               values={value || [5, 25]}

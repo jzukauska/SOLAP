@@ -1,4 +1,23 @@
-[
+[{
+    "name": "Time Period",
+    "type": "select",
+    "placeholder": "Select Available Time Period",
+    "fieldOptions": [
+      "2000",
+      "2005",
+      "2010"
+    ]
+  },
+  {
+    "name": "Geographic Area",
+    "type": "select",
+    "placeholder": "Select a Geographic Area",
+    "fieldOptions": [
+      "National",
+      "States",
+      "PUMAs/Country groups"
+    ]
+  },
   {
     "name": "population",
     "options": [
@@ -47,7 +66,8 @@
               "choropleth"
             ],
             "min": 0,
-            "max": 80
+            "max": 80,
+            "step": 5
           },
           {
             "name": "MartialStatus",
@@ -218,25 +238,6 @@
   {
     "name": "Income",
     "options": []
-  },
-  {
-    "name": "Time Period",
-    "type": "select",
-    "placeholder": "Select Available Time Period",
-    "fieldOptions": [
-      "2000",
-      "2005",
-      "2010"
-    ]
-  },
-  {
-    "name": "Geographic Area",
-    "type": "select",
-    "placeholder": "Select a Geographic Area",
-    "fieldOptions": [
-      "National",
-      "States",
-      "PUMAs/Country groups"
-    ]
   }
+  
 ]
