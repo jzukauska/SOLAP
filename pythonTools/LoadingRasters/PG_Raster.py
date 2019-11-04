@@ -4,6 +4,7 @@ Created on Thu Oct  3 14:37:05 2019
 
 @author: dahaynes
 """
+import psycopg2
 
 class PG_Raster():
     """
@@ -28,9 +29,9 @@ class PG_Raster():
 #            self.raster_table = theEnvironment["raster"]
         #print self.rasterFlags
         
-            import psycopg2
+            
             self.psycopg2 = psycopg2
-            self.urls = ['geoserver3.pop.umn.edu:8080', 'geoserver.terrapop.org']
+            #self.urls = ['geoserver3.pop.umn.edu:8080', 'geoserver.terrapop.org']
             
             
         else:
@@ -112,6 +113,7 @@ class PG_Raster():
 
         #import psycopg2
         conn_string = "host=%s dbname=%s port=%s user=%s password=%s " % (self.host, self.db, self.port, self.user, self.password)
+        #print(conn_string)
         self.pg_connection = self.psycopg2.connect(conn_string)
         self.cur = self.pg_connection.cursor()
         
@@ -386,6 +388,7 @@ class PG_Raster():
                 print("missing flag %s" % (self.rasterFlags[f]["flag"]))
         if verified == 5:
             self.GenerateRasterStatistics()
+            self.rsql = statement
             return 1
         else:
             return 0
@@ -402,16 +405,18 @@ class PG_Raster():
 
         import subprocess
 
-        postgis_table = self.rsql.split(' ')[-1]
-        self.schema, table = str(postgis_table).split('.')
+        #postgis_table = self.rsql.split(' ')[-1]
+        table = self.raster_table.split(".")[1]
+        #self.schema, table = str(postgis_table).split('.')
 
         self.host = pg_host
         self.db = pg_database
         self.port = pg_port
         self.user = pg_user
+        print(self.host, self.db, self.port, self.user)
         self.CreatePostgreSQLConnection()
-        self.DoesRasterSchemaExist(self.schema)
-        self.DoesRasterTableExist(self.schema, table)
+        #self.DoesRasterSchemaExist(self.schema)
+        #self.DoesRasterTableExist(self.schema, table)
 
         if type(self.overviews) == list:
             for view in self.overviews:
@@ -421,7 +426,9 @@ class PG_Raster():
 
         print('Uploading raster')
         self.raster2pgsql = 'raster2pgsql -C -x -I -Y -F'
-        self.uploadcmd = self.rsql + ' | psql -h %s -d %s -p %s -U %s' % (self.host, self.db, self.port, self.user)
+        aCMD = self.rsql + ' | psql -h %s -d %s -p %s -U %s' % (self.host, self.db, self.port, self.user)
+        self.uploadcmd = aCMD.replace("-vrt ", "").replace("-table ", "")
+        print(self.uploadcmd)
         proc = subprocess.Popen(self.uploadcmd, shell=True, bufsize=-1)
         proc.wait()
 

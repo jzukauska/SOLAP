@@ -275,17 +275,30 @@ class GeoServer(object):
         """
 
         import paramiko
-        sftp = paramiko.sftp_client
-        sftp = paramiko.SFTPClient.from_transport
+        ssh = paramiko.SSHClient()
+        ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        ssh.connect(self.hostaddress, username=self.serverUser, pkey=self.theKey)
+        sftp = ssh.open_sftp() 
+        #sftp = paramiko.SFTPClient.from_transport
         print(self.hostaddress, self.serverUser)
-        transport = paramiko.Transport((self.hostaddress, 22)) 
+        #transport = paramiko.Transport((self.hostaddress, 22)) 
         #ssh.connect("129.114.104.42", username="dhaynes", pkey=theKey)
         
-        transport.connect(username=self.serverUser, pkey=self.theKey)
+        #transport.connect(username=self.serverUser, pkey=self.theKey)
         #transport.connect(username=self.user, password=self.serverPSWD)
 
-        sftp = paramiko.SFTPClient.from_transport(transport)
+        
         sftp.chdir(self.dataDirectory)
+        connect_xml = r'%s/connect.postgis.xml' % (self.dataDirectory)
+        print(connect_xml)
+        try:
+            if not sftp.stat(connect_xml):
+                pass    
+        except:
+            print("No Connect file")
+            
+            self.CopyConnectXML(r"E:\git\SOLAP\connect.postgis.xml", connect_xml )
+            
         try:
             directory_path = r'%s/%s' % (self.dataDirectory, schema)
             sftp.chdir(directory_path)
@@ -296,8 +309,8 @@ class GeoServer(object):
             sftp.mkdir(schema) 
             connect_xml = r'%s/connect.postgis.xml' % (self.dataDirectory)
             
-            ssh = paramiko.SSHClient() 
-            ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+            #ssh = paramiko.SSHClient() 
+            #ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
             #print self.baseUrl, self.hostaddress
             ssh.connect(self.hostaddress, 22, username=self.serverUser, pkey=self.theKey)
             
@@ -307,6 +320,35 @@ class GeoServer(object):
 #            ssh.exec_command(copy_command)
 
             return 1
+
+    def CopyConnectXML(self,localFilePath, remoteFilePath):
+        """
+        connect.postgis.xml
+        <connect>
+           <dstype value="DBCP"/>
+           <username value="david"/>
+           <password value="pss"/>
+           <jdbcUrl value="jdbc:postgresql://129.114.104.42:5432/spatial_analytics"/>
+           <driverClassName value="org.postgresql.Driver"/>
+           <maxActive value="10"/>
+           <maxIdle value="0"/>
+        </connect>
+        """
+#         ssh = paramiko.SSHClient() 
+#         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+#            #print self.baseUrl, self.hostaddress
+#        ssh.connect(self.hostaddress, 22, username=self.serverUser, pkey=self.theKey)
+#        copy_command = 'cp %s %s' % (connect_xml, new_xml)
+#        ssh.exec_command(copy_command)
+        
+        
+        ssh = paramiko.SSHClient()
+        ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        ssh.connect(self.hostaddress, username=self.serverUser, pkey=self.theKey)
+        ftp_client=ssh.open_sftp()
+        ftp_client.put(localFilePath,remoteFilePath)
+        ftp_client.close()
+        print("added file")
 
     def RemoveServerDirectory(self, schema):
         """ Use paramiko library to connect to server and remove directory.
@@ -353,6 +395,7 @@ class GeoServer(object):
         ssh.connect(self.hostaddress, username=self.serverUser, pkey=self.theKey)
         ftp = ssh.open_sftp()
         geoserver_xml = '%s/%s/%s.xml' % (self.dataDirectory, schema, xml_name)
+        print("Writing {}".format(geoserver_xml))
         xmlfile = ftp.file(geoserver_xml, 'w')
         xmlfile.write(xml_string)
         #xmlfile.flush()

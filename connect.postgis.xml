@@ -1,0 +1,9 @@
+<connect>
+   <dstype value="DBCP"/>
+   <username value="david"/>
+   <password value="haynes"/>
+   <jdbcUrl value="jdbc:postgresql://149.165.157.154:5433/research"/>
+   <driverClassName value="org.postgresql.Driver"/>
+   <maxActive value="10"/>
+   <maxIdle value="0"/>
+</connect>
