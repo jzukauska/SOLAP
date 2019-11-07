@@ -152,7 +152,9 @@ class Clip(object):
             #print "Raserized Polygon", maskArray            
             maskRast = self.np.ma.masked_where(maskArray==1, srcArray)
             #print "Clipped Raster", self.np.ma.filled(maskRast,)        
-            band.WriteArray(self.np.ma.filled(maskRast,-99),yoff=row)
+            band.WriteArray(srcArray,yoff=row)
+            #This replaces srcArray if you want to have the maskRast values
+            #self.np.ma.filled(maskRast,-99)
             #print row
         
         print("Finished clippping raster")

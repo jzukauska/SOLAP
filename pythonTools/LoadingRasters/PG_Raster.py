@@ -319,7 +319,7 @@ class PG_Raster():
         coveragestore_url = r'http://%s/geoserver/rest/workspaces/%s/coveragestores' % (self.geoserver_url, self.geoserver_workspace)
 
         self.coveragestore_name = tablename.split('.')[-1].upper()
-        coveragestore_path =  'file:data/%s/%s.xml' % (self.schema, tablename)
+        coveragestore_path =  'file:%s/%s.xml' % (self.schema, tablename)
 
         #modified coveragestore_path (file:gli/gli.fruit_har.xml)
         self.coveragestore_XML = self.tpg.CreateStoreXML(self.coveragestore_name, "Something goes here", self.geoserver_workspace,coveragestore_path)
@@ -355,7 +355,7 @@ class PG_Raster():
                             'epsg': {'flag': '-s', 'pattern': '-s [0-9]*' ,'value': None},
                             'overviews': {'flag':'-l', 'pattern': '-l ([0-9]*,)*[0-9]*', 'value': None},
                             'vrtfile' : {'flag' : '-vrt', 'pattern' : '-vrt (\S)*', 'value': None  },
-                            'postgistable' : {'flag' : '-table', 'pattern': '-table ([a-z]*.[a-z]*)', 'value': None} }
+                            'postgistable' : {'flag' : '-table', 'pattern': '-table ([a-z]*.[\S]*)', 'value': None} }
         verified = 0
 
         for f in self.rasterFlags:

@@ -10,3 +10,15 @@ datasets/shapefiles/continental_us_tract_2010.prj
 datasets/shapefiles/continental_us_tract_2010.shp
 datasets/shapefiles/continental_us_tract_2010.shx
 pythonTools/LoadingRasters/testing.py
+pythonTools/LoadingRasters/bulkLoading.py
+pythonTools/LoadingRasters/testing1.py
+datasets/shapefiles/my_neighborhood_sites.dbf
+datasets/shapefiles/my_neighborhood_sites.sbn
+datasets/shapefiles/my_neighborhood_sites.sbx
+datasets/shapefiles/my_neighborhood_sites.shp
+datasets/shapefiles/my_neighborhood_sites.shp.xml
+datasets/shapefiles/my_neighborhood_sites.shx
+pythonTools/LoadingRasters/__pycache__/clip.cpython-35.pyc
+pythonTools/LoadingRasters/__pycache__/GeoServer.cpython-35.pyc
+pythonTools/LoadingRasters/__pycache__/PG_Raster.cpython-35.pyc
+pythonTools/LoadingRasters/__pycache__/GeoServer.cpython-35.pyc

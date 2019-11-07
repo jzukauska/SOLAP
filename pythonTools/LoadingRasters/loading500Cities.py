@@ -20,14 +20,17 @@ listOfVariables = ["Current lack of health insurance among adults aged 18-64 Yea
 geographicVariables = ["City", "Census Tract"]
 
 dataDirectory = r"E:\data\500_cities_datasets"
+outDirectory = r"E:\git\SOLAP\datasets"
 datasets = glob.glob(os.path.join(dataDirectory,"*.csv") )
-engine = create_engine('postgresql://david:haynes@localhost:5432/research')
+#engine = create_engine('postgresql://david:secret@localhost:5432/spatial_analytics')
 
 year = 2016
 for d in datasets:
     df = pandas.read_csv(d)
     
     theData = df[df.Measure.isin(listOfVariables) & df.GeographicLevel.isin(geographicVariables)]
-    theData.to_sql('health_behaviours_{}'.format(year), engine)
+    theData.to_csv(os.path.join(outDirectory, "health_{}.csv".format(year)))
+    #theData.to_sql('health_behaviours_{}'.format(year), engine)
     year += 1
-    break
+    #break
+    
