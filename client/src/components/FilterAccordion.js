@@ -45,18 +45,17 @@ const renderFieldBasedOnType = (field, value, onChange) => {
           name={field.name}
           options={field.fieldOptions}
           value={value}
-          onChange={e =>{
+          onChange={e => {
             const yearOptions = field.fieldOptions.find(
-                option => option.value === e.target.value
-              ).year
-              console.log(yearOptions, e.target.value)
+              option => option.value === e.target.value
+            ).year
+            console.log(yearOptions, e.target.value)
             onChange({
               name: e.target.name,
               value: e.target.value,
               yearOptions
             })
-          }
-          }
+          }}
         />
       )
     case 'rangeSelector':
@@ -109,14 +108,18 @@ const Filter = ({ field, value, onChange }) => {
   )
 }
 
-const YearFilter = ({field, value, onChange, filterValues}) => {
+const YearFilter = ({ field, value, onChange, filterValues }) => {
   const buildYearOptions = () => {
-    
-    return Object.values(filterValues).reduce((arr, val) => {
-      if (arr.length === 0) return val.year
-      return arr.filter(year => !val.year.includes(year))
-    }, [])
-
+    let yearOptions = []
+    Object.values(filterValues).forEach(val => {
+      if (yearOptions.length === 0) {
+        yearOptions = val.yearOptions
+      } else {
+        yearOptions = yearOptions.filter(year => val.yearOptions.includes(year))
+      }
+    })
+    console.log(yearOptions)
+    return yearOptions
   }
   return (
     <React.Fragment key={field.name}>
@@ -124,12 +127,12 @@ const YearFilter = ({field, value, onChange, filterValues}) => {
         {capitalize(field.name)}: {value === 0 ? 'Pick a year' : value}
       </Text>
       <Select
-         name={field.name}
-          placeholder={field.placeholder}
-          options={buildYearOptions()}
-          value={value}
-          onChange={onChange}
-        />
+        name={field.name}
+        placeholder={field.placeholder}
+        options={buildYearOptions()}
+        value={value}
+        onChange={onChange}
+      />
     </React.Fragment>
   )
 }
@@ -141,16 +144,17 @@ const FilterAccordion = ({ filterFields, filterValues, handleInputChange }) => {
     if (!field.options) {
       // Doesn't evaluate to boolean
       const value = filterValues[field.name] && filterValues[field.name].value
-      if (field.name === "Time Period") {
+      if (field.name === 'Time Period') {
         return (
-        <YearFilter
-        key={field.name}
-        field={field}
-        value={value}
-        onChange={handleInputChange}
-        filterValues={filterValues}
-      />
-      )}
+          <YearFilter
+            key={field.name}
+            field={field}
+            value={value}
+            onChange={handleInputChange}
+            filterValues={filterValues}
+          />
+        )
+      }
       return (
         <Filter
           key={field.name}

@@ -3,18 +3,13 @@
     "name": "Time Period",
     "type": "select",
     "placeholder": "Select Available Time Period",
-    "fieldOptions": [
-    ]
+    "fieldOptions": []
   },
   {
     "name": "Geographic Area",
     "type": "select",
     "placeholder": "Select a Geographic Area",
-    "fieldOptions": [
-      "National",
-      "States",
-      "PUMAs/Country groups"
-    ]
+    "fieldOptions": ["National", "States", "PUMAs/Country groups"]
   },
   {
     "name": "population",
@@ -26,33 +21,22 @@
             "name": "totalPopulation",
             "type": "radio",
             "dataType": "polygon",
-            "functions": [
-              "choropleth"
-            ],
+            "functions": ["choropleth"],
             "fieldOptions": [
               {
                 "label": "Total Population",
                 "value": "Total Population",
-                "year": [
-                  2000,
-                  2010
-                ]
+                "year": [2000, 2010]
               },
               {
                 "label": "Total Females",
                 "value": "Female",
-                "year": [
-                  2000,
-                  2010
-                ]
+                "year": [2000, 2010]
               },
               {
                 "label": "Total Males",
                 "value": "Male",
-                "year": [
-                  2000,
-                  2010
-                ]
+                "year": [2000, 2010]
               }
             ]
           },
@@ -60,9 +44,7 @@
             "name": "populationByAge",
             "type": "rangeSelector",
             "dataType": "polygon",
-            "functions": [
-              "choropleth"
-            ],
+            "functions": ["choropleth"],
             "min": 0,
             "max": 80,
             "step": 5
@@ -71,68 +53,43 @@
             "name": "MartialStatus",
             "type": "select",
             "placeholder": "Select a martial status",
-            "fieldOptions": [
-              "Married",
-              "Single",
-              "Widowed",
-              "Divorced"
-            ]
+            "fieldOptions": ["Married", "Single", "Widowed", "Divorced"]
           },
           {
             "name": "populationByRace",
             "type": "radio",
             "dataType": "polygon",
-            "functions": [
-              "choropleth"
-            ],
+            "functions": ["choropleth"],
             "fieldOptions": [
               {
                 "label": "White",
                 "value": "White",
-                "year": [
-                  2000,
-                  2010
-                ]
+                "year": [2000, 2010]
               },
               {
                 "label": "Black",
                 "value": "Black",
-                "year": [
-                  2000,
-                  2010
-                ]
+                "year": [2000, 2010]
               },
               {
                 "label": "American Indian",
                 "value": "American Indian",
-                "year": [
-                  2000,
-                  2010
-                ]
+                "year": [2000, 2010]
               },
               {
                 "label": "Asian",
                 "value": "Asian",
-                "year": [
-                  2000,
-                  2010
-                ]
+                "year": [2000, 2010]
               },
               {
                 "label": "Hawaiian & Pacific Islander",
                 "value": "Hawaiian & Pacific Islander",
-                "year": [
-                  2000,
-                  2010
-                ]
+                "year": [2000, 2010]
               },
               {
                 "label": "Other",
                 "value": "Some Other Race",
-                "year": [
-                  2000,
-                  2010
-                ]
+                "year": [2000, 2010]
               }
             ]
           }
@@ -145,62 +102,42 @@
             "name": "Neighborhood",
             "type": "radio",
             "dataType": "point",
-            "functions": [
-              "count",
-              "heatmap"
-            ],
+            "functions": ["count", "heatmap"],
             "fieldOptions": [
               {
                 "label": "Alchohol Retailors",
                 "value": "Alchohol Retailors",
-                "year": [
-                  2019
-                ]
+                "year": [2019]
               },
               {
                 "label": "Tabacco Retailors",
                 "value": "Tabacco Retailors",
-                "year": [
-                  20019
-                ]
+                "year": [20019]
               },
               {
                 "label": "Religious Sites",
                 "value": "Religious Sites",
-                "year": [
-                  20019
-                ]
+                "year": [20019]
               },
               {
                 "label": "YMCA",
                 "value": "YMCA",
-                "year": [
-                  20019
-                ]
+                "year": [20019]
               },
               {
                 "label": "Veterans Facilities (VFW)",
                 "value": "Veterans Facilities (VFW)",
-                "year": [
-                  2019
-                ]
+                "year": [2019]
               },
               {
                 "label": "American Legions",
                 "value": "American Legions",
-                "year": [
-                  2019
-                ]
+                "year": [2019]
               },
               {
                 "label": "Traffic Stops",
                 "value": "Traffic Stope",
-                "year": [
-                  2016,
-                  2017,
-                  2018,
-                  2019
-                ]
+                "year": [2016, 2017, 2018, 2019]
               }
             ]
           }
@@ -215,19 +152,13 @@
         "name": "Lack Of Insurance",
         "type": "radio",
         "dataType": "polygon",
-        "functions": [
-          "choropleth"
-        ],
+        "functions": ["choropleth"],
         "fieldOptions": [
           {
             "label": "Lack of Insurance",
             "value": "Lack of Insurance",
             "table_name": "health_behaviors",
-            "year": [
-              2016,
-              2017,
-              2018
-            ]
+            "year": [2016, 2017, 2018]
           }
         ]
       }
@@ -240,9 +171,7 @@
         "name": "Environment Exposure",
         "type": "radio",
         "dataType": "polygon",
-        "functions": [
-          "choropleth"
-        ],
+        "functions": ["choropleth"],
         "fieldOptions": [
           {
             "label": "Ozone",
@@ -383,10 +312,7 @@
         "dataType": "raster",
         "type": "radio",
         "fieldOptions": [],
-        "functions": [
-          "summary",
-          "raster_sld"
-        ]
+        "functions": ["summary", "raster_sld"]
       }
     ]
   },

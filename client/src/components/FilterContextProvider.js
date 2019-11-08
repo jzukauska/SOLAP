@@ -8,48 +8,13 @@ export default class FilterContextProvider extends Component {
     filterFields,
     filterValues: {}
   }
-  
+
   handleInputChange = ({ name, value, yearOptions }) => {
-    if (this.state.filterValues.hasOwnProperty("Time Period") && this.state.filterValues.hasOwnProperty("Geographic Area") && Object.keys(this.state.filterValues).length < 4) {
-      this.setState({
-        filterValues: {
-          ...this.state.filterValues,
-          [name]: {
-            ...this.state.filterValues[name],
-            value,
-            yearOptions,
-            colors: ''
-          }
-  
-        }})
-    }
-    else if (this.state.filterValues.hasOwnProperty("Time Period") && Object.keys(this.state.filterValues).length < 3) {
-      this.setState({
-        filterValues: {
-          ...this.state.filterValues,
-          [name]: {
-            ...this.state.filterValues[name],
-            value,
-            yearOptions,
-            colors: ''
-          }
-  
-        }})
-    }
-    else if (this.state.filterValues.hasOwnProperty("Geographic Area") && Object.keys(this.state.filterValues).length < 3) {
-      this.setState({
-        filterValues: {
-          ...this.state.filterValues,
-          [name]: {
-            ...this.state.filterValues[name],
-            value,
-            yearOptions,
-            colors: ''
-          }
-  
-        }})
-    }
-    else if (Object.keys(this.state.filterValues).length < 2 || name === "Time Period" || name === "Geographic Area") {
+    if (
+      this.state.filterValues.hasOwnProperty('Time Period') &&
+      this.state.filterValues.hasOwnProperty('Geographic Area') &&
+      Object.keys(this.state.filterValues).length < 4
+    ) {
       this.setState({
         filterValues: {
           ...this.state.filterValues,
@@ -60,10 +25,55 @@ export default class FilterContextProvider extends Component {
             colors: ''
           }
         }
-        })
-    }
-    else {
-      console.log("more than 2 objects choosen")
+      })
+    } else if (
+      this.state.filterValues.hasOwnProperty('Time Period') &&
+      Object.keys(this.state.filterValues).length < 3
+    ) {
+      this.setState({
+        filterValues: {
+          ...this.state.filterValues,
+          [name]: {
+            ...this.state.filterValues[name],
+            value,
+            yearOptions,
+            colors: ''
+          }
+        }
+      })
+    } else if (
+      this.state.filterValues.hasOwnProperty('Geographic Area') &&
+      Object.keys(this.state.filterValues).length < 3
+    ) {
+      this.setState({
+        filterValues: {
+          ...this.state.filterValues,
+          [name]: {
+            ...this.state.filterValues[name],
+            value,
+            yearOptions,
+            colors: ''
+          }
+        }
+      })
+    } else if (
+      Object.keys(this.state.filterValues).length < 2 ||
+      name === 'Time Period' ||
+      name === 'Geographic Area'
+    ) {
+      this.setState({
+        filterValues: {
+          ...this.state.filterValues,
+          [name]: {
+            ...this.state.filterValues[name],
+            value,
+            yearOptions,
+            colors: ''
+          }
+        }
+      })
+    } else {
+      console.log('more than 2 objects choosen')
       alert('Please delete a filter before adding another')
     }
     console.log(Object.keys(this.state.filterValues).length)
