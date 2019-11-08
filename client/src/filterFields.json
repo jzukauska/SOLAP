@@ -1,11 +1,9 @@
-[{
+[
+  {
     "name": "Time Period",
     "type": "select",
     "placeholder": "Select Available Time Period",
     "fieldOptions": [
-      "2000",
-      "2005",
-      "2010"
     ]
   },
   {
@@ -26,20 +24,20 @@
         "options": [
           {
             "name": "totalPopulation",
-            "type": "checkBox",
-            "dataType": "polygon",
-            "functions": [
-              "choropleth"
-            ]
-          },
-          {
-            "name": "populationBySex",
             "type": "radio",
             "dataType": "polygon",
             "functions": [
               "choropleth"
             ],
             "fieldOptions": [
+              {
+                "label": "Total Population",
+                "value": "Total Population",
+                "Year": [
+                  2000,
+                  2010
+                ]
+              },
               {
                 "label": "Total Females",
                 "value": "Female",
@@ -224,13 +222,170 @@
           {
             "label": "Lack of Insurance",
             "value": "Lack of Insurance",
+            "table_name": "health_behaviors",
             "Year": [
               2016,
               2017,
               2018
-            ],
-            "table_name": "health_behaviors"
+            ]
           }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Environment",
+    "options": [
+      {
+        "name": "Environment Exposure",
+        "type": "radio",
+        "dataType": "polygon",
+        "functions": [
+          "choropleth"
+        ],
+        "fieldOptions": [
+          {
+            "label": "Ozone",
+            "value": "Ozone",
+            "Year": [
+              2000,
+              2001,
+              2002,
+              2003,
+              2004,
+              2005,
+              2006,
+              2007,
+              2008,
+              2009,
+              2010,
+              2011,
+              2012,
+              2013,
+              2014,
+              2015
+            ]
+          },
+          {
+            "label": "Carbon Monoxide",
+            "value": "Carbon Monoxide",
+            "Year": [
+              2000,
+              2001,
+              2002,
+              2003,
+              2004,
+              2005,
+              2006,
+              2007,
+              2008,
+              2009,
+              2010,
+              2011,
+              2012,
+              2013,
+              2014,
+              2015
+            ]
+          },
+          {
+            "label": "Sulfur Dioxide",
+            "value": "Sulfur Dioxide",
+            "Year": [
+              2000,
+              2001,
+              2002,
+              2003,
+              2004,
+              2005,
+              2006,
+              2007,
+              2008,
+              2009,
+              2010,
+              2011,
+              2012,
+              2013,
+              2014,
+              2015
+            ]
+          },
+          {
+            "label": "Nitrous Oxide",
+            "value": "Nitrous Oxide",
+            "Year": [
+              2000,
+              2001,
+              2002,
+              2003,
+              2004,
+              2005,
+              2006,
+              2007,
+              2008,
+              2009,
+              2010,
+              2011,
+              2012,
+              2013,
+              2014,
+              2015
+            ]
+          },
+          {
+            "label": "Particulate Matter 10",
+            "value": "Particulate Matter 10",
+            "Year": [
+              2000,
+              2001,
+              2002,
+              2003,
+              2004,
+              2005,
+              2006,
+              2007,
+              2008,
+              2009,
+              2010,
+              2011,
+              2012,
+              2013,
+              2014,
+              2015
+            ]
+          },
+          {
+            "label": "Particulate Matter 2.5",
+            "value": "Particulate Matter 2.5",
+            "Year": [
+              2000,
+              2001,
+              2002,
+              2003,
+              2004,
+              2005,
+              2006,
+              2007,
+              2008,
+              2009,
+              2010,
+              2011,
+              2012,
+              2013,
+              2014,
+              2015
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Landcover",
+        "dataType": "raster",
+        "type": "radio",
+        "fieldOptions": [],
+        "functions": [
+          "summary",
+          "raster_sld"
         ]
       }
     ]
@@ -239,5 +394,4 @@
     "name": "Income",
     "options": []
   }
-  
 ]

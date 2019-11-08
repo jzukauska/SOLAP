@@ -64,7 +64,7 @@ const renderFieldBasedOnType = (field, value, onChange) => {
               step={field.step}
               size="full"
               round="small"
-              values={value || [5, 25]}
+              values={value || [0, 5]}
               onChange={numArr =>
                 onChange({ target: { value: numArr, name: field.name } })
               }
@@ -96,12 +96,42 @@ const Filter = ({ field, value, onChange }) => {
   )
 }
 
+const yearFilter = ({field, value, onChange, filterValues}) => {
+  const buildYearOptions = () => {
+
+  }
+  return (
+    <React.Fragment key={field.name}>
+      <Text>
+        {capitalize(field.name)}: {value === 0 ? 'Pick a year' : value}
+      </Text>
+      <Select
+         name={field.name}
+          placeholder={field.placeholder}
+          options={field.fieldOptions}
+          value={value}
+          onChange={onChange}
+        />
+    </React.Fragment>
+  )
+}
+
 const FilterAccordion = ({ filterFields, filterValues, handleInputChange }) => {
+  console.log(filterValues)
   return filterFields.map(field => {
     // Base case for recursive component
     if (!field.options) {
       // Doesn't evaluate to boolean
       const value = filterValues[field.name] && filterValues[field.name].value
+      if (field.name === "Time Period") {
+        return < yearFilter
+        key={field.name}
+        field={field}
+        value={value}
+        onChange={handleInputChange}
+        filterValues={filterValues}
+      />
+      }
       return (
         <Filter
           key={field.name}
