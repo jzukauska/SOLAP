@@ -132,6 +132,8 @@ checkSize();
  * to existing features in an ol/Source/Vector (VectorSource)
  * object.
  *
+ * WATCH OUT: There are promises within
+ *
  * @param {Object} options
  * @param {string} options.wfsUrl
  * @param {string} options.featurePrefix prefix for feature types, e.g. GeoServer workspace name
