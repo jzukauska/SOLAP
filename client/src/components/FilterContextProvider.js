@@ -9,14 +9,15 @@ export default class FilterContextProvider extends Component {
     filterValues: {}
   }
 
-  handleInputChange = e => {
-    console.log(e.target.name, e.option || e.target.value)
+  handleInputChange = ({ name, value, yearOptions }) => {
+    console.log(name, value, yearOptions)
     this.setState({
       filterValues: {
         ...this.state.filterValues,
-        [e.target.name]: {
-          ...this.state.filterValues[e.target.name],
-          value: e.option || e.target.value,
+        [name]: {
+          ...this.state.filterValues[name],
+          value,
+          yearOptions,
           colors: ''
         }
       }

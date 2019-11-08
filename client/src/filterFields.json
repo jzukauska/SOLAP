@@ -43,7 +43,7 @@
               {
                 "label": "Total Females",
                 "value": "Female",
-                "Year": [
+                "year": [
                   2000,
                   2010
                 ]
@@ -51,7 +51,7 @@
               {
                 "label": "Total Males",
                 "value": "Male",
-                "Year": [
+                "year": [
                   2000,
                   2010
                 ]

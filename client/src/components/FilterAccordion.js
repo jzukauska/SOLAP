@@ -24,7 +24,9 @@ const renderFieldBasedOnType = (field, value, onChange) => {
           max={field.max}
           step={field.step}
           value={value}
-          onChange={onChange}
+          onChange={e =>
+            onChange({ name: e.target.name, value: e.target.value })
+          }
         />
       )
     case 'select':
@@ -34,7 +36,7 @@ const renderFieldBasedOnType = (field, value, onChange) => {
           placeholder={field.placeholder}
           options={field.fieldOptions}
           value={value}
-          onChange={onChange}
+          onChange={e => onChange({ name: e.target.name, value: e.option })}
         />
       )
     case 'radio':
@@ -43,7 +45,15 @@ const renderFieldBasedOnType = (field, value, onChange) => {
           name={field.name}
           options={field.fieldOptions}
           value={value}
-          onChange={onChange}
+          onChange={e =>
+            onChange({
+              name: e.target.name,
+              value: e.target.value,
+              yearOptions: field.fieldOptions.find(
+                option => option.value === e.target.value
+              ).year
+            })
+          }
         />
       )
     case 'rangeSelector':
@@ -65,9 +75,7 @@ const renderFieldBasedOnType = (field, value, onChange) => {
               size="full"
               round="small"
               values={value || [5, 25]}
-              onChange={numArr =>
-                onChange({ target: { value: numArr, name: field.name } })
-              }
+              onChange={numArr => onChange({ value: numArr, name: field.name })}
             />
           </Stack>
         </Box>
@@ -77,7 +85,9 @@ const renderFieldBasedOnType = (field, value, onChange) => {
         <CheckBox
           name={field.name}
           checked={value}
-          onChange={onChange}
+          onChange={e =>
+            onChange({ name: e.target.name, value: e.target.value })
+          }
         />
       )
     default:
