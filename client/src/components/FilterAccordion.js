@@ -24,7 +24,9 @@ const renderFieldBasedOnType = (field, value, onChange) => {
           max={field.max}
           step={field.step}
           value={value}
-          onChange={onChange}
+          onChange={e =>
+            onChange({ name: e.target.name, value: e.target.value })
+          }
         />
       )
     case 'select':
@@ -34,7 +36,7 @@ const renderFieldBasedOnType = (field, value, onChange) => {
           placeholder={field.placeholder}
           options={field.fieldOptions}
           value={value}
-          onChange={onChange}
+          onChange={e => onChange({ name: e.target.name, value: e.option })}
         />
       )
     case 'radio':
@@ -43,7 +45,18 @@ const renderFieldBasedOnType = (field, value, onChange) => {
           name={field.name}
           options={field.fieldOptions}
           value={value}
-          onChange={onChange}
+          onChange={e =>{
+            const yearOptions = field.fieldOptions.find(
+                option => option.value === e.target.value
+              ).year
+              console.log(yearOptions, e.target.value)
+            onChange({
+              name: e.target.name,
+              value: e.target.value,
+              yearOptions
+            })
+          }
+          }
         />
       )
     case 'rangeSelector':
@@ -65,9 +78,7 @@ const renderFieldBasedOnType = (field, value, onChange) => {
               size="full"
               round="small"
               values={value || [0, 5]}
-              onChange={numArr =>
-                onChange({ target: { value: numArr, name: field.name } })
-              }
+              onChange={numArr => onChange({ value: numArr, name: field.name })}
             />
           </Stack>
         </Box>
@@ -77,7 +88,9 @@ const renderFieldBasedOnType = (field, value, onChange) => {
         <CheckBox
           name={field.name}
           checked={value}
-          onChange={onChange}
+          onChange={e =>
+            onChange({ name: e.target.name, value: e.target.value })
+          }
         />
       )
     default:
@@ -96,8 +109,13 @@ const Filter = ({ field, value, onChange }) => {
   )
 }
 
-const yearFilter = ({field, value, onChange, filterValues}) => {
+const YearFilter = ({field, value, onChange, filterValues}) => {
   const buildYearOptions = () => {
+    
+    return Object.values(filterValues).reduce((arr, val) => {
+      if (arr.length === 0) return val.year
+      return arr.filter(year => !val.year.includes(year))
+    }, [])
 
   }
   return (
@@ -108,7 +126,7 @@ const yearFilter = ({field, value, onChange, filterValues}) => {
       <Select
          name={field.name}
           placeholder={field.placeholder}
-          options={field.fieldOptions}
+          options={buildYearOptions()}
           value={value}
           onChange={onChange}
         />
@@ -124,14 +142,15 @@ const FilterAccordion = ({ filterFields, filterValues, handleInputChange }) => {
       // Doesn't evaluate to boolean
       const value = filterValues[field.name] && filterValues[field.name].value
       if (field.name === "Time Period") {
-        return < yearFilter
+        return (
+        <YearFilter
         key={field.name}
         field={field}
         value={value}
         onChange={handleInputChange}
         filterValues={filterValues}
       />
-      }
+      )}
       return (
         <Filter
           key={field.name}

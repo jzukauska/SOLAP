@@ -8,59 +8,59 @@ export default class FilterContextProvider extends Component {
     filterFields,
     filterValues: {}
   }
-
-  handleInputChange = e => {
-    console.log(e.target.name, e.option || e.target.value)
+  
+  handleInputChange = ({ name, value, yearOptions }) => {
     if (this.state.filterValues.hasOwnProperty("Time Period") && this.state.filterValues.hasOwnProperty("Geographic Area") && Object.keys(this.state.filterValues).length < 4) {
       this.setState({
         filterValues: {
           ...this.state.filterValues,
-          [e.target.name]: {
-            ...this.state.filterValues[e.target.name],
-            value: e.option || e.target.value,
+          [name]: {
+            ...this.state.filterValues[name],
+            value,
+            yearOptions,
             colors: ''
           }
-        }
-
-      })
+  
+        }})
     }
     else if (this.state.filterValues.hasOwnProperty("Time Period") && Object.keys(this.state.filterValues).length < 3) {
       this.setState({
         filterValues: {
           ...this.state.filterValues,
-          [e.target.name]: {
-            ...this.state.filterValues[e.target.name],
-            value: e.option || e.target.value,
+          [name]: {
+            ...this.state.filterValues[name],
+            value,
+            yearOptions,
             colors: ''
           }
-        }
-
-      })
+  
+        }})
     }
     else if (this.state.filterValues.hasOwnProperty("Geographic Area") && Object.keys(this.state.filterValues).length < 3) {
       this.setState({
         filterValues: {
           ...this.state.filterValues,
-          [e.target.name]: {
-            ...this.state.filterValues[e.target.name],
-            value: e.option || e.target.value,
+          [name]: {
+            ...this.state.filterValues[name],
+            value,
+            yearOptions,
             colors: ''
           }
-        }
-      })
+  
+        }})
     }
-    else if (Object.keys(this.state.filterValues).length < 2 || e.target.name === "Time Period" || e.target.name === "Geographic Area") {
+    else if (Object.keys(this.state.filterValues).length < 2 || name === "Time Period" || name === "Geographic Area") {
       this.setState({
         filterValues: {
           ...this.state.filterValues,
-          [e.target.name]: {
-            ...this.state.filterValues[e.target.name],
-            value: e.option || e.target.value,
+          [name]: {
+            ...this.state.filterValues[name],
+            value,
+            yearOptions,
             colors: ''
           }
         }
-
-      })
+        })
     }
     else {
       console.log("more than 2 objects choosen")

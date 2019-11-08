@@ -33,7 +33,7 @@
               {
                 "label": "Total Population",
                 "value": "Total Population",
-                "Year": [
+                "year": [
                   2000,
                   2010
                 ]
@@ -41,7 +41,7 @@
               {
                 "label": "Total Females",
                 "value": "Female",
-                "Year": [
+                "year": [
                   2000,
                   2010
                 ]
@@ -49,7 +49,7 @@
               {
                 "label": "Total Males",
                 "value": "Male",
-                "Year": [
+                "year": [
                   2000,
                   2010
                 ]
@@ -89,7 +89,7 @@
               {
                 "label": "White",
                 "value": "White",
-                "Year": [
+                "year": [
                   2000,
                   2010
                 ]
@@ -97,7 +97,7 @@
               {
                 "label": "Black",
                 "value": "Black",
-                "Year": [
+                "year": [
                   2000,
                   2010
                 ]
@@ -105,7 +105,7 @@
               {
                 "label": "American Indian",
                 "value": "American Indian",
-                "Year": [
+                "year": [
                   2000,
                   2010
                 ]
@@ -113,7 +113,7 @@
               {
                 "label": "Asian",
                 "value": "Asian",
-                "Year": [
+                "year": [
                   2000,
                   2010
                 ]
@@ -121,7 +121,7 @@
               {
                 "label": "Hawaiian & Pacific Islander",
                 "value": "Hawaiian & Pacific Islander",
-                "Year": [
+                "year": [
                   2000,
                   2010
                 ]
@@ -129,7 +129,7 @@
               {
                 "label": "Other",
                 "value": "Some Other Race",
-                "Year": [
+                "year": [
                   2000,
                   2010
                 ]
@@ -153,49 +153,49 @@
               {
                 "label": "Alchohol Retailors",
                 "value": "Alchohol Retailors",
-                "Year": [
+                "year": [
                   2019
                 ]
               },
               {
                 "label": "Tabacco Retailors",
                 "value": "Tabacco Retailors",
-                "Year": [
+                "year": [
                   20019
                 ]
               },
               {
                 "label": "Religious Sites",
                 "value": "Religious Sites",
-                "Year": [
+                "year": [
                   20019
                 ]
               },
               {
                 "label": "YMCA",
                 "value": "YMCA",
-                "Year": [
+                "year": [
                   20019
                 ]
               },
               {
                 "label": "Veterans Facilities (VFW)",
                 "value": "Veterans Facilities (VFW)",
-                "Year": [
+                "year": [
                   2019
                 ]
               },
               {
                 "label": "American Legions",
                 "value": "American Legions",
-                "Year": [
+                "year": [
                   2019
                 ]
               },
               {
                 "label": "Traffic Stops",
                 "value": "Traffic Stope",
-                "Year": [
+                "year": [
                   2016,
                   2017,
                   2018,
@@ -223,7 +223,7 @@
             "label": "Lack of Insurance",
             "value": "Lack of Insurance",
             "table_name": "health_behaviors",
-            "Year": [
+            "year": [
               2016,
               2017,
               2018
@@ -247,7 +247,7 @@
           {
             "label": "Ozone",
             "value": "Ozone",
-            "Year": [
+            "year": [
               2000,
               2001,
               2002,
@@ -269,7 +269,7 @@
           {
             "label": "Carbon Monoxide",
             "value": "Carbon Monoxide",
-            "Year": [
+            "year": [
               2000,
               2001,
               2002,
@@ -291,7 +291,7 @@
           {
             "label": "Sulfur Dioxide",
             "value": "Sulfur Dioxide",
-            "Year": [
+            "year": [
               2000,
               2001,
               2002,
@@ -313,7 +313,7 @@
           {
             "label": "Nitrous Oxide",
             "value": "Nitrous Oxide",
-            "Year": [
+            "year": [
               2000,
               2001,
               2002,
@@ -335,7 +335,7 @@
           {
             "label": "Particulate Matter 10",
             "value": "Particulate Matter 10",
-            "Year": [
+            "year": [
               2000,
               2001,
               2002,
@@ -357,7 +357,7 @@
           {
             "label": "Particulate Matter 2.5",
             "value": "Particulate Matter 2.5",
-            "Year": [
+            "year": [
               2000,
               2001,
               2002,
