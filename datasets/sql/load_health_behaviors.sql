@@ -1,7 +1,7 @@
 
 BEGIN;
 
---DROP TABLE IF EXISTS health_behaviors_2016;
+DROP TABLE IF EXISTS health_behaviors;
 
 CREATE TABLE public.health_behaviors
 (
