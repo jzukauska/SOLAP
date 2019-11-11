@@ -49,7 +49,6 @@ const renderFieldBasedOnType = (field, value, onChange) => {
             const yearOptions = field.fieldOptions.find(
               option => option.value === e.target.value
             ).year
-            console.log(yearOptions, e.target.value)
             onChange({
               name: e.target.name,
               value: e.target.value,
@@ -112,11 +111,14 @@ const YearFilter = ({ field, value, onChange, filterValues }) => {
   const buildYearOptions = () => {
     let yearOptions = []
     Object.values(filterValues).forEach(val => {
-      if (yearOptions.length === 0) {
-        yearOptions = val.yearOptions
-      } else {
-        yearOptions = yearOptions.filter(year => val.yearOptions.includes(year))
+      if (val.yearOptions) {
+        if (yearOptions.length === 0) {
+          yearOptions = val.yearOptions
+        } else {
+          yearOptions = yearOptions.filter(year => val.yearOptions.includes(year))
+        }
       }
+
     })
     console.log(yearOptions)
     return yearOptions
@@ -131,14 +133,13 @@ const YearFilter = ({ field, value, onChange, filterValues }) => {
         placeholder={field.placeholder}
         options={buildYearOptions()}
         value={value}
-        onChange={onChange}
+        onChange={e => onChange({ name: e.target.name, value: e.option })}
       />
     </React.Fragment>
   )
 }
 
 const FilterAccordion = ({ filterFields, filterValues, handleInputChange }) => {
-  console.log(filterValues)
   return filterFields.map(field => {
     // Base case for recursive component
     if (!field.options) {
