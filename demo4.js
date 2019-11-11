@@ -487,6 +487,74 @@ const styleFunctionFromBreaks = function(breaks, options) {
   }
 };
 
+/**
+ * Census API request and add to county features
+ *
+ * The Census API returns an array of arrays, with the first array
+ * being the header. Long GEO_IDs are offered and needed to be cut.
+ *
+ * Assumes the first column is GEO_ID
+ *
+ */
+const addCensusDataDemo = function() {
+  const censusUrl =
+    "https://api.census.gov/data/2017/acs/acs5?key=7d80d73f60739990cbd1565a9638eb53b98dda95&get=GEO_ID,NAME,B01003_001E,B19013_001E&for=county:*&in=state:27";
+
+  var request = new XMLHttpRequest();
+  request.open("GET", censusUrl, true);
+
+  request.onload = function() {
+    if (this.status >= 200 && this.status < 400) {
+      const censusData = JSON.parse(this.response);
+      const origFeatures = countySource.getFeatures();
+      const fieldsOfInterest = ["B01003_001E", "B19013_001E"];
+      app.censusData = censusData; // debug helper
+
+      // find array indices for fields of interest
+      const featuresHeader = censusData[0];
+      const fieldIndex = {};
+      for (let i = 0; i < featuresHeader.length; i++) {
+        for (let fi = 0; fi < fieldsOfInterest.length; fi++) {
+          if (featuresHeader.indexOf(fieldsOfInterest[fi]) !== -1) {
+            fieldIndex[fieldsOfInterest[fi]] = featuresHeader.indexOf(
+              fieldsOfInterest[fi]
+            );
+          }
+        }
+      }
+
+      // index new attributes by geoid; start at 1 to skip header
+      const featuresIndexed = {};
+      app.featuresIndexed = featuresIndexed;
+      for (let i = 1; i < censusData.length; i++) {
+        featuresIndexed[censusData[i][0].slice(-5)] = {};
+        for (let prop in fieldIndex) {
+          featuresIndexed[censusData[i][0].slice(-5)][prop] =
+            censusData[i][fieldIndex[prop]];
+        }
+      }
+
+      let curKey;
+      for (let i = 0; i < origFeatures.length; i++) {
+        curKey = origFeatures[i].getProperties()["geoid"];
+        if (curKey in featuresIndexed) {
+          origFeatures[i].setProperties(
+            Object.assign({}, featuresIndexed[curKey])
+          );
+        }
+      }
+
+      alert("Census API data loaded for counties");
+    }
+  };
+
+  request.onerror = function() {
+    alert("Error retrieving data from Census API. URL used: " + censusUrl);
+  };
+
+  request.send();
+};
+
 // populate additional attributes to an existing vector source
 document
   .querySelector(".demo-button-add-attrs")
@@ -581,6 +649,13 @@ document
     } else {
       alert("Need to add more attributes before symbolzing by population");
     }
+  });
+
+// add Census API attributes
+document
+  .querySelector(".demo-button-add-attrs-census")
+  .addEventListener("click", function(e) {
+    addCensusDataDemo();
   });
 
 window.app = {};
