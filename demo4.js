@@ -544,7 +544,23 @@ const addCensusDataDemo = function() {
         }
       }
 
-      alert("Census API data loaded for counties");
+      const symbolConfig = {
+        classCount: 5,
+        prop1Name: "B01003_001E"
+      };
+
+      if (
+        symbolConfig.prop1Name in countySource.getFeatures()[0].getProperties()
+      ) {
+        countyLayer.setStyle(
+          styleFunctionFromBreaks(
+            findQuantileBreaks(countySource.getFeatures(), symbolConfig),
+            symbolConfig
+          )
+        );
+      }
+
+      alert("Census API data loaded for counties; symbolizing on B01003_001E");
     }
   };
 
