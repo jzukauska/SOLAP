@@ -1,29 +1,29 @@
-import React from 'react'
-import useWindowSize from '../helpers/useWindowSize'
+import React from "react";
+import useWindowSize from "../helpers/useWindowSize";
 
-import DraggableGrid from './DraggableGrid'
-import MapFilter from './MapFilter'
-import MapController from './MapController'
+import DraggableGrid from "./DraggableGrid";
+import MapFilter from "./MapFilter";
+import MapController from "./MapController";
 
-import View from './OpenLayers/DefaultView'
-import Default from './OpenLayers/DefaultLayer'
-import MNCountiesLayer from './OpenLayers/MNCountiesLayer'
-import AlcoholLayerHeatmap from './OpenLayers/AlcoholLayerHeatmap'
+import View from "./OpenLayers/DefaultView";
+import BasemapLayer from "./OpenLayers/BasemapLayer";
+import MnCountyLayer from "./OpenLayers/MnCountyLayer";
+import AlcoholLayerHeatmap from "./OpenLayers/AlcoholLayerHeatmap";
 
 //const filterWidth = '900'
 
 const MapView = () => {
-  const [width] = useWindowSize()
+  const [width] = useWindowSize();
   return (
     <DraggableGrid>
       <MapFilter width={width / 2} />
       <MapController
         view={View}
-        layers={[Default, MNCountiesLayer, AlcoholLayerHeatmap]}
+        layers={[BasemapLayer, MnCountyLayer, AlcoholLayerHeatmap]}
         width={`${width / 2}`}
       />
     </DraggableGrid>
-  )
-}
+  );
+};
 
-export default MapView
+export default MapView;
