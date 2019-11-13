@@ -29,7 +29,7 @@
             "fieldOptions": [
               {
                 "label": "Total Population",
-                "value": "Total Population",
+                "value": "total",
                 "year": [
                   2000,
                   2010
@@ -37,7 +37,7 @@
               },
               {
                 "label": "Total Females",
-                "value": "Female",
+                "value": "female",
                 "year": [
                   2000,
                   2010
@@ -45,7 +45,7 @@
               },
               {
                 "label": "Total Males",
-                "value": "Male",
+                "value": "male",
                 "year": [
                   2000,
                   2010
@@ -62,10 +62,11 @@
             ],
             "min": 0,
             "max": 80,
-            "step": 5
+            "step": 5, 
+            "ops": ["Male_Under_5_years","Male_5_to_9_years","Male_10_to_14_years","Male_15_to_17_years","Male_18_and_19_years","Male_20_years","Male_21_years","Male_22_to_24_years","Male_25_to_29_years","Male_30_to_34_years","Male_35_to_39_years","Male_40_to_44_years","Male_45_to_49_years","Male_50_to_54_years","Male_55_to_59_years","Male_60_and_61_years","Male_62_to_64_years","Male_65_and_66_years","Male_67_to_69_years","Male_70_to_74_years","Male_75_to_79_years","Male_80_to_84_years","Male_85_years_and_over", "Male_Under_5_years","Male_5_to_9_years","Male_10_to_14_years","Male_15_to_17_years","Male_18_and_19_years","Male_20_years","Male_21_years","Male_22_to_24_years","Male_25_to_29_years","Male_30_to_34_years","Male_35_to_39_years","Male_40_to_44_years","Male_45_to_49_years","Male_50_to_54_years","Male_55_to_59_years","Male_60_and_61_years","Male_62_to_64_years","Male_65_and_66_years","Male_67_to_69_years","Male_70_to_74_years","female_75_to_79_years","female_80_to_84_years","female_85_years_and_over"]
           },
           {
-            "name": "populationByRace",
+            "name": "Race Demographics",
             "type": "radio",
             "dataType": "polygon",
             "functions": [
@@ -74,7 +75,7 @@
             "fieldOptions": [
               {
                 "label": "White",
-                "value": "White",
+                "value": "white_alone",
                 "year": [
                   2000,
                   2010
@@ -82,7 +83,7 @@
               },
               {
                 "label": "Black",
-                "value": "Black",
+                "value": "black_alone",
                 "year": [
                   2000,
                   2010
@@ -90,7 +91,7 @@
               },
               {
                 "label": "American Indian",
-                "value": "American Indian",
+                "value": "american_indian_alones",
                 "year": [
                   2000,
                   2010
@@ -98,7 +99,7 @@
               },
               {
                 "label": "Asian",
-                "value": "Asian",
+                "value": "asian_alone",
                 "year": [
                   2000,
                   2010
@@ -106,7 +107,7 @@
               },
               {
                 "label": "Hawaiian & Pacific Islander",
-                "value": "Hawaiian & Pacific Islander",
+                "value": "hawaiian_pi_alone",
                 "year": [
                   2000,
                   2010
@@ -114,7 +115,7 @@
               },
               {
                 "label": "Other",
-                "value": "Some Other Race",
+                "value": "sor_alone",
                 "year": [
                   2000,
                   2010
@@ -143,7 +144,7 @@
                 "value": "Alchohol Retailors",
                 "year": [
                   2019
-                ]
+                ], "table_name": "alcohol_outlet"
               },
               {
                 "label": "Tabacco Retailors",
@@ -250,7 +251,8 @@
               2013,
               2014,
               2015
-            ]
+            ], "table_name": "caces_pollutants"
+          
           },
           {
             "label": "Carbon Monoxide",
@@ -272,7 +274,7 @@
               2013,
               2014,
               2015
-            ]
+            ], "table_name": "caces_pollutants"
           },
           {
             "label": "Sulfur Dioxide",
@@ -294,7 +296,7 @@
               2013,
               2014,
               2015
-            ]
+            ], "table_name": "caces_pollutants"
           },
           {
             "label": "Nitrous Oxide",
@@ -338,7 +340,7 @@
               2013,
               2014,
               2015
-            ]
+            ], "table_name": "caces_pollutants"
           },
           {
             "label": "Particulate Matter 2.5",
@@ -360,7 +362,7 @@
               2013,
               2014,
               2015
-            ]
+            ], "table_name": "caces_pollutants"
           }
         ]
       },
@@ -375,9 +377,5 @@
         ]
       }
     ]
-  },
-  {
-    "name": "Income",
-    "options": []
   }
 ]
