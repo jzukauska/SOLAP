@@ -9,6 +9,7 @@ import View from "./OpenLayers/DefaultView";
 import BasemapLayer from "./OpenLayers/BasemapLayer";
 import MnCountyLayer from "./OpenLayers/MnCountyLayer";
 import AlcoholLayerHeatmap from "./OpenLayers/AlcoholLayerHeatmap";
+import MerisLandCover from "./OpenLayers/MerisLandCover";
 
 //const filterWidth = '900'
 
@@ -19,11 +20,20 @@ const MapView = () => {
       <MapFilter width={width / 2} />
       <MapController
         view={View}
-        layers={[BasemapLayer, MnCountyLayer, AlcoholLayerHeatmap]}
+        layers={[
+          BasemapLayer,
+          MnCountyLayer,
+          AlcoholLayerHeatmap,
+          MerisLandCover
+        ]}
         width={`${width / 2}`}
       />
     </DraggableGrid>
   );
 };
+
+let app = {};
+window.app = app;
+app.l = MerisLandCover;
 
 export default MapView;
