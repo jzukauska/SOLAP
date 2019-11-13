@@ -194,7 +194,6 @@ const layer = new Image({
  */
 layer.setYear = function(year) {
   if (year in yearLayers) {
-    console.log("Ok");
     this.getSource().updateParams({ LAYERS: yearLayers[year] });
   } else {
     console.warn("invalid year for MERIS setYear:", year);
@@ -255,21 +254,17 @@ layer.updateClasses = function(show, classes) {
     obj[split[0]] = split[1];
     return obj;
   }, {});
-  console.log("currentEnv :", currentEnv);
 
   updateEnv = classes.reduce(function(obj, str, index) {
     obj[str] = show ? 1 : 0;
     return obj;
   }, {});
-  console.log("updateEnv :", updateEnv);
 
   newEnv = Object.assign(currentEnv, updateEnv);
   newEnvStr = Object.keys(newEnv)
     .map(key => `${key}:${newEnv[key]}`)
     .join(";");
   this.getSource().updateParams({ env: newEnvStr });
-
-  console.log("newEnv :", newEnv);
 };
 
 export default layer;
