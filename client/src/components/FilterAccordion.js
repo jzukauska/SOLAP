@@ -120,7 +120,6 @@ const YearFilter = ({ field, value, onChange, filterValues }) => {
       }
 
     })
-    console.log(yearOptions)
     return yearOptions
   }
   return (

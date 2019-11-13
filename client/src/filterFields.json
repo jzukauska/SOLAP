@@ -7,12 +7,11 @@
   },
   {
     "name": "Geographic Area",
-    "type": "select",
+    "type": "radio",
     "placeholder": "Select a Geographic Area",
     "fieldOptions": [
-      "National",
-      "States",
-      "PUMAs/Country groups"
+      "County",
+      "Census Tracts"
     ]
   },
   {
@@ -125,8 +124,10 @@
             ]
           }
         ]
-      },
-      {
+      }
+      
+    ]
+  },{
         "name": "Neighborhood",
         "options": [
           {
@@ -193,9 +194,7 @@
             ]
           }
         ]
-      }
-    ]
-  },
+      },
   {
     "name": "Health",
     "options": [
