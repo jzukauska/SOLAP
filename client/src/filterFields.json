@@ -8,10 +8,9 @@
   {
     "name": "Geographic Area",
     "type": "radio",
-    "placeholder": "Select a Geographic Area",
     "fieldOptions": [
-      "County",
-      "Census Tracts"
+      {"label": "County", "value": "County"},
+      {"label": "Census Tracts", "value": "Census Tracts"}
     ]
   },
   {
@@ -150,21 +149,21 @@
                 "label": "Tabacco Retailors",
                 "value": "Tabacco Retailors",
                 "year": [
-                  20019
+                  2019
                 ]
               },
               {
                 "label": "Religious Sites",
                 "value": "Religious Sites",
                 "year": [
-                  20019
+                  2019
                 ]
               },
               {
                 "label": "YMCA",
                 "value": "YMCA",
                 "year": [
-                  20019
+                  2019
                 ]
               },
               {
