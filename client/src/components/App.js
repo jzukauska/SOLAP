@@ -2,10 +2,9 @@ import React from 'react'
 
 import FilterContextProvider from './FilterContextProvider'
 
-import { Grommet, Box } from 'grommet'
+import { Grommet } from 'grommet'
 
-import Navbar from './Navbar'
-import MapView from './MapView'
+import ViewBox from './ViewBox'
 
 const theme = {
   global: {
@@ -58,10 +57,7 @@ const App = () => {
   return (
     <Grommet theme={theme} full>
       <FilterContextProvider>
-        <Box direction="column" fill>
-          <Navbar />
-          <MapView />
-        </Box>
+        <ViewBox />
       </FilterContextProvider>
     </Grommet>
   )

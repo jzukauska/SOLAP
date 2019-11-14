@@ -6,20 +6,17 @@ import MapFilter from "./MapFilter";
 import MapController from "./MapController";
 
 import View from "./OpenLayers/DefaultView";
-import BasemapLayer from "./OpenLayers/BasemapLayer";
-import MnCountyLayer from "./OpenLayers/MnCountyLayer";
-import AlcoholLayerHeatmap from "./OpenLayers/AlcoholLayerHeatmap";
 
 //const filterWidth = '900'
 
-const MapView = () => {
+const MapView = ({layers}) => {
   const [width] = useWindowSize();
   return (
     <DraggableGrid>
       <MapFilter width={width / 2} />
       <MapController
         view={View}
-        layers={[BasemapLayer, MnCountyLayer, AlcoholLayerHeatmap]}
+        layers={layers}
         width={`${width / 2}`}
       />
     </DraggableGrid>

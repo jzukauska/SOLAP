@@ -1,12 +1,17 @@
 import React, { Component } from 'react'
 import filterFields from '../filterFields.json'
 
+import BasemapLayer from "./OpenLayers/BasemapLayer";
+import MnCountyLayer from "./OpenLayers/MnCountyLayer";
+import AlcoholLayerHeatmap from "./OpenLayers/AlcoholLayerHeatmap";
+
 const FilterContext = React.createContext()
 
 export default class FilterContextProvider extends Component {
   state = {
     filterFields,
-    filterValues: {}
+    filterValues: {},
+    layers: [BasemapLayer, MnCountyLayer, AlcoholLayerHeatmap]
   }
 
   handleInputChange = ({ name, value, yearOptions }) => {
@@ -47,6 +52,9 @@ export default class FilterContextProvider extends Component {
           }
         }
       })
+      if (name === 'totalPopulation') {
+        // modify layers here
+      }
     }
     else {
       console.log('more than 2 objects choosen')
@@ -75,7 +83,10 @@ export default class FilterContextProvider extends Component {
   }
 
   render() {
-    const { children } = this.props
+    // add layers to the children
+    const children = React.Children.map(this.props.children, child =>
+      React.cloneElement(child, { layers: this.state.layers })
+    );
 
     return (
       <FilterContext.Provider
