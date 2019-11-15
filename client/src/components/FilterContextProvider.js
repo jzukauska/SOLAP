@@ -1,45 +1,47 @@
-import React, { Component } from 'react'
-import filterFields from '../filterFields.json'
+import React, { Component } from "react";
+import filterFields from "../filterFields.json";
 
 import BasemapLayer from "./OpenLayers/BasemapLayer";
 import MnCountyLayer from "./OpenLayers/MnCountyLayer";
 import AlcoholLayerHeatmap from "./OpenLayers/AlcoholLayerHeatmap";
 
-const FilterContext = React.createContext()
+const FilterContext = React.createContext();
 
 export default class FilterContextProvider extends Component {
   state = {
     filterFields,
     filterValues: {},
     layers: [BasemapLayer, MnCountyLayer, AlcoholLayerHeatmap]
-  }
+  };
 
   handleInputChange = ({ name, value, yearOptions }) => {
     const canAddFilter = () => {
       if (
-        this.state.filterValues.hasOwnProperty('Time Period') &&
-        this.state.filterValues.hasOwnProperty('Geographic Area') &&
+        this.state.filterValues.hasOwnProperty("Time Period") &&
+        this.state.filterValues.hasOwnProperty("Geographic Area") &&
         Object.keys(this.state.filterValues).length < 4
       )
-        return (true)
-      else if (this.state.filterValues.hasOwnProperty('Time Period') &&
+        return true;
+      else if (
+        this.state.filterValues.hasOwnProperty("Time Period") &&
         Object.keys(this.state.filterValues).length < 3
       )
-        return (true)
-      else if (this.state.filterValues.hasOwnProperty('Geographic Area') &&
-        Object.keys(this.state.filterValues).length < 3)
-        return (true)
-      else if (Object.keys(this.state.filterValues).length < 2 ||
-        name === 'Time Period' ||
-        name === 'Geographic Area')
-        return (true)
-      else if (this.state.filterValues.hasOwnProperty(name))
-        return (true)
-      else
-        return (false)
-
-    }
-    const canAdd = canAddFilter()
+        return true;
+      else if (
+        this.state.filterValues.hasOwnProperty("Geographic Area") &&
+        Object.keys(this.state.filterValues).length < 3
+      )
+        return true;
+      else if (
+        Object.keys(this.state.filterValues).length < 2 ||
+        name === "Time Period" ||
+        name === "Geographic Area"
+      )
+        return true;
+      else if (this.state.filterValues.hasOwnProperty(name)) return true;
+      else return false;
+    };
+    const canAdd = canAddFilter();
     if (canAdd === true) {
       this.setState({
         filterValues: {
@@ -48,27 +50,25 @@ export default class FilterContextProvider extends Component {
             ...this.state.filterValues[name],
             value,
             yearOptions,
-            colors: ''
+            colors: ""
           }
         }
-      })
-      if (name === 'totalPopulation') {
+      });
+      if (name === "totalPopulation") {
         // modify layers here
       }
+    } else {
+      console.log("more than 2 objects choosen");
+      alert("Please delete a filter before adding another");
     }
-    else {
-      console.log('more than 2 objects choosen')
-      alert('Please delete a filter before adding another')
-
-    }
-  }
+  };
 
   clearFilter = name => {
-    const { [name]: _, ...filterValues } = this.state.filterValues
+    const { [name]: _, ...filterValues } = this.state.filterValues;
     this.setState({
       filterValues
-    })
-  }
+    });
+  };
 
   handleColorChange = (name, colorsArr) => {
     this.setState({
@@ -79,8 +79,8 @@ export default class FilterContextProvider extends Component {
           colors: colorsArr
         }
       }
-    })
-  }
+    });
+  };
 
   render() {
     // add layers to the children
@@ -100,8 +100,8 @@ export default class FilterContextProvider extends Component {
       >
         {children}
       </FilterContext.Provider>
-    )
+    );
   }
 }
 
-export const FilterConsumer = FilterContext.Consumer
+export const FilterConsumer = FilterContext.Consumer;
