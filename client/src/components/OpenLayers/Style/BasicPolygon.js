@@ -7,7 +7,7 @@ import { Stroke, Fill, Style } from "ol/style";
 
 export default new Style({
   stroke: new Stroke({
-    color: "rgba(0, 0, 0, 1.0)",
+    color: "rgba(0, 0, 0, 0.2)",
     width: 1
   }),
   fill: new Fill({
