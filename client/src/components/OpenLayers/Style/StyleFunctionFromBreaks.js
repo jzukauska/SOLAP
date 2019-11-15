@@ -17,13 +17,10 @@ export default function(breaks, options) {
     colorbrewerRampId: "YlGnBu"
   };
 
-  console.log("breaks :", breaks);
   const opts = Object.assign({}, defaultOpts, options);
 
-  // console.log("opts :", opts);
   // univariate
   if (breaks.length === 1) {
-    // console.log("break are one");
     return function(feature) {
       let testVal = 0,
         featProps = feature.getProperties(),
@@ -32,12 +29,9 @@ export default function(breaks, options) {
       for (let i = 0; i < opts.prop1Names.length; i++) {
         testVal += parseFloat(featProps[opts.prop1Names[i]]);
       }
-      // console.log("testVal :", testVal);
 
       for (let i = 0; i < numClasses; i++) {
-        // console.log("returning styles for break", i);
         if (testVal <= breaks[0][i]) {
-          // console.log("returning styles for break", i);
           return ColorBrewerStyles[opts.colorbrewerRampId][numClasses][i];
         }
       }

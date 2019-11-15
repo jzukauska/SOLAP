@@ -22,7 +22,6 @@ export default function(features, options) {
   let values1, values2;
 
   values1 = GetSymbolizationValueList(features, opts.prop1Names);
-  console.log("values1 :", values1);
 
   if (typeof opts.prop2Name !== "undefined") {
     values2 = GetSymbolizationValueList(features, [opts.prop2Name]);
