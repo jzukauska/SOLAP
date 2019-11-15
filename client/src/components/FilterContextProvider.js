@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import filterFields from "../filterFields.json";
 
 import BasemapLayer from "./OpenLayers/BasemapLayer";
-import MnCountyLayer from "./OpenLayers/MnCountyLayer";
+import MnTractLayer from "./OpenLayers/MnTractLayer";
 import AlcoholLayerHeatmap from "./OpenLayers/AlcoholLayerHeatmap";
 
 const FilterContext = React.createContext();
@@ -11,7 +11,7 @@ export default class FilterContextProvider extends Component {
   state = {
     filterFields,
     filterValues: {},
-    layers: [BasemapLayer, MnCountyLayer, AlcoholLayerHeatmap]
+    layers: [BasemapLayer, MnTractLayer, AlcoholLayerHeatmap]
   };
 
   handleInputChange = ({ name, value, yearOptions }) => {
