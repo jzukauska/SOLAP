@@ -11,7 +11,11 @@ export default class FilterContextProvider extends Component {
   state = {
     filterFields,
     filterValues: {},
-    layers: [BasemapLayer, MnTractLayer, AlcoholLayerHeatmap]
+    layers: {
+      BasemapLayer: BasemapLayer,
+      MnTractLayer: MnTractLayer,
+      AlcoholLayerHeatmap: AlcoholLayerHeatmap
+    }
   };
 
   handleInputChange = ({ name, value, yearOptions }) => {
@@ -55,7 +59,13 @@ export default class FilterContextProvider extends Component {
         }
       });
       if (name === "totalPopulation") {
-        // modify layers here
+        if (value === "total") {
+          this.state.layers.MnTractLayer.symbolizeOn(
+            {prop1Names: ["male", "female"]}, 3)
+        }
+        else {
+          this.state.layers.MnTractLayer.symbolizeOn({prop1Names: [value]}, 5)
+        }
       }
     } else {
       console.log("more than 2 objects choosen");

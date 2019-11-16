@@ -20,7 +20,7 @@ const MapController = ({ view, layers }) => {
   }, [])
 
   useEffect(() => {
-    setMapInstance(OLMap(mapRef.current, view, layers))
+    setMapInstance(OLMap(mapRef.current, view, Object.values(layers)))
   }, [view, layers])
   // data-nodrag is used to disable dragging on the grid
   return <div ref={mapRef} data-nodrag="true" style={{ height: '100%' }} />
