@@ -69,6 +69,10 @@ layer.symbolizeOn = function(options, classCount) {
   }
 };
 
+layer.clearStyling = function() {
+  this.setStyle(BasicPolygon);
+};
+
 /**
  * Get properties of features from a WFS source and attach them
  * to existing features in an ol/Source/Vector (VectorSource)
