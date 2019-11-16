@@ -60,15 +60,11 @@ export default class FilterContextProvider extends Component {
       });
       if (name === "totalPopulation") {
         if (value === "total") {
-          this.state.layers.MnTractLayer.symbolizeOn(
-            { prop1Names: ["male", "female"] },
-            5
-          );
+          this.state.layers.MnTractLayer.symbolizeOn({
+            prop1Names: ["male", "female"]
+          });
         } else {
-          this.state.layers.MnTractLayer.symbolizeOn(
-            { prop1Names: [value] },
-            5
-          );
+          this.state.layers.MnTractLayer.symbolizeOn({ prop1Names: [value] });
         }
       }
     } else {

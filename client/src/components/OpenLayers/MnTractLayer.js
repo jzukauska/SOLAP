@@ -26,7 +26,7 @@ const layer = new VectorLayer({
  * @param {string[]} options.prop1Names one or more attributes to sum to get the value of a feature
  * @param {number} classCount number of classes to break data into
  */
-layer.symbolizeOn = function(options, classCount) {
+layer.symbolizeOn = function(options, classCount = 5) {
   // are all properties required in the features? just check one feature
   const checkFeature = this.getSource()
     .getFeatures()[0]
