@@ -69,6 +69,9 @@ layer.symbolizeOn = function(options, classCount) {
   }
 };
 
+/**
+ * Reset layer styling to basic polygon style
+ */
 layer.clearStyling = function() {
   this.setStyle(BasicPolygon);
 };
