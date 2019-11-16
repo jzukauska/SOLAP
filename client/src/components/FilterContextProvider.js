@@ -62,7 +62,7 @@ export default class FilterContextProvider extends Component {
         if (value === "total") {
           this.state.layers.MnTractLayer.symbolizeOn(
             { prop1Names: ["male", "female"] },
-            3
+            5
           );
         } else {
           this.state.layers.MnTractLayer.symbolizeOn(
