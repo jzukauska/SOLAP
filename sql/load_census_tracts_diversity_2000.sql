@@ -12,6 +12,14 @@ Census_Tract_Code integer,
 Total integer,
 Male integer,
 Female integer,
+White_alone integer,
+Black_alone integer,
+American_Indian_alone integer,
+Asian_alone integer,
+Hawaiian_PI_alone integer,
+SOR_alone integer,
+Hispanic integer,
+Not_hispanic integer,
 Male_Under_5_years integer,
 Male_5_to_9_years integer,
 Male_10_to_14_years integer,
@@ -57,13 +65,8 @@ Female_67_to_69_years integer,
 Female_70_to_74_years integer,
 Female_75_to_79_years integer,
 Female_80_to_84_years integer,
-Female_85_years_and_over integer,
-White_alone integer,
-Black_alone integer,
-American_Indian_alone integer,
-Asian_alone integer,
-Hawaiian_PI_alone integer,
-SOR_alone integer
+Female_85_years_and_over integer
+
 );
 
 \COPY census_tracts_2000_diversity FROM 'E:\git\SOLAP\datasets\census_tracts_2000_diversity.csv' WITH CSV HEADER ENCODING 'LATIN-1';
