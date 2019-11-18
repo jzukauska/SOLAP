@@ -13,11 +13,11 @@ const MapView = ({layers}) => {
   const [width] = useWindowSize();
   return (
     <DraggableGrid>
-      <MapFilter width={width / 2} />
+      <MapFilter width={width / 3} />
       <MapController
         view={View}
         layers={layers}
-        width={`${width / 2}`}
+        width={`${2 * width / 3}`}
       />
     </DraggableGrid>
   );

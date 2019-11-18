@@ -9,8 +9,14 @@
     "name": "Geographic Area",
     "type": "radio",
     "fieldOptions": [
-      {"label": "County", "value": "County"},
-      {"label": "Census Tracts", "value": "Census Tracts"}
+      {
+        "label": "County",
+        "value": "County"
+      },
+      {
+        "label": "Census Tracts",
+        "value": "Census Tracts"
+      }
     ]
   },
   {
@@ -62,8 +68,55 @@
             ],
             "min": 0,
             "max": 80,
-            "step": 5, 
-            "ops": ["Male_Under_5_years","Male_5_to_9_years","Male_10_to_14_years","Male_15_to_17_years","Male_18_and_19_years","Male_20_years","Male_21_years","Male_22_to_24_years","Male_25_to_29_years","Male_30_to_34_years","Male_35_to_39_years","Male_40_to_44_years","Male_45_to_49_years","Male_50_to_54_years","Male_55_to_59_years","Male_60_and_61_years","Male_62_to_64_years","Male_65_and_66_years","Male_67_to_69_years","Male_70_to_74_years","Male_75_to_79_years","Male_80_to_84_years","Male_85_years_and_over", "Male_Under_5_years","Male_5_to_9_years","Male_10_to_14_years","Male_15_to_17_years","Male_18_and_19_years","Male_20_years","Male_21_years","Male_22_to_24_years","Male_25_to_29_years","Male_30_to_34_years","Male_35_to_39_years","Male_40_to_44_years","Male_45_to_49_years","Male_50_to_54_years","Male_55_to_59_years","Male_60_and_61_years","Male_62_to_64_years","Male_65_and_66_years","Male_67_to_69_years","Male_70_to_74_years","female_75_to_79_years","female_80_to_84_years","female_85_years_and_over"]
+            "step": 5,
+            "ops": [
+              "Male_Under_5_years",
+              "Male_5_to_9_years",
+              "Male_10_to_14_years",
+              "Male_15_to_17_years",
+              "Male_18_and_19_years",
+              "Male_20_years",
+              "Male_21_years",
+              "Male_22_to_24_years",
+              "Male_25_to_29_years",
+              "Male_30_to_34_years",
+              "Male_35_to_39_years",
+              "Male_40_to_44_years",
+              "Male_45_to_49_years",
+              "Male_50_to_54_years",
+              "Male_55_to_59_years",
+              "Male_60_and_61_years",
+              "Male_62_to_64_years",
+              "Male_65_and_66_years",
+              "Male_67_to_69_years",
+              "Male_70_to_74_years",
+              "Male_75_to_79_years",
+              "Male_80_to_84_years",
+              "Male_85_years_and_over",
+              "Male_Under_5_years",
+              "Male_5_to_9_years",
+              "Male_10_to_14_years",
+              "Male_15_to_17_years",
+              "Male_18_and_19_years",
+              "Male_20_years",
+              "Male_21_years",
+              "Male_22_to_24_years",
+              "Male_25_to_29_years",
+              "Male_30_to_34_years",
+              "Male_35_to_39_years",
+              "Male_40_to_44_years",
+              "Male_45_to_49_years",
+              "Male_50_to_54_years",
+              "Male_55_to_59_years",
+              "Male_60_and_61_years",
+              "Male_62_to_64_years",
+              "Male_65_and_66_years",
+              "Male_67_to_69_years",
+              "Male_70_to_74_years",
+              "female_75_to_79_years",
+              "female_80_to_84_years",
+              "female_85_years_and_over"
+            ]
           },
           {
             "name": "Race Demographics",
@@ -125,76 +178,77 @@
           }
         ]
       }
-      
     ]
-  },{
+  },
+  {
+    "name": "Neighborhood",
+    "options": [
+      {
         "name": "Neighborhood",
-        "options": [
+        "type": "radio",
+        "dataType": "point",
+        "functions": [
+          "count",
+          "heatmap"
+        ],
+        "fieldOptions": [
           {
-            "name": "Neighborhood",
-            "type": "radio",
-            "dataType": "point",
-            "functions": [
-              "count",
-              "heatmap"
+            "label": "Alcohol Retailors",
+            "value": "Alcohol Retailors",
+            "year": [
+              2019
             ],
-            "fieldOptions": [
-              {
-                "label": "Alchohol Retailors",
-                "value": "Alchohol Retailors",
-                "year": [
-                  2019
-                ], "table_name": "alcohol_outlet"
-              },
-              {
-                "label": "Tabacco Retailors",
-                "value": "Tabacco Retailors",
-                "year": [
-                  2019
-                ]
-              },
-              {
-                "label": "Religious Sites",
-                "value": "Religious Sites",
-                "year": [
-                  2019
-                ]
-              },
-              {
-                "label": "YMCA",
-                "value": "YMCA",
-                "year": [
-                  2019
-                ]
-              },
-              {
-                "label": "Veterans Facilities (VFW)",
-                "value": "Veterans Facilities (VFW)",
-                "year": [
-                  2019
-                ]
-              },
-              {
-                "label": "American Legions",
-                "value": "American Legions",
-                "year": [
-                  2019
-                ]
-              },
-              {
-                "label": "Traffic Stops",
-                "value": "Traffic Stope",
-                "year": [
-                  2016,
-                  2017,
-                  2018,
-                  2019
-                ]
-              }
+            "table_name": "alcohol_outlet"
+          },
+          {
+            "label": "Tabacco Retailors",
+            "value": "Tabacco Retailors",
+            "year": [
+              2019
+            ]
+          },
+          {
+            "label": "Religious Sites",
+            "value": "Religious Sites",
+            "year": [
+              2019
+            ]
+          },
+          {
+            "label": "YMCA",
+            "value": "YMCA",
+            "year": [
+              2019
+            ]
+          },
+          {
+            "label": "Veterans Facilities (VFW)",
+            "value": "Veterans Facilities (VFW)",
+            "year": [
+              2019
+            ]
+          },
+          {
+            "label": "American Legions",
+            "value": "American Legions",
+            "year": [
+              2019
+            ]
+          },
+          {
+            "label": "Traffic Stops",
+            "value": "Traffic Stope",
+            "year": [
+              2016,
+              2017,
+              2018,
+              2019
             ]
           }
         ]
-      },
+      }
+    ]
+  },
   {
     "name": "Health",
     "options": [
@@ -214,8 +268,96 @@
               2016,
               2017,
               2018
-            ]
+            ],
+            "attribute": ""
+          },
+          {
+            "label": "Physical health not good for >=14 days among adults aged >=18 Years",
+            "value": "Physical health not good for >=14 days among adults aged >=18 Years",
+            "table_name": "health_behaviors",
+            "year": [
+              2016,
+              2017,
+              2018
+            ],
+            "attribute": ""
+          },
+          {
+            "label": "Current lack of health insurance among adults aged 18-64 Years",
+            "value": "Current lack of health insurance among adults aged 18-64 Years",
+            "table_name": "health_behaviors",
+            "year": [
+              2016,
+              2017,
+              2018
+            ],
+            "attribute": ""
+          },
+          {
+            "label": "Obesity among adults aged >=18 Years",
+            "value": "Obesity among adults aged >=18 Years",
+            "table_name": "health_behaviors",
+            "year": [
+              2016,
+              2017,
+              2018
+            ],
+            "attribute": ""
+          },{
+            "label": "Mental health not good for >=14 days among adults aged >=18 Years",
+            "value": "Mental health not good for >=14 days among adults aged >=18 Years",
+            "table_name": "health_behaviors",
+            "year": [
+              2016,
+              2017,
+              2018
+            ],
+            "attribute": ""
+          },
+          {
+            "label": "Visits to doctor for routine checkup within the past Year among adults aged >=18 Years",
+            "value": "Visits to doctor for routine checkup within the past Year among adults aged >=18 Years",
+            "table_name": "health_behaviors",
+            "year": [
+              2016,
+              2017,
+              2018
+            ],
+            "attribute": ""
+          },{
+            "label": "Binge drinking among adults aged >=18 Years",
+            "value": "Binge drinking among adults aged >=18 Years",
+            "table_name": "health_behaviors",
+            "year": [
+              2016,
+              2017,
+              2018
+            ],
+            "attribute": ""
+          },
+          {
+            "label": "Current smoking among adults aged >=18 Years",
+            "value": "Current smoking among adults aged >=18 Years",
+            "table_name": "health_behaviors",
+            "year": [
+              2016,
+              2017,
+              2018
+            ],
+            "attribute": ""
+          },
+          {
+            "label": "No leisure-time physical activity among adults aged >=18 Years",
+            "value": "No leisure-time physical activity among adults aged >=18 Years",
+            "table_name": "health_behaviors",
+            "year": [
+              2016,
+              2017,
+              2018
+            ],
+            "attribute": ""
           }
+          
         ]
       }
     ]
@@ -251,8 +393,8 @@
               2013,
               2014,
               2015
-            ], "table_name": "caces_pollutants"
-          
+            ],
+            "table_name": "caces_pollutants"
           },
           {
             "label": "Carbon Monoxide",
@@ -274,7 +416,8 @@
               2013,
               2014,
               2015
-            ], "table_name": "caces_pollutants"
+            ],
+            "table_name": "caces_pollutants"
           },
           {
             "label": "Sulfur Dioxide",
@@ -296,7 +439,8 @@
               2013,
               2014,
               2015
-            ], "table_name": "caces_pollutants"
+            ],
+            "table_name": "caces_pollutants"
           },
           {
             "label": "Nitrous Oxide",
@@ -340,7 +484,8 @@
               2013,
               2014,
               2015
-            ], "table_name": "caces_pollutants"
+            ],
+            "table_name": "caces_pollutants"
           },
           {
             "label": "Particulate Matter 2.5",
@@ -362,7 +507,8 @@
               2013,
               2014,
               2015
-            ], "table_name": "caces_pollutants"
+            ],
+            "table_name": "caces_pollutants"
           }
         ]
       },
