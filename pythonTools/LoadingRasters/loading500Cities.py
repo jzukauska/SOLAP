@@ -29,8 +29,9 @@ for d in datasets:
     df = pandas.read_csv(d)
     
     theData = df[df.Measure.isin(listOfVariables) & df.GeographicLevel.isin(geographicVariables)]
-    theData.to_csv(os.path.join(outDirectory, "health_{}.csv".format(year)))
+    newData = theData.drop(columns=['Data_Value_Footnote_Symbol', 'Data_Value_Footnote','GeoLocation'])
+    newData.to_csv(os.path.join(outDirectory, "health_{}.csv".format(year)), index=False  )
     #theData.to_sql('health_behaviours_{}'.format(year), engine)
     year += 1
     #break
-    
+print("Finished")

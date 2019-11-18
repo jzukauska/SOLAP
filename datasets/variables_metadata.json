@@ -3,6 +3,8 @@
         "Age Demographics": {
             "header": "Demographics",
             "datatype": "polygon",
+            "geoserver_tract_layer": "mn_tract_2010",
+            "geoserver_county_layer": "mn_county_2010",
             "functions": ["choropleth"],
             "variables": [
                             {
@@ -26,6 +28,8 @@
         "Race Demographics": {
             "header": "Demographics",
             "datatype": "polygon",
+            "geoserver_tract_layer": "mn_tract_2010",
+            "geoserver_county_layer": "mn_county_2010",
             "functions": ["choropleth"],
             "variables": [
                             {
@@ -55,50 +59,46 @@
         "Health Behaviors":{
             "datatype": "polygon",
             "functions": ["choropleth"],
+            "geoserver_layer": "health_behaviors",
             "variables": [
-                            {
-                                "Lack of Insurance": {
-                                    "Year": [2016,2017,2018], "table_name": "health_behaviors", "attribute":""
-                                }
-                            },
-                            {
+                               {
                                 "Physical health not good for >=14 days among adults aged >=18 Years": {
-                                    "Year": [2016,2017,2018], "table_name": "health_behaviors", "attribute":""
+                                    "Year": [2014,2015,2016], "table_name": "health_behaviors", "parameter":"Physical"
                                 }
                             },
                             {
                                 "Current lack of health insurance among adults aged 18-64 Years": {
-                                  "Year": [2016,2017,2018], "table_name": "health_behaviors", "attribute":""  
+                                  "Year": [2014,2015,2016], "table_name": "health_behaviors", "parameter":"Insurance"  
                                 }
                             },
                             {
                                 "Obesity among adults aged >=18 Years": {
-                                  "Year": [2016,2017,2018], "table_name": "health_behaviors", "attribute":""  
+                                  "Year": [2014,2015,2016], "table_name": "health_behaviors", "parameter":"Obesity"  
                                 }
                             },
                             {
                                 "Mental health not good for >=14 days among adults aged >=18 Years": {
-                                  "Year": [2016,2017,2018], "table_name": "health_behaviors", "attribute":""  
+                                  "Year": [2014,2015,2016], "table_name": "health_behaviors", "parameter":"Mental"  
                                 }
                             },
                             {
                                 "Visits to doctor for routine checkup within the past Year among adults aged >=18 Years": {
-                                  "Year": [2016,2017,2018], "table_name": "health_behaviors", "attribute":""  
+                                  "Year": [2014,2015,2016], "table_name": "health_behaviors", "parameter":"Checkup"  
                                 }
                             },
                             {
                                 "Binge drinking among adults aged >=18 Years": {
-                                  "Year": [2016,2017,2018], "table_name": "health_behaviors", "attribute":""  
+                                  "Year": [2014,2015,2016], "table_name": "health_behaviors", "parameter":"Drinking"  
                                 }
                             },
                             {
                                 "Current smoking among adults aged >=18 Years": {
-                                  "Year": [2016,2017,2018], "table_name": "health_behaviors", "attribute":""  
+                                  "Year": [2014,2015,2016], "table_name": "health_behaviors", "parameter":"Smoking"  
                                 }
                             },
                             {
                                 "No leisure-time physical activity among adults aged >=18 Years": {
-                                  "Year": [2016,2017,2018], "table_name": "health_behaviors", "attribute":""  
+                                  "Year": [2014,2015,2016], "table_name": "health_behaviors", "parameter":"Inactivity"  
                                 }
                             }
                         ]
