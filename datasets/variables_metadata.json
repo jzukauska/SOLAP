@@ -158,32 +158,32 @@
             "variables": [
                             {
                                 "Ozone": {
-                                    "Year": [2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015], "table_name": "caces_pollutants"
+                                    "Year": [2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015], "geoserver_layer": "caces_pollutants", "parameter": "o3"
                                 }
                             },
                             {
                                 "Carbon Monoxide": {
-                                    "Year": [2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015], "table_name": "caces_pollutants"
+                                    "Year": [2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015], "geoserver_layer": "caces_pollutants", "parameter": "co"
                                 }
                             },
                             {
                                 "Sulfur Dioxide": {
-                                    "Year": [2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015], "table_name": "caces_pollutants"
+                                    "Year": [2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015], "geoserver_layer": "caces_pollutants", "parameter": "so2"
                                 }
                             },
                             {
-                                "Nitrous Oxide": {
-                                    "Year": [2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015], "table_name": "caces_pollutants"
+                                "Nitrous Dioxide": {
+                                    "Year": [2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015], "geoserver_layer": "caces_pollutants", "parameter": "no2"
                                 }
                             },
                             {
                                 "Particulate Matter 10": {
-                                    "Year": [2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015], "table_name": "caces_pollutants"
+                                    "Year": [2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015], "geoserver_layer": "caces_pollutants", "parameter": "pm10"
                                 }
                             },
                             {
                                 "Particulate Matter 2.5": {
-                                    "Year": [2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015], "table_name": "caces_pollutants"
+                                    "Year": [2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015], "geoserver_layer": "caces_pollutants", "parameter": "pm25"
                                 }
                             },
                         ]
@@ -195,6 +195,32 @@
             "datatype": "raster",
             "functions": ["summary", "raster_sld"],
             "variables": [
+                {
+                    "Name": "Global Landcover 2000",
+                    "Year": [2000],
+                    "Store": "",
+                    "Layer": "",
+                    "Pixels":
+                    [   {"Label": "No Data", "opacity": 0, "parameter": ["lcnodata"]},
+                        {"Label": "Forest", "opacity": 0, "parameter": ["lcbrdevgrn", "lcdecidcl","lcdecidop","lcndlevgrn", "lcndldecid","lcmxlftree"]},
+                        {"Label": "No Data", "opacity": 0, "parameter": "lcnodata"},
+                        {"Label": "Water", "opacity": 0, "parameter": ["lcnwater"]},
+                        {"Label": "Built Environment", "opacity": 0, "parameter": ["lcartif"]},
+                        {"Label": "Bare Areas", "opacity": 0, "parameter": "lcbare"},
+                        
+
+                    ]
+
+                },
+                {
+                    "Name": "Meris Landcover",
+                    "Year": [2000,2005,2010,2015],
+                    "Store": "",
+                    "Layer":"",
+                    "Pixels": [
+
+                    ]
+                }
             ]
             }
     },
