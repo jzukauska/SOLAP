@@ -1,4 +1,8 @@
-[
+[{
+  "name": "Chatbot",
+  "type": "textInput",
+  "placeholder": "Chatbot"
+},
   {
     "name": "Time Period",
     "type": "select",
@@ -6,7 +10,7 @@
     "fieldOptions": []
   },
   {
-    "name": "Geographic Area",
+    "name": "Geographic Unit",
     "type": "radio",
     "fieldOptions": [
       {
@@ -144,7 +148,7 @@
               },
               {
                 "label": "American Indian",
-                "value": "american_indian_alones",
+                "value": "american_indian_alone",
                 "year": [
                   2000,
                   2010

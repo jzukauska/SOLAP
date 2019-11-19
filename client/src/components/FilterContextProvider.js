@@ -22,7 +22,7 @@ export default class FilterContextProvider extends Component {
     const canAddFilter = () => {
       if (
         this.state.filterValues.hasOwnProperty("Time Period") &&
-        this.state.filterValues.hasOwnProperty("Geographic Area") &&
+        this.state.filterValues.hasOwnProperty("Geographic Unit") &&
         Object.keys(this.state.filterValues).length < 4
       )
         return true;
@@ -32,14 +32,14 @@ export default class FilterContextProvider extends Component {
       )
         return true;
       else if (
-        this.state.filterValues.hasOwnProperty("Geographic Area") &&
+        this.state.filterValues.hasOwnProperty("Geographic Unit") &&
         Object.keys(this.state.filterValues).length < 3
       )
         return true;
       else if (
         Object.keys(this.state.filterValues).length < 2 ||
         name === "Time Period" ||
-        name === "Geographic Area"
+        name === "Geographic Unit"
       )
         return true;
       else if (this.state.filterValues.hasOwnProperty(name)) return true;

@@ -9,13 +9,23 @@ import {
   Text,
   RangeSelector,
   Stack,
-  CheckBox
+  CheckBox,
+  TextInput
 } from 'grommet'
 
 import { capitalize } from '../helpers/utils'
 
 const renderFieldBasedOnType = (field, value, onChange) => {
   switch (field.type) {
+    case 'textInput':
+      return (
+        <TextInput
+          name={field.name}
+          placeholder={field.placeholder}
+          value={value}
+          //onChange={onChange}
+        />
+      )
     case 'range':
       return (
         <RangeInput
