@@ -12,6 +12,12 @@ import MnCountyLayer from "./OpenLayers/MnCountyLayer";
 
 const VizContext = React.createContext();
 
+// TODO:
+// Fix map type change
+// Get age slider working
+// Get multiple (2) features working together
+// Customize requests so not just defaults used
+
 export default class VizController extends Component {
   state = {
     layers: {
@@ -23,16 +29,19 @@ export default class VizController extends Component {
   handleMapChange = ({ name, value, yearOptions }) => {
     if (name === "Geographic Unit") {
       if (value === "County") {
-        console.log("county")
-        this.setState((state, props) => ({
-          layers: {BasemapLayer: state.layers.BasemapLayer, CurrentLayer: MnCountyLayer}
-        }))
-      }
-      else if (value === "Census Tracts") {
-        console.log("census")
-        this.setState((state, props) => ({
-          layers: {BasemapLayer: state.layers.BasemapLayer, CurrentLayer: MnTractLayer}
-        }))
+        this.setState(
+          (state, props) => ({
+            layers: Object.assign(state.layers, { CurrentLayer: MnCountyLayer })
+          }),
+          () => this.forceUpdate()
+        );
+      } else if (value === "Census Tracts") {
+        this.setState(
+          (state, props) => ({
+            layers: Object.assign(state.layers, { CurrentLayer: MnTractLayer })
+          }),
+          () => this.forceUpdate()
+        );
       }
     } else {
       this.symbolizeOn({
@@ -53,10 +62,11 @@ export default class VizController extends Component {
    * @param {number} classCount number of classes to break data into
    */
 
-   symbolizeOn = function(options, classCount = 5) {
+  symbolizeOn = function(options, classCount = 5) {
     // are all properties required in the features? just check one feature
-    const layer = this.state.layers.CurrentLayer
-    const checkFeature = layer.getSource()
+    const layer = this.state.layers.CurrentLayer;
+    const checkFeature = layer
+      .getSource()
       .getFeatures()[0]
       .getProperties();
     const propsNeeded = !options.prop1Names.every(
@@ -74,7 +84,7 @@ export default class VizController extends Component {
             prop1Names: options.prop1Names
           };
 
-          this.state.layers.CurrentLayer.setStyle(
+          layer.setStyle(
             StyleFunctionFromBreaks(
               FindQuantileBreaks(layer.getSource().getFeatures(), symbolConfig),
               symbolConfig
@@ -120,7 +130,7 @@ export default class VizController extends Component {
    * @param {string} options.joinKeySource key field on original ol/Source/Vector to use when joining
    * @param {string} options.joinKeyExtras key field on additional propertie retrieved to use when joining
    */
-   getFeaturePropertiesFromWfs = function(options) {
+  getFeaturePropertiesFromWfs = function(options) {
     const defaultOpts = {
       wfsUrl: "http://149.165.157.200:8080/geoserver/wfs",
       featurePrefix: "solap",
@@ -190,7 +200,10 @@ export default class VizController extends Component {
 
   render() {
     const children = React.Children.map(this.props.children, child =>
-      React.cloneElement(child, { layers: this.state.layers, handleMapChange: this.handleMapChange })
+      React.cloneElement(child, {
+        layers: this.state.layers,
+        handleMapChange: this.handleMapChange
+      })
     );
 
     return (
