@@ -1,6 +1,7 @@
 import React from 'react'
 
 import FilterContextProvider from './FilterContextProvider'
+import VizController from './VizController'
 
 import { Grommet } from 'grommet'
 
@@ -56,9 +57,11 @@ const theme = {
 const App = () => {
   return (
     <Grommet theme={theme} full>
-      <FilterContextProvider>
-        <ViewBox />
-      </FilterContextProvider>
+      <VizController>
+        <FilterContextProvider>
+          <ViewBox />
+        </FilterContextProvider>
+      </VizController>
     </Grommet>
   )
 }

@@ -1,21 +1,12 @@
 import React, { Component } from "react";
 import filterFields from "../filterFields.json";
 
-import BasemapLayer from "./OpenLayers/BasemapLayer";
-import MnTractLayer from "./OpenLayers/MnTractLayer";
-import AlcoholLayerHeatmap from "./OpenLayers/AlcoholLayerHeatmap";
-
 const FilterContext = React.createContext();
 
 export default class FilterContextProvider extends Component {
   state = {
     filterFields,
     filterValues: {},
-    layers: {
-      BasemapLayer: BasemapLayer,
-      MnTractLayer: MnTractLayer,
-      AlcoholLayerHeatmap: AlcoholLayerHeatmap
-    }
   };
 
   handleInputChange = ({ name, value, yearOptions }) => {
@@ -58,15 +49,7 @@ export default class FilterContextProvider extends Component {
           }
         }
       });
-      if (name === "totalPopulation") {
-        if (value === "total") {
-          this.state.layers.MnTractLayer.symbolizeOn({
-            prop1Names: ["male", "female"]
-          });
-        } else {
-          this.state.layers.MnTractLayer.symbolizeOn({ prop1Names: [value] });
-        }
-      }
+      this.props.handleMapChange({ name, value, yearOptions })
     } else {
       console.log("more than 2 objects choosen");
       alert("Please delete a filter before adding another");
@@ -95,7 +78,7 @@ export default class FilterContextProvider extends Component {
   render() {
     // add layers to the children
     const children = React.Children.map(this.props.children, child =>
-      React.cloneElement(child, { layers: this.state.layers })
+      React.cloneElement(child, { layers: this.props.layers })
     );
 
     return (
