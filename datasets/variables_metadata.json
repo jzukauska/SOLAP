@@ -108,7 +108,8 @@
         "Neighborhood":{
 
             "datatype": "point",
-            "functions": ["count","heatmap"],
+            "function_type": "radio",
+            "functions": ["count","heatmap","point"],
             "variables": [
                             {
                                 "Alcohol Retailors": {

@@ -22,3 +22,5 @@ pythonTools/LoadingRasters/__pycache__/clip.cpython-35.pyc
 pythonTools/LoadingRasters/__pycache__/GeoServer.cpython-35.pyc
 pythonTools/LoadingRasters/__pycache__/PG_Raster.cpython-35.pyc
 pythonTools/LoadingRasters/__pycache__/GeoServer.cpython-35.pyc
+datasets/caces_pollutants.csv
+datasets/caces_pollutants.csv
