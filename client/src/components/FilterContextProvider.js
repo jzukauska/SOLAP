@@ -4,6 +4,7 @@ import filterFields from "../filterFields.json";
 import BasemapLayer from "./OpenLayers/BasemapLayer";
 import MnTractLayer from "./OpenLayers/MnTractLayer";
 import AlcoholLayerHeatmap from "./OpenLayers/AlcoholLayerHeatmap";
+import ColorBrewerStyles from "./OpenLayers/Style/ColorBrewerStyles";
 
 const FilterContext = React.createContext();
 
@@ -18,7 +19,7 @@ export default class FilterContextProvider extends Component {
     }
   };
 
-  handleInputChange = ({ name, value, yearOptions }) => {
+  handleInputChange = async ({ name, value, yearOptions }) => {
     const canAddFilter = () => {
       if (
         this.state.filterValues.hasOwnProperty("Time Period") &&
@@ -60,11 +61,15 @@ export default class FilterContextProvider extends Component {
       });
       if (name === "totalPopulation") {
         if (value === "total") {
-          this.state.layers.MnTractLayer.symbolizeOn({
+          const styleData = await this.state.layers.MnTractLayer.symbolizeOn({
             prop1Names: ["male", "female"]
           });
+          this.generateStyleForLegend({ title: "Total Population", styleData });
         } else {
-          this.state.layers.MnTractLayer.symbolizeOn({ prop1Names: [value] });
+          const styleData = await this.state.layers.MnTractLayer.symbolizeOn({
+            prop1Names: [value]
+          });
+          this.generateStyleForLegend({ title: `${value}`, styleData });
         }
       }
     } else {
@@ -79,6 +84,20 @@ export default class FilterContextProvider extends Component {
       filterValues
     });
   };
+
+  generateStyleForLegend({ title, styleData }) {
+    const legend = [];
+    for (let i = 0; i < styleData[0].length; i++) {
+      const data = {
+        stroke:
+          ColorBrewerStyles["YlGnBu"][styleData[0].length][i].fill_.color_,
+        lowerBound: i === 0 ? 0 : styleData[0][i - 1],
+        upperBound: styleData[0][i]
+      };
+      legend.push(data);
+    }
+    return { title, data: legend };
+  }
 
   handleColorChange = (name, colorsArr) => {
     this.setState({

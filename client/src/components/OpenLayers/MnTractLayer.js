@@ -26,7 +26,7 @@ const layer = new VectorLayer({
  * @param {string[]} options.prop1Names one or more attributes to sum to get the value of a feature
  * @param {number} classCount number of classes to break data into
  */
-layer.symbolizeOn = function(options, classCount = 5) {
+layer.symbolizeOn = async function(options, classCount = 5) {
   // are all properties required in the features? just check one feature
   const checkFeature = this.getSource()
     .getFeatures()[0]
@@ -40,7 +40,7 @@ layer.symbolizeOn = function(options, classCount = 5) {
     this.getFeaturePropertiesFromWfs({
       propertyNames: options.prop1Names
     }).then(
-      function() {
+      async function() {
         const symbolConfig = {
           classCount: classCount,
           prop1Names: options.prop1Names
@@ -52,6 +52,7 @@ layer.symbolizeOn = function(options, classCount = 5) {
             symbolConfig
           )
         );
+        return FindQuantileBreaks(this.getSource().getFeatures(), symbolConfig);
       }.bind(this)
     );
   } else {
@@ -59,13 +60,13 @@ layer.symbolizeOn = function(options, classCount = 5) {
       classCount: classCount,
       prop1Names: options.prop1Names
     };
-
     layer.setStyle(
       StyleFunctionFromBreaks(
         FindQuantileBreaks(this.getSource().getFeatures(), symbolConfig),
         symbolConfig
       )
     );
+    return FindQuantileBreaks(this.getSource().getFeatures(), symbolConfig);
   }
 };
 
