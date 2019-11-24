@@ -16,7 +16,8 @@ export default class FilterContextProvider extends Component {
       BasemapLayer: BasemapLayer,
       MnTractLayer: MnTractLayer,
       AlcoholLayerHeatmap: AlcoholLayerHeatmap
-    }
+    },
+    legend: null
   };
 
   handleInputChange = async ({ name, value, yearOptions }) => {
@@ -96,7 +97,7 @@ export default class FilterContextProvider extends Component {
       };
       legend.push(data);
     }
-    return { title, data: legend };
+    this.setState({ legend: { title, data: legend } });
   }
 
   handleColorChange = (name, colorsArr) => {
@@ -114,7 +115,10 @@ export default class FilterContextProvider extends Component {
   render() {
     // add layers to the children
     const children = React.Children.map(this.props.children, child =>
-      React.cloneElement(child, { layers: this.state.layers })
+      React.cloneElement(child, {
+        layers: this.state.layers,
+        legend: this.state.legend
+      })
     );
 
     return (
