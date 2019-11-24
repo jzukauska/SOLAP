@@ -1,7 +1,7 @@
 import React from 'react'
 import { FilterConsumer } from './FilterContextProvider'
 
-import { Box } from 'grommet'
+import { Box, Tab, Tabs } from 'grommet'
 
 import FilterTable from './FilterTable'
 import FilterAccordion from './FilterAccordion'
@@ -16,22 +16,35 @@ const MapFilter = ({ width }) => {
   return (
     <FilterConsumer>
       {({
+        required,
         filterFields,
         filterValues,
-        handleInputChange,
-        handleColorChange,
+        handleInput1Change,
+        handleInput2Change,
         clearFilter
       }) => (
           <MapFilterContainer>
-            <FilterAccordion
-              filterFields={filterFields}
-              filterValues={filterValues}
-              handleInputChange={handleInputChange}
-            />
-            
+            <Tabs>
+              <Tab title={"Variable 1"}>
+                <FilterAccordion
+                  required={required}
+                  filterFields={filterFields}
+                  filterValues={filterValues}
+                  handleInputChange={handleInput1Change}
+                />
+              </Tab>
+              <Tab title={"Variable 2"}>
+                <FilterAccordion
+                  required={required}
+                  filterFields={filterFields}
+                  filterValues={filterValues}
+                  handleInputChange={handleInput2Change}
+                />
+              </Tab>
+            </Tabs>
             <FilterTable
+              required={required}
               filterValues={filterValues}
-              handleColorChange={handleColorChange}
               clearFilter={clearFilter}
             />
 
@@ -44,8 +57,9 @@ const MapFilter = ({ width }) => {
             >
             </Box>
           </MapFilterContainer>
-        )}
-    </FilterConsumer>
+        )
+      }
+    </FilterConsumer >
   )
 }
 

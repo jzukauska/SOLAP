@@ -17,7 +17,6 @@ const FilterTable = ({
     <Table>
       <TableBody>
         {Object.entries(filterValues).map(([name, obj]) => {
-          if (obj !== null && name !== "Time Period" && name !== "Geographic Unit") {
             return (
               <TableRow key={name}>
                 <TableCell scope="row">{obj.value}</TableCell>
@@ -28,11 +27,8 @@ const FilterTable = ({
                 </TableCell>
               </TableRow>)
           }
-          else
-            return (
-              null
             )
-        })}
+        }
       </TableBody>
 
     </Table>

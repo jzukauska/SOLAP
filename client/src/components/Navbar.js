@@ -16,6 +16,7 @@ const Navbar = () => {
   const [area, setArea] = useState("[Geographic Unit]")
   return (<NavbarContainer pad="small"><text>Mapping: {year} for {area}</text><FilterConsumer>
     {({
+      required,
       filterFields,
       filterValues,
       handleInputChange,
@@ -23,7 +24,7 @@ const Navbar = () => {
       clearFilter
     }) => (
 
-        Object.entries(filterValues).map(([name, obj]) => {
+        Object.entries(required).map(([name, obj]) => {
           if (obj !== null && name === "Geographic Unit") {
             setArea(obj.value)
           }

@@ -23,7 +23,7 @@ const renderFieldBasedOnType = (field, value, onChange) => {
           name={field.name}
           placeholder={field.placeholder}
           value={value}
-          //onChange={onChange}
+        //onChange={onChange}
         />
       )
     case 'range':
@@ -148,23 +148,36 @@ const YearFilter = ({ field, value, onChange, filterValues }) => {
   )
 }
 
-const FilterAccordion = ({ filterFields, filterValues, handleInputChange }) => {
+const FilterAccordion = ({ required, filterFields, filterValues, handleInputChange }) => {
   return filterFields.map(field => {
     // Base case for recursive component
     if (!field.options) {
       // Doesn't evaluate to boolean
-      const value = filterValues[field.name] && filterValues[field.name].value
+
       if (field.name === 'Time Period') {
+        const yearValue = required[field.name] && required[field.name].value
         return (
           <YearFilter
             key={field.name}
             field={field}
-            value={value}
+            value={yearValue}
             onChange={handleInputChange}
             filterValues={filterValues}
           />
         )
       }
+      else if (field.name === "Geographic Unit") {
+        const value = required[field.name] && required[field.name].value
+        return (
+          <Filter
+            key={field.name}
+            field={field}
+            value={value}
+            onChange={handleInputChange}
+          />
+          )
+      }
+      const value = filterValues[field.name] && filterValues[field.name].value
       return (
         <Filter
           key={field.name}
@@ -180,6 +193,7 @@ const FilterAccordion = ({ filterFields, filterValues, handleInputChange }) => {
           <AccordionPanel key={field.name} label={capitalize(field.name)}>
             <Box pad="xsmall" background="light-2">
               <FilterAccordion
+                required={required}
                 filterFields={field.options}
                 filterValues={filterValues}
                 handleInputChange={handleInputChange}

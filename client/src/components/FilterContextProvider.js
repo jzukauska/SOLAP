@@ -10,6 +10,7 @@ const FilterContext = React.createContext();
 export default class FilterContextProvider extends Component {
   state = {
     filterFields,
+    required: {},
     filterValues: {},
     layers: {
       BasemapLayer: BasemapLayer,
@@ -18,46 +19,41 @@ export default class FilterContextProvider extends Component {
     }
   };
 
-  handleInputChange = ({ name, value, yearOptions }) => {
-    const canAddFilter = () => {
-      if (
-        this.state.filterValues.hasOwnProperty("Time Period") &&
-        this.state.filterValues.hasOwnProperty("Geographic Unit") &&
-        Object.keys(this.state.filterValues).length < 4
-      )
-        return true;
-      else if (
-        this.state.filterValues.hasOwnProperty("Time Period") &&
-        Object.keys(this.state.filterValues).length < 3
-      )
-        return true;
-      else if (
-        this.state.filterValues.hasOwnProperty("Geographic Unit") &&
-        Object.keys(this.state.filterValues).length < 3
-      )
-        return true;
-      else if (
-        Object.keys(this.state.filterValues).length < 2 ||
-        name === "Time Period" ||
-        name === "Geographic Unit"
-      )
-        return true;
-      else if (this.state.filterValues.hasOwnProperty(name)) return true;
-      else return false;
-    };
-    const canAdd = canAddFilter();
-    if (canAdd === true) {
+  handleInput1Change = ({ name, value, yearOptions }) => {
+    if (name === "Time Period" || name === "Geographic Unit") {
+      this.setState({
+        required: {
+          ...this.state.required,
+          [name]: {
+            ...this.state.required[name],
+            value,
+            yearOptions
+          }
+        }
+      })
+    }
+
+    else {
+      Object.values(this.state.filterValues).forEach(val => {
+        if (val.variable) {
+          if (val.variable === 1) {
+            delete this.state.filterValues[val.name]
+          }
+        }
+
+      })
       this.setState({
         filterValues: {
           ...this.state.filterValues,
           [name]: {
             ...this.state.filterValues[name],
+            name,
             value,
             yearOptions,
-            colors: ""
+            variable: 1
           }
         }
-      });
+      })
       if (name === "totalPopulation") {
         if (value === "total") {
           this.state.layers.MnTractLayer.symbolizeOn({
@@ -67,9 +63,53 @@ export default class FilterContextProvider extends Component {
           this.state.layers.MnTractLayer.symbolizeOn({ prop1Names: [value] });
         }
       }
-    } else {
-      console.log("more than 2 objects choosen");
-      alert("Please delete a filter before adding another");
+    }
+  };
+
+  handleInput2Change = ({ name, value, yearOptions }) => {
+    if (name === "Time Period" || name === "Geographic Unit") {
+      this.setState({
+        required: {
+          ...this.state.required,
+          [name]: {
+            ...this.state.required[name],
+            value,
+            yearOptions
+          }
+        }
+      })
+    }
+
+    else {
+      Object.values(this.state.filterValues).forEach(val => {
+        if (val.variable) {
+          if (val.variable === 2) {
+            delete this.state.filterValues[val.name]
+          }
+        }
+
+      })
+      this.setState({
+        filterValues: {
+          ...this.state.filterValues,
+          [name]: {
+            ...this.state.filterValues[name],
+            name,
+            value,
+            yearOptions,
+            variable: 2
+          }
+        }
+      })
+      if (name === "totalPopulation") {
+        if (value === "total") {
+          this.state.layers.MnTractLayer.symbolizeOn({
+            prop1Names: ["male", "female"]
+          });
+        } else {
+          this.state.layers.MnTractLayer.symbolizeOn({ prop1Names: [value] });
+        }
+      }
     }
   };
 
@@ -102,9 +142,10 @@ export default class FilterContextProvider extends Component {
       <FilterContext.Provider
         value={{
           filterFields: this.state.filterFields,
+          required: this.state.required,
           filterValues: this.state.filterValues,
-          handleInputChange: this.handleInputChange,
-          handleColorChange: this.handleColorChange,
+          handleInput1Change: this.handleInput1Change,
+          handleInput2Change: this.handleInput2Change,
           clearFilter: this.clearFilter
         }}
       >
