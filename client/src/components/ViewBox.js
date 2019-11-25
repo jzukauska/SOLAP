@@ -1,17 +1,18 @@
-import React from 'react'
+import React from "react";
 
-import { Box } from 'grommet'
+import { Box } from "grommet";
 
-import Navbar from './Navbar'
-import MapView from './MapView'
+import Navbar from "./Navbar";
+import MapView from "./MapView";
 
-const ViewBox = ({layers}) => {
+const ViewBox = ({ layers, legend }) => {
+  console.log("ViewBox legend :", legend);
   return (
     <Box direction="column" fill>
       <Navbar />
-      <MapView layers={layers}/>
+      <MapView layers={layers} legend={legend} />
     </Box>
-  )
-}
+  );
+};
 
-export default ViewBox
+export default ViewBox;

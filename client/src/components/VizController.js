@@ -24,7 +24,8 @@ export default class VizController extends Component {
     layers: {
       BasemapLayer: BasemapLayer,
       CurrentLayer: MnTractLayer
-    }
+    },
+    legend: null
   };
 
   generateStyleForLegend({ title, styleData }) {
@@ -38,7 +39,7 @@ export default class VizController extends Component {
       };
       legend.push(data);
     }
-    return { title, data: legend };
+    this.setState({ legend: { title, data: legend } });
   }
 
   handleMapChange = async ({ name, value, yearOptions }) => {
@@ -225,6 +226,7 @@ export default class VizController extends Component {
     const children = React.Children.map(this.props.children, child =>
       React.cloneElement(child, {
         layers: this.state.layers,
+        legend: this.state.legend,
         handleMapChange: this.handleMapChange
       })
     );
