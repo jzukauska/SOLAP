@@ -34,6 +34,8 @@
             "name": "totalPopulation",
             "type": "radio",
             "dataType": "polygon",
+            "geoserver_tract_layer": "mn_tract_2010",
+            "geoserver_county_layer": "mn_county_2010",
             "functions": [
               "choropleth"
             ],
@@ -67,6 +69,8 @@
           {
             "name": "Race Demographics",
             "type": "radio",
+            "geoserver_tract_layer": "mn_tract_2010",
+            "geoserver_county_layer": "mn_county_2010",
             "dataType": "polygon",
             "functions": [
               "choropleth"
@@ -124,66 +128,72 @@
           }
         ]
       },
-      {"name": "Population By Age",
-        "options": [{
-        "name": "populationByAge",
-        "type": "rangeSelector",
-        "dataType": "polygon",
-        "functions": [
-          "choropleth"
-        ],
-        "min": 0,
-        "max": 80,
-        "step": 5,
-        "ops": [
-          "Male_Under_5_years",
-          "Male_5_to_9_years",
-          "Male_10_to_14_years",
-          "Male_15_to_17_years",
-          "Male_18_and_19_years",
-          "Male_20_years",
-          "Male_21_years",
-          "Male_22_to_24_years",
-          "Male_25_to_29_years",
-          "Male_30_to_34_years",
-          "Male_35_to_39_years",
-          "Male_40_to_44_years",
-          "Male_45_to_49_years",
-          "Male_50_to_54_years",
-          "Male_55_to_59_years",
-          "Male_60_and_61_years",
-          "Male_62_to_64_years",
-          "Male_65_and_66_years",
-          "Male_67_to_69_years",
-          "Male_70_to_74_years",
-          "Male_75_to_79_years",
-          "Male_80_to_84_years",
-          "Male_85_years_and_over",
-          "Male_Under_5_years",
-          "Male_5_to_9_years",
-          "Male_10_to_14_years",
-          "Male_15_to_17_years",
-          "Male_18_and_19_years",
-          "Male_20_years",
-          "Male_21_years",
-          "Male_22_to_24_years",
-          "Male_25_to_29_years",
-          "Male_30_to_34_years",
-          "Male_35_to_39_years",
-          "Male_40_to_44_years",
-          "Male_45_to_49_years",
-          "Male_50_to_54_years",
-          "Male_55_to_59_years",
-          "Male_60_and_61_years",
-          "Male_62_to_64_years",
-          "Male_65_and_66_years",
-          "Male_67_to_69_years",
-          "Male_70_to_74_years",
-          "female_75_to_79_years",
-          "female_80_to_84_years",
-          "female_85_years_and_over"
+      {
+        "name": "Population By Age",
+        "options": [
+          {
+            "name": "populationByAge",
+            "type": "rangeSelector",
+            "dataType": "polygon",
+            "geoserver_tract_layer": "mn_tract_2010",
+            "geoserver_county_layer": "mn_county_2010",
+            "functions": [
+              "choropleth"
+            ],
+            "min": 0,
+            "max": 80,
+            "step": 5,
+            "Population By Age": [
+              "Male_Under_5_years",
+              "Male_5_to_9_years",
+              "Male_10_to_14_years",
+              "Male_15_to_17_years",
+              "Male_18_and_19_years",
+              "Male_20_years",
+              "Male_21_years",
+              "Male_22_to_24_years",
+              "Male_25_to_29_years",
+              "Male_30_to_34_years",
+              "Male_35_to_39_years",
+              "Male_40_to_44_years",
+              "Male_45_to_49_years",
+              "Male_50_to_54_years",
+              "Male_55_to_59_years",
+              "Male_60_and_61_years",
+              "Male_62_to_64_years",
+              "Male_65_and_66_years",
+              "Male_67_to_69_years",
+              "Male_70_to_74_years",
+              "Male_75_to_79_years",
+              "Male_80_to_84_years",
+              "Male_85_years_and_over",
+              "Male_Under_5_years",
+              "Male_5_to_9_years",
+              "Male_10_to_14_years",
+              "Male_15_to_17_years",
+              "Male_18_and_19_years",
+              "Male_20_years",
+              "Male_21_years",
+              "Male_22_to_24_years",
+              "Male_25_to_29_years",
+              "Male_30_to_34_years",
+              "Male_35_to_39_years",
+              "Male_40_to_44_years",
+              "Male_45_to_49_years",
+              "Male_50_to_54_years",
+              "Male_55_to_59_years",
+              "Male_60_and_61_years",
+              "Male_62_to_64_years",
+              "Male_65_and_66_years",
+              "Male_67_to_69_years",
+              "Male_70_to_74_years",
+              "female_75_to_79_years",
+              "female_80_to_84_years",
+              "female_85_years_and_over"
+            ]
+          }
         ]
-      }]}
+      }
     ]
   },
   {
@@ -195,7 +205,8 @@
         "dataType": "point",
         "functions": [
           "count",
-          "heatmap"
+          "heatmap",
+          "point"
         ],
         "fieldOptions": [
           {
@@ -259,9 +270,10 @@
     "name": "Health",
     "options": [
       {
-        "name": "Lack Of Insurance",
+        "name": "Health Behaviors",
         "type": "radio",
         "dataType": "polygon",
+        "geoserver_layer": "health_behaviors",
         "functions": [
           "choropleth"
         ],
@@ -271,9 +283,9 @@
             "value": "Physical health not good for >=14 days among adults aged >=18 Years",
             "table_name": "health_behaviors",
             "year": [
-              2016,
-              2017,
-              2018
+              2014,
+              2015,
+              2016
             ],
             "parameter": "Physical"
           },
@@ -282,9 +294,9 @@
             "value": "Current lack of health insurance among adults aged 18-64 Years",
             "table_name": "health_behaviors",
             "year": [
-              2016,
-              2017,
-              2018
+              2014,
+              2015,
+              2016
             ],
             "parameter": "Insurance"
           },
@@ -293,9 +305,9 @@
             "value": "Obesity among adults aged >=18 Years",
             "table_name": "health_behaviors",
             "year": [
-              2016,
-              2017,
-              2018
+              2014,
+              2015,
+              2016
             ],
             "parameter": "Obesity"
           },
@@ -304,9 +316,9 @@
             "value": "Mental health not good for >=14 days among adults aged >=18 Years",
             "table_name": "health_behaviors",
             "year": [
-              2016,
-              2017,
-              2018
+              2014,
+              2015,
+              2016
             ],
             "parameter": "Mental"
           },
@@ -315,9 +327,9 @@
             "value": "Visits to doctor for routine checkup within the past Year among adults aged >=18 Years",
             "table_name": "health_behaviors",
             "year": [
-              2016,
-              2017,
-              2018
+              2014,
+              2015,
+              2016
             ],
             "parameter": "Checkup"
           },
@@ -326,9 +338,9 @@
             "value": "Binge drinking among adults aged >=18 Years",
             "table_name": "health_behaviors",
             "year": [
-              2016,
-              2017,
-              2018
+              2014,
+              2015,
+              2016
             ],
             "parameter": "Drinking"
           },
@@ -337,9 +349,9 @@
             "value": "Current smoking among adults aged >=18 Years",
             "table_name": "health_behaviors",
             "year": [
-              2016,
-              2017,
-              2018
+              2014,
+              2015,
+              2016
             ],
             "parameter": "Smoking"
           },
@@ -348,9 +360,9 @@
             "value": "No leisure-time physical activity among adults aged >=18 Years",
             "table_name": "health_behaviors",
             "year": [
-              2016,
-              2017,
-              2018
+              2014,
+              2015,
+              2016
             ],
             "parameter": "Inactivity"
           }
@@ -390,7 +402,8 @@
               2014,
               2015
             ],
-            "table_name": "caces_pollutants"
+            "geoserver_layer": "caces_pollutants",
+            "parameter": "o3"
           },
           {
             "label": "Carbon Monoxide",
@@ -413,7 +426,8 @@
               2014,
               2015
             ],
-            "table_name": "caces_pollutants"
+            "geoserver_layer": "caces_pollutants",
+            "parameter": "co"
           },
           {
             "label": "Sulfur Dioxide",
@@ -436,11 +450,12 @@
               2014,
               2015
             ],
-            "table_name": "caces_pollutants"
+            "geoserver_layer": "caces_pollutants",
+            "parameter": "so2"
           },
           {
-            "label": "Nitrous Oxide",
-            "value": "Nitrous Oxide",
+            "label": "Nitrous Dioxide",
+            "value": "Nitrous Dioxide",
             "year": [
               2000,
               2001,
@@ -458,7 +473,9 @@
               2013,
               2014,
               2015
-            ]
+            ],
+            "geoserver_layer": "caces_pollutants",
+            "parameter": "no2"
           },
           {
             "label": "Particulate Matter 10",
@@ -481,7 +498,8 @@
               2014,
               2015
             ],
-            "table_name": "caces_pollutants"
+            "geoserver_layer": "caces_pollutants",
+            "parameter": "pm10"
           },
           {
             "label": "Particulate Matter 2.5",
@@ -504,13 +522,18 @@
               2014,
               2015
             ],
-            "table_name": "caces_pollutants"
+            "geoserver_layer": "caces_pollutants",
+            "parameter": "pm25"
           }
         ]
       },
       {
         "name": "Landcover",
         "dataType": "raster",
+        "functions": [
+          "summary",
+          "raster_sld"
+        ],
         "type": "radio",
         "fieldOptions": [
           {
@@ -578,10 +601,6 @@
             "Layer": "",
             "Pixels": []
           }
-        ],
-        "functions": [
-          "summary",
-          "raster_sld"
         ]
       }
     ]
