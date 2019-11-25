@@ -6,7 +6,7 @@ const FilterContext = React.createContext();
 export default class FilterContextProvider extends Component {
   state = {
     filterFields,
-    filterValues: {},
+    filterValues: {}
   };
 
   handleInputChange = ({ name, value, yearOptions }) => {
@@ -49,7 +49,7 @@ export default class FilterContextProvider extends Component {
           }
         }
       });
-      this.props.handleMapChange({ name, value, yearOptions })
+      this.props.handleMapChange({ name, value, yearOptions });
     } else {
       console.log("more than 2 objects choosen");
       alert("Please delete a filter before adding another");

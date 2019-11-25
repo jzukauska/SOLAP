@@ -9,6 +9,7 @@ import BasicPolygon from "./OpenLayers/Style/BasicPolygon";
 import BasemapLayer from "./OpenLayers/BasemapLayer";
 import MnTractLayer from "./OpenLayers/MnTractLayer";
 import MnCountyLayer from "./OpenLayers/MnCountyLayer";
+import ColorBrewerStyles from "./OpenLayers/Style/ColorBrewerStyles";
 
 const VizContext = React.createContext();
 
@@ -26,7 +27,21 @@ export default class VizController extends Component {
     }
   };
 
-  handleMapChange = ({ name, value, yearOptions }) => {
+  generateStyleForLegend({ title, styleData }) {
+    const legend = [];
+    for (let i = 0; i < styleData[0].length; i++) {
+      const data = {
+        stroke:
+          ColorBrewerStyles["YlGnBu"][styleData[0].length][i].fill_.color_,
+        lowerBound: i === 0 ? 0 : styleData[0][i - 1],
+        upperBound: styleData[0][i]
+      };
+      legend.push(data);
+    }
+    return { title, data: legend };
+  }
+
+  handleMapChange = async ({ name, value, yearOptions }) => {
     if (name === "Geographic Unit") {
       if (value === "County") {
         this.setState(
@@ -44,9 +59,10 @@ export default class VizController extends Component {
         );
       }
     } else {
-      this.symbolizeOn({
+      const styleData = await this.symbolizeOn({
         prop1Names: [value]
       });
+      this.generateStyleForLegend({ title: `${value}`, styleData });
     }
   };
 
@@ -62,7 +78,7 @@ export default class VizController extends Component {
    * @param {number} classCount number of classes to break data into
    */
 
-  symbolizeOn = function(options, classCount = 5) {
+  symbolizeOn = async function(options, classCount = 5) {
     // are all properties required in the features? just check one feature
     const layer = this.state.layers.CurrentLayer;
     const checkFeature = layer
@@ -78,7 +94,7 @@ export default class VizController extends Component {
       this.getFeaturePropertiesFromWfs({
         propertyNames: options.prop1Names
       }).then(
-        function() {
+        async function() {
           const symbolConfig = {
             classCount: classCount,
             prop1Names: options.prop1Names
@@ -89,6 +105,11 @@ export default class VizController extends Component {
               FindQuantileBreaks(layer.getSource().getFeatures(), symbolConfig),
               symbolConfig
             )
+          );
+
+          return FindQuantileBreaks(
+            layer.getSource().getFeatures(),
+            symbolConfig
           );
         }.bind(this)
       );
@@ -104,6 +125,8 @@ export default class VizController extends Component {
           symbolConfig
         )
       );
+
+      return FindQuantileBreaks(layer.getSource().getFeatures(), symbolConfig);
     }
   };
 
