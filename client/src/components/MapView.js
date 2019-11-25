@@ -9,7 +9,7 @@ import View from "./OpenLayers/DefaultView";
 
 //const filterWidth = '900'
 
-const MapView = ({layers}) => {
+const MapView = ({ layers, legend }) => {
   const [width] = useWindowSize();
   return (
     <DraggableGrid>
@@ -17,7 +17,8 @@ const MapView = ({layers}) => {
       <MapController
         view={View}
         layers={layers}
-        width={`${2 * width / 3}`}
+        legend={legend}
+        width={`${(2 * width) / 3}`}
       />
     </DraggableGrid>
   );

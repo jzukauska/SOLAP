@@ -1,16 +1,16 @@
-import React from 'react'
-import { FilterConsumer } from './FilterContextProvider'
+import React from "react";
+import { FilterConsumer } from "./FilterContextProvider";
 
 import { Box, Tab, Tabs } from 'grommet'
 
-import FilterTable from './FilterTable'
-import FilterAccordion from './FilterAccordion'
-import styled from 'styled-components'
+import FilterTable from "./FilterTable";
+import FilterAccordion from "./FilterAccordion";
+import styled from "styled-components";
 
 const MapFilterContainer = styled.div`
   height: 100%;
   overflow: auto;
-`
+`;
 
 const MapFilter = ({ width }) => {
   return (
@@ -63,4 +63,4 @@ const MapFilter = ({ width }) => {
   )
 }
 
-export default MapFilter
+export default MapFilter;
