@@ -3,8 +3,7 @@
         "Age Demographics": {
             "header": "Demographics",
             "datatype": "polygon",
-            "geoserver_tract_layer": "mn_tract_2010",
-            "geoserver_county_layer": "mn_county_2010",
+            "geoserver_layer": "demographics",
             "functions": ["choropleth"],
             "variables": [
                             {
@@ -19,7 +18,36 @@
                                 },                                
                             },
                             {
-                                "Population By Age": ["Male_Under_5_years","Male_5_to_9_years","Male_10_to_14_years","Male_15_to_17_years","Male_18_and_19_years","Male_20_years","Male_21_years","Male_22_to_24_years","Male_25_to_29_years","Male_30_to_34_years","Male_35_to_39_years","Male_40_to_44_years","Male_45_to_49_years","Male_50_to_54_years","Male_55_to_59_years","Male_60_and_61_years","Male_62_to_64_years","Male_65_and_66_years","Male_67_to_69_years","Male_70_to_74_years","Male_75_to_79_years","Male_80_to_84_years","Male_85_years_and_over", "Male_Under_5_years","Male_5_to_9_years","Male_10_to_14_years","Male_15_to_17_years","Male_18_and_19_years","Male_20_years","Male_21_years","Male_22_to_24_years","Male_25_to_29_years","Male_30_to_34_years","Male_35_to_39_years","Male_40_to_44_years","Male_45_to_49_years","Male_50_to_54_years","Male_55_to_59_years","Male_60_and_61_years","Male_62_to_64_years","Male_65_and_66_years","Male_67_to_69_years","Male_70_to_74_years","female_75_to_79_years","female_80_to_84_years","female_85_years_and_over"]
+                                "Population By Age": {
+                                    "values" : [0,5,10,15,17,19,20],
+                                    "variables":
+                                    [
+                                        {
+                                            "min": 0, "max": 5, "fields": ["person_under_5_years"]
+                                        },
+                                        {
+                                            "min": 5, "max": 10, "fields": ["person_5_to_9_years"]  
+                                        },
+                                        {
+                                            "min": 10, "max": 15, "fields": ["person_10_to_14_years"]  
+                                        },
+                                        {
+                                            "min": 15, "max": 17, "fields": ["person_15_to_17_years"]  
+                                        },
+                                        {
+                                            "min": 17, "max": 19, "fields": ["person_18_to_19_years"]  
+                                        },
+                                        {
+                                            "min": 20, "max": 20, "fields": ["person_20_years"]  
+                                        },
+                                        {
+                                            "min": 15, "max": 20, "fields": ["person_15_to_17_years", "person_18_to_19_years", "person_20_years"]  
+                                        }
+
+
+
+                                    ]
+                                }
                             }                        
                         ]
         }
@@ -28,8 +56,7 @@
         "Race Demographics": {
             "header": "Demographics",
             "datatype": "polygon",
-            "geoserver_tract_layer": "mn_tract_2010",
-            "geoserver_county_layer": "mn_county_2010",
+            "geoserver_layer": "demographics",
             "functions": ["choropleth"],
             "variables": [
                             {
@@ -59,46 +86,46 @@
         "Health Behaviors":{
             "datatype": "polygon",
             "functions": ["choropleth"],
-            "geoserver_layer": "health_behaviors",
+            "geoserver_layer": "health_behavior",
             "variables": [
                                {
                                 "Physical health not good for >=14 days among adults aged >=18 Years": {
-                                    "Year": [2014,2015,2016], "table_name": "health_behaviors", "parameter":"Physical"
+                                    "Year": [2014,2015,2016], "parameter":"Physical"
                                 }
                             },
                             {
                                 "Current lack of health insurance among adults aged 18-64 Years": {
-                                  "Year": [2014,2015,2016], "table_name": "health_behaviors", "parameter":"Insurance"  
+                                  "Year": [2014,2015,2016], "parameter":"Insurance"  
                                 }
                             },
                             {
                                 "Obesity among adults aged >=18 Years": {
-                                  "Year": [2014,2015,2016], "table_name": "health_behaviors", "parameter":"Obesity"  
+                                  "Year": [2014,2015,2016], "parameter":"Obesity"  
                                 }
                             },
                             {
                                 "Mental health not good for >=14 days among adults aged >=18 Years": {
-                                  "Year": [2014,2015,2016], "table_name": "health_behaviors", "parameter":"Mental"  
+                                  "Year": [2014,2015,2016], "parameter":"Mental"  
                                 }
                             },
                             {
                                 "Visits to doctor for routine checkup within the past Year among adults aged >=18 Years": {
-                                  "Year": [2014,2015,2016], "table_name": "health_behaviors", "parameter":"Checkup"  
+                                  "Year": [2014,2015,2016], "parameter":"Checkup"  
                                 }
                             },
                             {
                                 "Binge drinking among adults aged >=18 Years": {
-                                  "Year": [2014,2015,2016], "table_name": "health_behaviors", "parameter":"Drinking"  
+                                  "Year": [2014,2015,2016], "parameter":"Drinking"  
                                 }
                             },
                             {
                                 "Current smoking among adults aged >=18 Years": {
-                                  "Year": [2014,2015,2016], "table_name": "health_behaviors", "parameter":"Smoking"  
+                                  "Year": [2014,2015,2016], "parameter":"Smoking"  
                                 }
                             },
                             {
                                 "No leisure-time physical activity among adults aged >=18 Years": {
-                                  "Year": [2014,2015,2016], "table_name": "health_behaviors", "parameter":"Inactivity"  
+                                  "Year": [2014,2015,2016], "parameter":"Inactivity"  
                                 }
                             }
                         ]
@@ -113,32 +140,37 @@
             "variables": [
                             {
                                 "Alcohol Retailors": {
-                                    "Year": [2019], "table_name": "alcohol_outlet"
+                                    "Year": [2019], "table_name": "alcohol_outlet", "geoserver_layer": "alcohol_outlet",
+                                }
+                            },
+                            {
+                                "Libraries": {
+                                    "Year": [2019], "table_name": "library", "geoserver_layer": "alcohol_outlet",
                                 }
                             },
                             {
                                 "Tobacco Retailors": {
-                                    "Year": [2019]
+                                    "Year": [2019], "table_name": "tobacco_outlets", "geoserver_layer": "mn_tobacco_outlets",
                                 }
                             },
                             {
                                 "Religious Sites": {
-                                    "Year": [2019]
+                                    "Year": [2019], "table_name": "religious", "geoserver_layer": "religious",
                                 }
                             },
                             {
                                 "YMCA": {
-                                    "Year": [2019]
+                                    "Year": [2019], "table_name": "ymca", "geoserver_layer": "ymca",
                                 }
                             },
                             {
                                 "Veterans Facilities (VFW)": {
-                                    "Year": [2019]
+                                    "Year": [2019], "table_name": "vfw", "geoserver_layer": "vfs",
                                 }
                             },
                             {
                                 "American Legions": {
-                                    "Year": [2019]
+                                    "Year": [2019], "table_name": "american_legion", "geoserver_layer": "american_legion",
                                 }
                             },
                             {
@@ -226,6 +258,35 @@
             }
     },
     {
-        "Indices": 
+        "Socoio-Economic Indicators": {
+            "header": "Socoio-Economic",
+            "datatype": "polygon",
+            "functions": ["choropleth"],
+            "variables": [
+                            {
+                                "Population with Access to Grocery Store Greater than (1m Urban & 10m Rural)": {
+                                    "Year": [2015], "geoserver_layer": "food_access", "parameter": "low_access_population_urban_1_rural_10"
+                                }
+                            },
+                            {
+                                "Population with Access to Grocery Store Greater than(0.5m Urban & 10m Rural)": {
+                                    "Year": [2015], "geoserver_layer": "food_access", "parameter": "low_access_population_urban_05_rural_10"
+                                }
+                            },
+                            {
+                                "Population with Access to Grocery Store Greater than (1m Urban & 20m Rural)": {
+                                    "Year": [2015], "geoserver_layer": "food_access", "parameter": "low_access_income_population_urban_1_rural_20"
+                                }
+                            },
+                                                        {
+                                "Population count beyond 0.5 m from Grocery Store": {
+                                    "Year": [2015], "geoserver_layer": "food_access", "parameter": "population_05_supermarket"
+                                }
+                            },
+            ]
+        }
     }
+    
 ]
+
+Population count beyond 1/2 mile from supermarket
