@@ -7,13 +7,9 @@ import VizController from "./VizController";
 import { Grommet } from "grommet";
 
 import ViewBox from "./ViewBox";
-import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
-import Typography from "@material-ui/core/Typography";
-import Box from "@material-ui/core/Box";
 
 const theme = {
   global: {
@@ -99,7 +95,6 @@ const App = () => {
       <>
         {value === 0 && (
           <div>
-            Tab 0
             <Grommet theme={theme} full>
               <VizController variableName={"firstVariable"}>
                 <FilterContextProvider variableName={"firstVariable"}>
@@ -113,7 +108,6 @@ const App = () => {
       <>
         {value === 1 && (
           <div>
-            Tab 1
             <Grommet theme={theme} full>
               <VizController variableName={"secondVariable"}>
                 <FilterContextProvider variableName={"secondVariable"}>
