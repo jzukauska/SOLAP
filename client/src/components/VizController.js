@@ -37,14 +37,6 @@ export default class VizController extends Component {
     }
   };
 
-  componentDidMount() {
-    console.error(this.state);
-  }
-
-  componentDidUpdate() {
-    console.error(this.state);
-  }
-
   generateStyleForLegend({ title, styleData }) {
     const { variableName } = this.props;
     const legend = [];

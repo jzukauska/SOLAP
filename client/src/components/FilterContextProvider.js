@@ -4,16 +4,15 @@ import filterFields from "../filterFields.json";
 const FilterContext = React.createContext();
 
 export default class FilterContextProvider extends Component {
-  state = {
-    firstVariable: { filterFields, filterValues: {} },
-    secondVariable: { filterFields, filterValues: {} }
-  };
-
-  componentDidMount() {}
-  componentDidUpdate() {
-    console.error(this.state);
+  constructor(props) {
+    super(props);
+    this.state = {
+      firstVariable: { filterFields, filterValues: {} },
+      secondVariable: { filterFields, filterValues: {} }
+    };
   }
-  handleInputChange = ({ name, value, yearOptions }) => {
+
+  handleInputChange = async ({ name, value, yearOptions }) => {
     const canAddFilter = () => {
       if (
         this.state[this.props.variableName].filterValues.hasOwnProperty(
@@ -55,7 +54,7 @@ export default class FilterContextProvider extends Component {
     const canAdd = canAddFilter();
     const { variableName } = this.props;
     if (canAdd === true) {
-      this.setState({
+      await this.setState({
         [variableName]: {
           ...this.state[variableName],
           filterValues: {

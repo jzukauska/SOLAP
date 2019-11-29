@@ -75,9 +75,11 @@ const useStyles = makeStyles(theme => ({
 const App = () => {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
-
+  const [currentVariable, setCurrentVariable] = React.useState("firstVariable");
   const handleChange = (event, newValue) => {
+    const newVariable = newValue === 0 ? "firstVariable" : "secondVariable";
     setValue(newValue);
+    setCurrentVariable(newVariable);
   };
   return (
     <div className={classes.root}>
@@ -92,20 +94,20 @@ const App = () => {
         <Tab label="Variable 1" {...a11yProps(0)} />
         <Tab label="Variable 2" {...a11yProps(1)} />
       </Tabs>
-      <>
-        {value === 0 && (
-          <div>
-            <Grommet theme={theme} full>
-              <VizController variableName={"firstVariable"}>
-                <FilterContextProvider variableName={"firstVariable"}>
-                  <ViewBox />
-                </FilterContextProvider>
-              </VizController>
-            </Grommet>
-          </div>
-        )}
-      </>
-      <>
+      {/* <> */}
+      {/* {value === 0 && ( */}
+      <div>
+        <Grommet theme={theme} full>
+          <VizController variableName={currentVariable}>
+            <FilterContextProvider variableName={currentVariable}>
+              <ViewBox />
+            </FilterContextProvider>
+          </VizController>
+        </Grommet>
+      </div>
+      {/* )}
+      </> */}
+      {/* <>
         {value === 1 && (
           <div>
             <Grommet theme={theme} full>
@@ -117,7 +119,7 @@ const App = () => {
             </Grommet>
           </div>
         )}
-      </>
+      </> */}
     </div>
   );
 };
