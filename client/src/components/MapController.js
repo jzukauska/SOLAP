@@ -29,37 +29,59 @@ const MapController = ({ view, layers, legend }) => {
       {legend && (
         <div
           style={{
-            marginBottom: "10px",
-            marginLeft: "10px",
+            bottom: "0.5em",
+            left: "0.5em",
+            padding: "0.5em 1em",
             width: "200px",
-            height: "400px",
-            backgroundColor: "white",
-            position: "fixed",
-            bottom: 0
+            backgroundColor: "#ffffff",
+            border: "thin solid rgba(0, 0, 0, 0.2)",
+            position: "fixed"
           }}
         >
-          {legend.title}
-          {legend.data.map(d => {
-            return (
-              <div>
-                <div style={{ display: "inline-block" }}>
-                  {d.lowerBound} - {d.upperBound}
-                </div>
-                <div
+          <p
+            style={{
+              margin: "0",
+              fontWeight: "bold"
+            }}
+          >
+            {legend.title.charAt(0).toUpperCase() + legend.title.slice(1)}
+          </p>
+          <ul
+            style={{
+              float: "left",
+              margin: "0",
+              padding: "0",
+              listStyle: "none",
+              listStylePosition: "inside"
+            }}
+          >
+            {legend.data.map(d => {
+              return (
+                <li
                   style={{
-                    height: "20px",
-                    width: "20px",
-                    marginTop: "20px",
-                    marginLeft: "4px",
-                    border: "1px solid rgba(0, 0, 0, 0.2)",
-                    backgroundColor: d.stroke,
-                    display: "inline-block"
+                    lineHeight: "1.5em",
+                    listStyle: "none",
+                    margin: "0.5em 0",
+                    padding: "0"
                   }}
-                ></div>
-                <br />
-              </div>
-            );
-          })}
+                >
+                  <span
+                    style={{
+                      display: "block",
+                      float: "left",
+                      marginRight: "0.5em",
+                      border: "thin solid rgba(0, 0, 0, 0.2)",
+                      backgroundColor: d.stroke,
+                      width: "2.4em",
+                      height: "1.5em"
+                    }}
+                  ></span>
+                  {d.lowerBound.toLocaleString()}&nbsp;&ndash;&nbsp;
+                  {d.upperBound.toLocaleString()}
+                </li>
+              );
+            })}
+          </ul>
         </div>
       )}
     </>
