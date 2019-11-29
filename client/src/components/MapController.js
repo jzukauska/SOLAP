@@ -51,7 +51,7 @@ const MapController = ({ view, layers, legend }) => {
                     width: "20px",
                     marginTop: "20px",
                     marginLeft: "4px",
-                    border: "1px solid black",
+                    border: "1px solid rgba(0, 0, 0, 0.2)",
                     backgroundColor: d.stroke,
                     display: "inline-block"
                   }}

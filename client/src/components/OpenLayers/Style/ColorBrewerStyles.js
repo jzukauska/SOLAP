@@ -15,8 +15,8 @@ for (const rampId in colorbrewer) {
       ColorBrewerStyles[rampId][rampSize].push(
         new Style({
           stroke: new Stroke({
-            color: "#000",
-            width: 1
+            color: "rgba(0, 0, 0, 0.2)",
+            width: 2
           }),
           fill: new Fill({
             color: colorbrewer[rampId][rampSize][i]
