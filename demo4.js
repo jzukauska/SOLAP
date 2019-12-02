@@ -38,7 +38,7 @@ const countySource = new VectorSource({
   url: function(extent) {
     return (
       "http://149.165.157.200:8080/geoserver/ows?service=wfs&" +
-      "version=1.1.0&request=GetFeature&typename=solap:mn_county_2010_1&" +
+      "version=1.1.0&request=GetFeature&typename=solap:mn_county_2010&" +
       "outputFormat=application/json&srsname=EPSG:3857"
     );
   },
@@ -584,7 +584,7 @@ document
   .addEventListener("click", function(e) {
     const symbolConfig = {
       classCount: 5,
-      prop1Name: "county_fips"
+      prop1Name: "geoid"
     };
 
     countyLayer.setStyle(
