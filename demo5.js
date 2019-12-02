@@ -5,7 +5,7 @@
  *   - univariate symbolization with normalization on a vector source, and
  *   - bivariate symbolziation with optional normalization (either var) on a vector source
  */
-
+import "@babel/polyfill"; // just for async
 import "ol/ol.css";
 import { Map, View } from "ol";
 import Overlay from "ol/Overlay";
@@ -161,16 +161,28 @@ checkSize();
  * @param {string} options.featurePrefix prefix for feature types, e.g. GeoServer workspace name
  * @param {string} options.featureType features name, e.g. GeoServer layer names; expects only one
  * @param {string[]} options.propertyNames property names to retrieve from layer
+ * @param {Object} options.viewParams key:value pairs for viewParams in request (eg, {pollutant:"so2"})
+ * @returns {Object} tracts and counties top-level keys, geoid as second-level, value as third
  */
-const getFeaturePropertiesFromWfs = function(options) {
+const getFeaturePropertiesFromWfs = async function(options) {
+  // const defaultOpts = {
+  //   wfsUrl: "http://149.165.157.200:8080/geoserver/wfs",
+  //   featurePrefix: "solap",
+  //   featureType: "demographics",
+  //   propertyNames: ["total", "male", "female", "person_under_5_years"].concat([
+  //     "tract_geoid",
+  //     "county_geoid"
+  //   ]),
+  //   viewParams: "pollutant:so2"
+  // };
+
   const defaultOpts = {
     wfsUrl: "http://149.165.157.200:8080/geoserver/wfs",
     featurePrefix: "solap",
-    featureType: "demographics",
-    propertyNames: ["total", "male", "female", "person_under_5_years"].concat([
-      "tract_geoid",
-      "county_geoid"
-    ])
+    featureType: "caces_pollutants",
+    propertyNames: ["data_value"],
+    addlProps: ["tract_geoid", "county_geoid"], // always pull these by default
+    viewParams: { pollutant: "so2", year: 2005 }
   };
   const opts = Object.assign({}, defaultOpts, options);
 
@@ -179,57 +191,59 @@ const getFeaturePropertiesFromWfs = function(options) {
     srsName: opts.srsName,
     featurePrefix: opts.featurePrefix,
     featureTypes: [opts.featureType],
-    propertyNames: opts.propertyNames, // always add the join key
+    propertyNames: opts.propertyNames.concat(opts.addlProps), // always add the join key
+    viewParams: Object.keys(opts.viewParams)
+      .map(x => `${x}:${opts.viewParams[x]}`)
+      .join(";"), // colon-separated key:value pairs, semicolon delimited
     outputFormat: "application/json"
   });
 
-  fetch(opts.wfsUrl, {
+  const response = await fetch(opts.wfsUrl, {
     method: "POST",
     body: new XMLSerializer().serializeToString(featureRequest)
-  })
-    .then(function(response) {
-      return response.json();
-    })
-    .then(function(json) {
-      const features = new GeoJSON().readFeatures(json);
-      const result = { tracts: {}, counties: {} };
-      let featProps;
+  });
 
-      // populate tracts
-      for (let i = 0; i < features.length; i++) {
-        featProps = features[i].getProperties();
-        result.tracts[featProps.tract_geoid] = featProps["total"];
-      }
+  const featureJson = await response.json();
+  const features = new GeoJSON().readFeatures(featureJson);
+  const result = { tracts: {}, counties: {} };
+  let featProps;
 
-      // get unique county geoids
-      const countyGeoids = Array.from(
-        new Set(Object.keys(result.tracts).map(x => x.slice(0, 5)))
-      );
+  // populate tracts
+  for (let i = 0; i < features.length; i++) {
+    featProps = features[i].getProperties();
+    result.tracts[featProps.tract_geoid] = featProps[opts.propertyNames[0]]; // TODO support multiple properties
+  }
 
-      // zero placeholders for all counties
-      for (let i = 0; i < countyGeoids.length; i++) {
-        result.counties[countyGeoids[i]] = 0;
-      }
+  // get unique county geoids
+  const countyGeoids = Array.from(
+    new Set(Object.keys(result.tracts).map(x => x.slice(0, 5)))
+  );
 
-      // sum by county
-      for (let prop in result.tracts) {
-        result.counties[prop.slice(0, 5)] += result.tracts[prop];
-      }
+  // zero placeholders for all counties
+  for (let i = 0; i < countyGeoids.length; i++) {
+    result.counties[countyGeoids[i]] = 0;
+  }
 
-      console.log("result :", result);
-      alert(
-        `Retrieved attributes for ${
-          Object.keys(result.tracts).length
-        } tracts in ${Object.keys(result.counties).length} counties`
-      );
-    });
+  // sum by county
+  for (let prop in result.tracts) {
+    result.counties[prop.slice(0, 5)] += result.tracts[prop];
+  }
+
+  alert(
+    `Retrieved attributes for ${Object.keys(result.tracts).length} tracts in ${
+      Object.keys(result.counties).length
+    } counties`
+  );
+
+  return result;
 };
 
 // populate additional attributes to an existing vector source
 document
   .querySelector(".demo-button-add-attrs")
   .addEventListener("click", function(e) {
-    getFeaturePropertiesFromWfs(); // real implementation would need params; these are testOpts in the function def
+    const result = getFeaturePropertiesFromWfs(); // real implementation would need params; these are testOpts in the function def
+    console.log("result :", result);
   });
 
 window.app = {};
