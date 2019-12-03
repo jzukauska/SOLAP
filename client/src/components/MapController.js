@@ -6,7 +6,6 @@ const MapController = ({ view, layers, legend }) => {
   const [mapInstance, setMapInstance] = useState(null);
   const mapRef = useRef();
   const didMountRef = useRef(false);
-  const [counter, setCounter] = useState(0);
 
   useEffect(() => {
     async function loadMap() {
@@ -15,14 +14,12 @@ const MapController = ({ view, layers, legend }) => {
 
         // need to add the basemap layer at the bottom/front of collection
         Object.values(layers).map(async layer => {
-          if (layer.get("name") == "tiledBasemap") {
+          if (layer.get("name") === "tiledBasemap") {
             await mapInstance.getLayers().insertAt(0, layer);
           } else {
             await mapInstance.addLayer(layer);
           }
         });
-
-        setCounter(1);
       } else {
         didMountRef.current = true;
         setMapInstance(OLMap(mapRef.current, view, Object.values(layers)));

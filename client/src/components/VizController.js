@@ -126,26 +126,24 @@ export default class VizController extends Component {
     if (propsNeeded) {
       this.getFeaturePropertiesFromWfs({
         propertyNames: options.prop1Names
-      }).then(
-        async function() {
-          const symbolConfig = {
-            classCount: classCount,
-            prop1Names: options.prop1Names
-          };
+      }).then(async function() {
+        const symbolConfig = {
+          classCount: classCount,
+          prop1Names: options.prop1Names
+        };
 
-          layer.setStyle(
-            StyleFunctionFromBreaks(
-              FindQuantileBreaks(layer.getSource().getFeatures(), symbolConfig),
-              symbolConfig
-            )
-          );
-
-          return FindQuantileBreaks(
-            layer.getSource().getFeatures(),
+        layer.setStyle(
+          StyleFunctionFromBreaks(
+            FindQuantileBreaks(layer.getSource().getFeatures(), symbolConfig),
             symbolConfig
-          );
-        }.bind(this)
-      );
+          )
+        );
+
+        return FindQuantileBreaks(
+          layer.getSource().getFeatures(),
+          symbolConfig
+        );
+      });
     } else {
       const symbolConfig = {
         classCount: classCount,
