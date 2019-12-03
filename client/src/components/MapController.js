@@ -1,26 +1,34 @@
 import React, { useState, useRef, useEffect } from "react";
 
 import OLMap from "./OpenLayers/OLMap";
+import BasemapLayer from "./OpenLayers/BasemapLayer";
+import MnTractLayer from "./OpenLayers/MnTractLayer";
 
 const MapController = ({ view, layers, legend }) => {
   const [mapInstance, setMapInstance] = useState(null);
   const mapRef = useRef();
+  const didMountRef = useRef(false);
+  const [counter, setCounter] = useState(0);
 
   useEffect(() => {
-    // BUG: Somehow this creates a new map on viewport width change
-    const redrawMap = () => {
-      mapInstance.updateSize();
-    };
-    window.addEventListener("resize", redrawMap);
+    async function loadMap() {
+      if (didMountRef && didMountRef.current) {
+        mapInstance
+          .getLayers()
+          .forEach(async layer => await mapInstance.removeLayer(layer));
+        mapInstance
+          .getLayers()
+          .forEach(async layer => await mapInstance.removeLayer(layer));
+        await mapInstance.addLayer(MnTractLayer);
+        await mapInstance.addLayer(BasemapLayer);
 
-    return () => {
-      window.removeEventListener("resize", redrawMap);
-    };
-    // eslint-disable-next-line
-  }, []);
-
-  useEffect(() => {
-    setMapInstance(OLMap(mapRef.current, view, Object.values(layers)));
+        setCounter(1);
+      } else {
+        didMountRef.current = true;
+        setMapInstance(OLMap(mapRef.current, view, Object.values(layers)));
+      }
+    }
+    loadMap();
   }, [view, layers]);
   // data-nodrag is used to disable dragging on the grid
   return (
