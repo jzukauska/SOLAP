@@ -40,7 +40,7 @@ const MapController = ({ view, layers, legend }) => {
             bottom: "0.5em",
             left: "0.5em",
             padding: "0.5em 1em",
-            width: "200px",
+            maxWidth: "250px",
             backgroundColor: "#ffffff",
             border: "thin solid rgba(0, 0, 0, 0.2)",
             position: "fixed"
