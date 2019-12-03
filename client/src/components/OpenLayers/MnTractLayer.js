@@ -12,7 +12,7 @@ const serviceUrl =
   "version=1.1.0&request=GetFeature&typename=solap:mn_tract_2010&" +
   "outputFormat=application/json&srsname=EPSG:3857";
 
-const layer1 = new VectorLayer({
+const layer1Tract = new VectorLayer({
   name: "mn_tract_2010",
   source: new VectorSource({
     format: new GeoJSON(),
@@ -25,7 +25,7 @@ const layer1 = new VectorLayer({
   style: BasicPolygon
 });
 
-const layer2 = new VectorLayer({
+const layer2Tract = new VectorLayer({
   name: "mn_tract_2010",
   source: new VectorSource({
     format: new GeoJSON(),
@@ -38,4 +38,4 @@ const layer2 = new VectorLayer({
   style: BasicPolygon
 });
 
-export { layer1, layer2 };
+export { layer1Tract, layer2Tract };

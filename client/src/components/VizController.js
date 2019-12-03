@@ -7,8 +7,8 @@ import { GeoJSON, WFS } from "ol/format";
 import BasicPolygon from "./OpenLayers/Style/BasicPolygon";
 
 import BasemapLayer from "./OpenLayers/BasemapLayer";
-import { layer1, layer2 } from "./OpenLayers/MnTractLayer";
-import MnCountyLayer from "./OpenLayers/MnCountyLayer";
+import { layer1Tract, layer2Tract } from "./OpenLayers/MnTractLayer";
+import { layer1County, layer2County } from "./OpenLayers/MnCountyLayer";
 import ColorBrewerStyles from "./OpenLayers/Style/ColorBrewerStyles";
 
 const VizContext = React.createContext();
@@ -24,14 +24,14 @@ export default class VizController extends Component {
     firstVariable: {
       layers: {
         BasemapLayer: BasemapLayer,
-        CurrentLayer: layer1
+        CurrentLayer: layer1Tract
       },
       legend: null
     },
     secondVariable: {
       layers: {
         BasemapLayer: BasemapLayer,
-        CurrentLayer: layer2
+        CurrentLayer: layer2Tract
       },
       legend: null
     }
@@ -63,10 +63,12 @@ export default class VizController extends Component {
       if (value === "County") {
         this.setState(
           (state, props) => ({
-            // layers: Object.assign(state.layers, { CurrentLayer: MnCountyLayer })
             [variableName]: {
               ...state[variableName],
-              layers: { CurrentLayer: MnCountyLayer }
+              layers: {
+                CurrentLayer:
+                  variableName === "firstVariable" ? layer1County : layer2County
+              }
             }
           }),
           () => this.forceUpdate()
@@ -74,11 +76,11 @@ export default class VizController extends Component {
       } else if (value === "Census Tracts") {
         this.setState(
           (state, props) => ({
-            // layers: Object.assign(state.layers, { CurrentLayer: MnTractLayer })
             [variableName]: {
               ...state[variableName],
               layers: {
-                CurrentLayer: variableName === "firstVariable" ? layer1 : layer2
+                CurrentLayer:
+                  variableName === "firstVariable" ? layer1Tract : layer2Tract
               }
             }
           }),
