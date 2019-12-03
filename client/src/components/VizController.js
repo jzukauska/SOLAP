@@ -76,7 +76,10 @@ export default class VizController extends Component {
           }),
           () => this.forceUpdate()
         );
-      } else if (value === "Census Tracts") {
+        return;
+      }
+
+      if (value === "Census Tracts") {
         this.setState(
           (state, props) => ({
             [variableName]: {
@@ -90,13 +93,17 @@ export default class VizController extends Component {
           }),
           () => this.forceUpdate()
         );
+        return;
       }
-    } else {
-      const styleData = await this.symbolizeOn({
-        prop1Names: [value]
-      });
-      this.generateStyleForLegend({ title: `${value}`, styleData });
     }
+
+    // all other cases, only work for basic, single vars
+    // TODO handle years changes
+    // TODO get field(s) with sources to symbolizeOn
+    const styleData = await this.symbolizeOn({
+      prop1Names: [value]
+    });
+    this.generateStyleForLegend({ title: `${value}`, styleData });
   };
 
   /**
