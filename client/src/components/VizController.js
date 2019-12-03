@@ -7,7 +7,7 @@ import { GeoJSON, WFS } from "ol/format";
 import BasicPolygon from "./OpenLayers/Style/BasicPolygon";
 
 import BasemapLayer from "./OpenLayers/BasemapLayer";
-import MnTractLayer from "./OpenLayers/MnTractLayer";
+import { layer1, layer2 } from "./OpenLayers/MnTractLayer";
 import MnCountyLayer from "./OpenLayers/MnCountyLayer";
 import ColorBrewerStyles from "./OpenLayers/Style/ColorBrewerStyles";
 
@@ -24,14 +24,14 @@ export default class VizController extends Component {
     firstVariable: {
       layers: {
         BasemapLayer: BasemapLayer,
-        CurrentLayer: MnTractLayer
+        CurrentLayer: layer1
       },
       legend: null
     },
     secondVariable: {
       layers: {
         BasemapLayer: BasemapLayer,
-        CurrentLayer: MnTractLayer
+        CurrentLayer: layer2
       },
       legend: null
     }
@@ -77,7 +77,9 @@ export default class VizController extends Component {
             // layers: Object.assign(state.layers, { CurrentLayer: MnTractLayer })
             [variableName]: {
               ...state[variableName],
-              layers: { CurrentLayer: MnTractLayer }
+              layers: {
+                CurrentLayer: variableName === "firstVariable" ? layer1 : layer2
+              }
             }
           }),
           () => this.forceUpdate()

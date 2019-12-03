@@ -19,8 +19,10 @@ const MapController = ({ view, layers, legend }) => {
         mapInstance
           .getLayers()
           .forEach(async layer => await mapInstance.removeLayer(layer));
-        await mapInstance.addLayer(MnTractLayer);
-        await mapInstance.addLayer(BasemapLayer);
+
+        Object.values(layers).map(async layer => {
+          await mapInstance.addLayer(layer);
+        });
 
         setCounter(1);
       } else {
