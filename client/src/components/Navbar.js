@@ -16,9 +16,7 @@ const Navbar = () => {
   const [area, setArea] = useState("[Geographic Unit]");
   return (
     <NavbarContainer pad="small">
-      <text>
-        Mapping: {year} for {area}
-      </text>
+      Mapping: {year} for {area}
       <FilterConsumer>
         {({
           filterFields,
