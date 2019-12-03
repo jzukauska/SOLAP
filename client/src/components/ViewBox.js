@@ -6,7 +6,6 @@ import Navbar from "./Navbar";
 import MapView from "./MapView";
 
 const ViewBox = ({ layers, legend }) => {
-  console.log("ViewBox legend :", legend);
   return (
     <Box direction="column" fill>
       <Navbar />
