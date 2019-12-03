@@ -24,14 +24,14 @@ export default class VizController extends Component {
     firstVariable: {
       layers: {
         BasemapLayer: BasemapLayer,
-        CurrentLayer: layer1Tract
+        CurrentLayer: layer1County
       },
       legend: null
     },
     secondVariable: {
       layers: {
         BasemapLayer: BasemapLayer,
-        CurrentLayer: layer2Tract
+        CurrentLayer: layer2County
       },
       legend: null
     }
