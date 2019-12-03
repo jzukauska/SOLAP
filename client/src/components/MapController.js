@@ -1,8 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 
 import OLMap from "./OpenLayers/OLMap";
-import BasemapLayer from "./OpenLayers/BasemapLayer";
-import MnTractLayer from "./OpenLayers/MnTractLayer";
 
 const MapController = ({ view, layers, legend }) => {
   const [mapInstance, setMapInstance] = useState(null);
