@@ -67,7 +67,10 @@ export default class VizController extends Component {
               ...state[variableName],
               layers: {
                 CurrentLayer:
-                  variableName === "firstVariable" ? layer1County : layer2County
+                  variableName === "firstVariable"
+                    ? layer1County
+                    : layer2County,
+                BasemapLayer: BasemapLayer
               }
             }
           }),
@@ -80,7 +83,8 @@ export default class VizController extends Component {
               ...state[variableName],
               layers: {
                 CurrentLayer:
-                  variableName === "firstVariable" ? layer1Tract : layer2Tract
+                  variableName === "firstVariable" ? layer1Tract : layer2Tract,
+                BasemapLayer: BasemapLayer
               }
             }
           }),

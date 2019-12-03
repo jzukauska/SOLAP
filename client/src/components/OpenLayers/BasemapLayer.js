@@ -5,6 +5,7 @@ import { Tile as TileLayer } from "ol/layer";
 import { XYZ } from "ol/source";
 
 export default new TileLayer({
+  name: "tiledBasemap",
   source: new XYZ({
     url:
       "https://cartodb-basemaps-{a-d}.global.ssl.fastly.net/rastertiles/voyager/{z}/{x}/{y}{r}.png",

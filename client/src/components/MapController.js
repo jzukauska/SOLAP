@@ -11,15 +11,15 @@ const MapController = ({ view, layers, legend }) => {
   useEffect(() => {
     async function loadMap() {
       if (didMountRef && didMountRef.current) {
-        mapInstance
-          .getLayers()
-          .forEach(async layer => await mapInstance.removeLayer(layer));
-        mapInstance
-          .getLayers()
-          .forEach(async layer => await mapInstance.removeLayer(layer));
+        mapInstance.getLayers().clear();
 
+        // need to add the basemap layer at the bottom/front of collection
         Object.values(layers).map(async layer => {
-          await mapInstance.addLayer(layer);
+          if (layer.get("name") == "tiledBasemap") {
+            await mapInstance.getLayers().insertAt(0, layer);
+          } else {
+            await mapInstance.addLayer(layer);
+          }
         });
 
         setCounter(1);
