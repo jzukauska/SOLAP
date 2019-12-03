@@ -7,9 +7,32 @@ import { GeoJSON, WFS } from "ol/format";
 import BasicPolygon from "./OpenLayers/Style/BasicPolygon";
 
 import BasemapLayer from "./OpenLayers/BasemapLayer";
-import MnTractLayer from "./OpenLayers/MnTractLayer";
-import MnCountyLayer from "./OpenLayers/MnCountyLayer";
+import {
+  layerVar1Tract,
+  layerVar2Tract,
+  layerBivarTract
+} from "./OpenLayers/MnTractLayer";
+import {
+  layerVar1County,
+  layerVar2County,
+  layerBivarCounty
+} from "./OpenLayers/MnCountyLayer";
 import ColorBrewerStyles from "./OpenLayers/Style/ColorBrewerStyles";
+
+const app = {};
+window.app = app;
+
+const allEnumUnitLayers = [
+  layerVar1Tract,
+  layerVar2Tract,
+  layerBivarTract,
+  layerVar1County,
+  layerVar2County,
+  layerBivarCounty
+];
+
+allEnumUnitLayers.forEach(x => x.setVisible(false));
+layerVar1County.setVisible(true);
 
 const VizContext = React.createContext();
 
@@ -19,14 +42,30 @@ const VizContext = React.createContext();
 // Get multiple (2) features working together
 // Customize requests so not just defaults used
 
+app.layers = allEnumUnitLayers;
+
 export default class VizController extends Component {
   state = {
     layers: {
       BasemapLayer: BasemapLayer,
-      CurrentLayer: MnTractLayer
+      layerVar1Tract: layerVar1Tract,
+      layerVar2Tract: layerVar2Tract,
+      layerBivarTract: layerBivarTract,
+      layerVar1County: layerVar1County,
+      layerVar2County: layerVar2County,
+      layerBivarCounty: layerBivarCounty
     },
     legend: null
   };
+
+  allEnumUnitLayers = [
+    layerVar1County,
+    layerVar2County,
+    layerBivarCounty,
+    layerVar1Tract,
+    layerVar2Tract,
+    layerBivarTract
+  ];
 
   generateStyleForLegend({ title, styleData }) {
     const legend = [];
@@ -45,19 +84,11 @@ export default class VizController extends Component {
   handleMapChange = async ({ name, value, yearOptions }) => {
     if (name === "Geographic Unit") {
       if (value === "County") {
-        this.setState(
-          (state, props) => ({
-            layers: Object.assign(state.layers, { CurrentLayer: MnCountyLayer })
-          }),
-          () => this.forceUpdate()
-        );
+        this.allEnumUnitLayers.forEach(x => x.setVisible(false));
+        layerVar1County.setVisible(true);
       } else if (value === "Census Tracts") {
-        this.setState(
-          (state, props) => ({
-            layers: Object.assign(state.layers, { CurrentLayer: MnTractLayer })
-          }),
-          () => this.forceUpdate()
-        );
+        this.allEnumUnitLayers.forEach(x => x.setVisible(false));
+        layerVar1Tract.setVisible(true);
       }
     } else {
       const styleData = await this.symbolizeOn({
