@@ -4,6 +4,7 @@ import useWindowSize from "../helpers/useWindowSize";
 import DraggableGrid from "./DraggableGrid";
 import MapFilter from "./MapFilter";
 import MapController from "./MapController";
+import BarGraph from "./BarGraph"
 
 import View from "./OpenLayers/DefaultView";
 
@@ -14,6 +15,7 @@ const MapView = ({ layers, legend }) => {
   return (
     <DraggableGrid>
       <MapFilter width={width / 3} />
+      <BarGraph />
       <MapController
         view={View}
         layers={layers}
