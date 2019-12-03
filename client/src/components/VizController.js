@@ -7,7 +7,7 @@ import { GeoJSON, WFS } from "ol/format";
 import BasicPolygon from "./OpenLayers/Style/BasicPolygon";
 
 import BasemapLayer from "./OpenLayers/BasemapLayer";
-import MnTractLayer from "./OpenLayers/MnTractLayer";
+import { layer1, layer2 } from "./OpenLayers/MnTractLayer";
 import MnCountyLayer from "./OpenLayers/MnCountyLayer";
 import ColorBrewerStyles from "./OpenLayers/Style/ColorBrewerStyles";
 
@@ -21,14 +21,24 @@ const VizContext = React.createContext();
 
 export default class VizController extends Component {
   state = {
-    layers: {
-      BasemapLayer: BasemapLayer,
-      CurrentLayer: MnTractLayer
+    firstVariable: {
+      layers: {
+        BasemapLayer: BasemapLayer,
+        CurrentLayer: layer1
+      },
+      legend: null
     },
-    legend: null
+    secondVariable: {
+      layers: {
+        BasemapLayer: BasemapLayer,
+        CurrentLayer: layer2
+      },
+      legend: null
+    }
   };
 
   generateStyleForLegend({ title, styleData }) {
+    const { variableName } = this.props;
     const legend = [];
     for (let i = 0; i < styleData[0].length; i++) {
       const data = {
@@ -39,22 +49,38 @@ export default class VizController extends Component {
       };
       legend.push(data);
     }
-    this.setState({ legend: { title, data: legend } });
+    this.setState({
+      [variableName]: {
+        ...this.state[variableName],
+        legend: { title, data: legend }
+      }
+    });
   }
 
   handleMapChange = async ({ name, value, yearOptions }) => {
+    const { variableName } = this.props;
     if (name === "Geographic Unit") {
       if (value === "County") {
         this.setState(
           (state, props) => ({
-            layers: Object.assign(state.layers, { CurrentLayer: MnCountyLayer })
+            // layers: Object.assign(state.layers, { CurrentLayer: MnCountyLayer })
+            [variableName]: {
+              ...state[variableName],
+              layers: { CurrentLayer: MnCountyLayer }
+            }
           }),
           () => this.forceUpdate()
         );
       } else if (value === "Census Tracts") {
         this.setState(
           (state, props) => ({
-            layers: Object.assign(state.layers, { CurrentLayer: MnTractLayer })
+            // layers: Object.assign(state.layers, { CurrentLayer: MnTractLayer })
+            [variableName]: {
+              ...state[variableName],
+              layers: {
+                CurrentLayer: variableName === "firstVariable" ? layer1 : layer2
+              }
+            }
           }),
           () => this.forceUpdate()
         );
@@ -81,7 +107,7 @@ export default class VizController extends Component {
 
   symbolizeOn = async function(options, classCount = 5) {
     // are all properties required in the features? just check one feature
-    const layer = this.state.layers.CurrentLayer;
+    const layer = this.state[this.props.variableName].layers.CurrentLayer;
     const checkFeature = layer
       .getSource()
       .getFeatures()[0]
@@ -160,7 +186,9 @@ export default class VizController extends Component {
       featurePrefix: "solap",
       featureType: "us_census_2010",
       propertyNames: [],
-      vectorSourceToUpdate: this.state.layers.CurrentLayer.getSource(),
+      vectorSourceToUpdate: this.state[
+        this.props.variableName
+      ].layers.CurrentLayer.getSource(),
       joinKeySource: "geoid",
       joinKeyExtras: "gis_join_match_code" // gis_join_match_code irregular from us_census_2010
     };
@@ -225,8 +253,8 @@ export default class VizController extends Component {
   render() {
     const children = React.Children.map(this.props.children, child =>
       React.cloneElement(child, {
-        layers: this.state.layers,
-        legend: this.state.legend,
+        layers: this.state[this.props.variableName].layers,
+        legend: this.state[this.props.variableName].legend,
         handleMapChange: this.handleMapChange
       })
     );
@@ -234,7 +262,7 @@ export default class VizController extends Component {
     return (
       <VizContext.Provider
         value={{
-          layers: this.state.layers,
+          layers: this.state[this.props.variableName].layers,
           handleMapChange: this.handleMapChange
         }}
       >

@@ -4,48 +4,67 @@ import filterFields from "../filterFields.json";
 const FilterContext = React.createContext();
 
 export default class FilterContextProvider extends Component {
-  state = {
-    filterFields,
-    filterValues: {}
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      firstVariable: { filterFields, filterValues: {} },
+      secondVariable: { filterFields, filterValues: {} }
+    };
+  }
 
-  handleInputChange = ({ name, value, yearOptions }) => {
+  handleInputChange = async ({ name, value, yearOptions }) => {
     const canAddFilter = () => {
       if (
-        this.state.filterValues.hasOwnProperty("Time Period") &&
-        this.state.filterValues.hasOwnProperty("Geographic Unit") &&
-        Object.keys(this.state.filterValues).length < 4
+        this.state[this.props.variableName].filterValues.hasOwnProperty(
+          "Time Period"
+        ) &&
+        this.state[this.props.variableName].filterValues.hasOwnProperty(
+          "Geographic Unit"
+        ) &&
+        Object.keys(this.state[this.props.variableName].filterValues).length < 4
       )
         return true;
       else if (
-        this.state.filterValues.hasOwnProperty("Time Period") &&
-        Object.keys(this.state.filterValues).length < 3
+        this.state[this.props.variableName].filterValues.hasOwnProperty(
+          "Time Period"
+        ) &&
+        Object.keys(this.state[this.props.variableName].filterValues).length < 3
       )
         return true;
       else if (
-        this.state.filterValues.hasOwnProperty("Geographic Unit") &&
-        Object.keys(this.state.filterValues).length < 3
+        this.state[this.props.variableName].filterValues.hasOwnProperty(
+          "Geographic Unit"
+        ) &&
+        Object.keys(this.state[this.props.variableName].filterValues).length < 3
       )
         return true;
       else if (
-        Object.keys(this.state.filterValues).length < 2 ||
+        Object.keys(this.state[this.props.variableName].filterValues).length <
+          2 ||
         name === "Time Period" ||
         name === "Geographic Unit"
       )
         return true;
-      else if (this.state.filterValues.hasOwnProperty(name)) return true;
+      else if (
+        this.state[this.props.variableName].filterValues.hasOwnProperty(name)
+      )
+        return true;
       else return false;
     };
     const canAdd = canAddFilter();
+    const { variableName } = this.props;
     if (canAdd === true) {
-      this.setState({
-        filterValues: {
-          ...this.state.filterValues,
-          [name]: {
-            ...this.state.filterValues[name],
-            value,
-            yearOptions,
-            colors: ""
+      await this.setState({
+        [variableName]: {
+          ...this.state[variableName],
+          filterValues: {
+            ...this.state[variableName].filterValues,
+            [name]: {
+              ...this.state[variableName].filterValues[name],
+              value,
+              yearOptions,
+              colors: ""
+            }
           }
         }
       });
@@ -57,19 +76,30 @@ export default class FilterContextProvider extends Component {
   };
 
   clearFilter = name => {
-    const { [name]: _, ...filterValues } = this.state.filterValues;
+    const { variableName } = this.props;
+    const { [name]: _, ...filterValues } = this.state[
+      this.props.variableName
+    ].filterValues;
+
     this.setState({
-      filterValues
+      [variableName]: {
+        ...this.state[variableName],
+        filterValues
+      }
     });
   };
 
   handleColorChange = (name, colorsArr) => {
+    const { variableName } = this.props;
     this.setState({
-      filterValues: {
-        ...this.state.filterValues,
-        [name]: {
-          ...this.state.filterValues[name],
-          colors: colorsArr
+      [variableName]: {
+        ...this.state[variableName],
+        filterValues: {
+          ...this.state[this.props.variableName].filterValues,
+          [name]: {
+            ...this.state[variableName].filterValues[name],
+            colors: colorsArr
+          }
         }
       }
     });
@@ -87,8 +117,8 @@ export default class FilterContextProvider extends Component {
     return (
       <FilterContext.Provider
         value={{
-          filterFields: this.state.filterFields,
-          filterValues: this.state.filterValues,
+          filterFields: this.state[this.props.variableName].filterFields,
+          filterValues: this.state[this.props.variableName].filterValues,
           handleInputChange: this.handleInputChange,
           handleColorChange: this.handleColorChange,
           clearFilter: this.clearFilter

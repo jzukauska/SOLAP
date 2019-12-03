@@ -7,16 +7,17 @@ import { GeoJSON } from "ol/format";
 import { all as allStrategy } from "ol/loadingstrategy";
 import BasicPolygon from "./Style/BasicPolygon";
 
-const layer = new VectorLayer({
+const serviceUrl =
+  "http://149.165.157.200:8080/geoserver/ows?service=wfs&" +
+  "version=1.1.0&request=GetFeature&typename=solap:mn_tract_2010&" +
+  "outputFormat=application/json&srsname=EPSG:3857";
+
+const layer1 = new VectorLayer({
   name: "mn_tract_2010",
   source: new VectorSource({
     format: new GeoJSON(),
     url: function(extent) {
-      return (
-        "http://149.165.157.200:8080/geoserver/ows?service=wfs&" +
-        "version=1.1.0&request=GetFeature&typename=solap:mn_tract_2010&" +
-        "outputFormat=application/json&srsname=EPSG:3857"
-      );
+      return serviceUrl;
     },
     attributions: "U.S. Census Bureau",
     strategy: allStrategy
@@ -24,4 +25,17 @@ const layer = new VectorLayer({
   style: BasicPolygon
 });
 
-export default layer;
+const layer2 = new VectorLayer({
+  name: "mn_tract_2010",
+  source: new VectorSource({
+    format: new GeoJSON(),
+    url: function(extent) {
+      return serviceUrl;
+    },
+    attributions: "U.S. Census Bureau",
+    strategy: allStrategy
+  }),
+  style: BasicPolygon
+});
+
+export { layer1, layer2 };

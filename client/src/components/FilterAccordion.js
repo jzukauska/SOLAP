@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 import {
   Accordion,
   AccordionPanel,
@@ -11,13 +11,13 @@ import {
   Stack,
   CheckBox,
   TextInput
-} from 'grommet'
+} from "grommet";
 
-import { capitalize } from '../helpers/utils'
+import { capitalize } from "../helpers/utils";
 
 const renderFieldBasedOnType = (field, value, onChange) => {
   switch (field.type) {
-    case 'textInput':
+    case "textInput":
       return (
         <TextInput
           name={field.name}
@@ -25,8 +25,8 @@ const renderFieldBasedOnType = (field, value, onChange) => {
           value={value}
           //onChange={onChange}
         />
-      )
-    case 'range':
+      );
+    case "range":
       return (
         <RangeInput
           name={field.name}
@@ -38,8 +38,8 @@ const renderFieldBasedOnType = (field, value, onChange) => {
             onChange({ name: e.target.name, value: e.target.value })
           }
         />
-      )
-    case 'select':
+      );
+    case "select":
       return (
         <Select
           name={field.name}
@@ -48,8 +48,8 @@ const renderFieldBasedOnType = (field, value, onChange) => {
           value={value}
           onChange={e => onChange({ name: e.target.name, value: e.option })}
         />
-      )
-    case 'radio':
+      );
+    case "radio":
       return (
         <RadioButtonGroup
           name={field.name}
@@ -58,23 +58,23 @@ const renderFieldBasedOnType = (field, value, onChange) => {
           onChange={e => {
             const yearOptions = field.fieldOptions.find(
               option => option.value === e.target.value
-            ).year
+            ).year;
             onChange({
               name: e.target.name,
               value: e.target.value,
               yearOptions
-            })
+            });
           }}
         />
-      )
-    case 'rangeSelector':
+      );
+    case "rangeSelector":
       return (
         <Box pad="xsmall" background="light-2">
           <Stack>
             <Box direction="row" justify="between">
               {[0, 15, 30, 45, 60, 75].map(val => (
                 <Box key={val} pad="xsmall" border={false}>
-                  <Text style={{ fontFamily: 'monospace' }}>{val}</Text>
+                  <Text style={{ fontFamily: "monospace" }}>{val}</Text>
                 </Box>
               ))}
             </Box>
@@ -90,8 +90,8 @@ const renderFieldBasedOnType = (field, value, onChange) => {
             />
           </Stack>
         </Box>
-      )
-    case 'checkBox':
+      );
+    case "checkBox":
       return (
         <CheckBox
           name={field.name}
@@ -100,42 +100,43 @@ const renderFieldBasedOnType = (field, value, onChange) => {
             onChange({ name: e.target.name, value: e.target.value })
           }
         />
-      )
+      );
     default:
-      throw new Error(`${field.type} is not a supported field type`)
+      throw new Error(`${field.type} is not a supported field type`);
   }
-}
+};
 
 const Filter = ({ field, value, onChange }) => {
   return (
     <React.Fragment key={field.name}>
-      <Text>
-        {capitalize(field.name)}: {value === 0 ? 'Pick a year' : value}
-      </Text>
+      <div>
+        {capitalize(field.name)}: {value === 0 ? "Pick a year" : value}
+      </div>
       {renderFieldBasedOnType(field, value, onChange)}
     </React.Fragment>
-  )
-}
+  );
+};
 
 const YearFilter = ({ field, value, onChange, filterValues }) => {
   const buildYearOptions = () => {
-    let yearOptions = []
+    let yearOptions = [];
     Object.values(filterValues).forEach(val => {
       if (val.yearOptions) {
         if (yearOptions.length === 0) {
-          yearOptions = val.yearOptions
+          yearOptions = val.yearOptions;
         } else {
-          yearOptions = yearOptions.filter(year => val.yearOptions.includes(year))
+          yearOptions = yearOptions.filter(year =>
+            val.yearOptions.includes(year)
+          );
         }
       }
-
-    })
-    return yearOptions
-  }
+    });
+    return yearOptions;
+  };
   return (
     <React.Fragment key={field.name}>
       <Text>
-        {capitalize(field.name)}: {value === 0 ? 'Pick a year' : value}
+        {capitalize(field.name)}: {value === 0 ? "Pick a year" : value}
       </Text>
       <Select
         name={field.name}
@@ -145,16 +146,16 @@ const YearFilter = ({ field, value, onChange, filterValues }) => {
         onChange={e => onChange({ name: e.target.name, value: e.option })}
       />
     </React.Fragment>
-  )
-}
+  );
+};
 
 const FilterAccordion = ({ filterFields, filterValues, handleInputChange }) => {
   return filterFields.map(field => {
     // Base case for recursive component
     if (!field.options) {
       // Doesn't evaluate to boolean
-      const value = filterValues[field.name] && filterValues[field.name].value
-      if (field.name === 'Time Period') {
+      const value = filterValues[field.name] && filterValues[field.name].value;
+      if (field.name === "Time Period") {
         return (
           <YearFilter
             key={field.name}
@@ -163,7 +164,7 @@ const FilterAccordion = ({ filterFields, filterValues, handleInputChange }) => {
             onChange={handleInputChange}
             filterValues={filterValues}
           />
-        )
+        );
       }
       return (
         <Filter
@@ -172,7 +173,7 @@ const FilterAccordion = ({ filterFields, filterValues, handleInputChange }) => {
           value={value}
           onChange={handleInputChange}
         />
-      )
+      );
     } else {
       // Add an accordion and recursively call this component again
       return (
@@ -187,9 +188,9 @@ const FilterAccordion = ({ filterFields, filterValues, handleInputChange }) => {
             </Box>
           </AccordionPanel>
         </Accordion>
-      )
+      );
     }
-  })
-}
+  });
+};
 
-export default FilterAccordion
+export default FilterAccordion;
