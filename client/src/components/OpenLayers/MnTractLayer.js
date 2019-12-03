@@ -13,7 +13,7 @@ const serviceUrl =
   "outputFormat=application/json&srsname=EPSG:3857";
 
 const layer1Tract = new VectorLayer({
-  name: "mn_tract_2010",
+  name: "mn_tract_2010 layer1Tract",
   source: new VectorSource({
     format: new GeoJSON(),
     url: function(extent) {
@@ -26,7 +26,7 @@ const layer1Tract = new VectorLayer({
 });
 
 const layer2Tract = new VectorLayer({
-  name: "mn_tract_2010",
+  name: "mn_tract_2010 layer2Tract",
   source: new VectorSource({
     format: new GeoJSON(),
     url: function(extent) {
