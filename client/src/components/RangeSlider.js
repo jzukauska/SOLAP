@@ -1,16 +1,11 @@
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Box, RangeSelector, Stack, Text } from 'grommet';
 
 const RangeSlider = (props) => {
 
   let { value, onChange, name } = props
 
-  const [sliderValue, setSliderValue] = useState(value)
-
-  useEffect(() => {
-    setSliderValue(value)
-  }, [value])
 
   const adjustValues = (newValue) => {
     const ageGroups = [
@@ -127,7 +122,7 @@ const RangeSlider = (props) => {
         max={100}
         size='full'
         round='small'
-        values={sliderValue || [0, 5]}
+        values={value || [0, 5]}
         onChange={nextValues => adjustValues(nextValues)} //this.setState({ values: nextValues })
       />
     </Stack >
