@@ -301,28 +301,24 @@ class EnumUnitData {
     const defaultGroupOpts = {
         wfsUrl: "http://149.165.157.200:8080/geoserver/wfs",
         geoserverWorkspace: "solap",
-        // geoserverLayer: "demographics",
-        geoserverLayer: "caces_pollutants",
+        geoserverLayer: "demographics",
         geoidField: "tract_geoid"
       },
       defaultFieldOpts = [
         {
-          // propertyName: "total"
-          propertyName: "data_value",
-          viewParams: { pollutant: "so2", year: 2005 }
+          propertyName: "total"
         }
       ];
     let result = {};
 
     const optsGroup = Object.assign({}, defaultGroupOpts, groupOptions);
     const optsFields =
-      typeof fieldOptions === "undefined" ? defaultFieldOpts : defaultFieldOpts; // TODO get arg later
+      typeof fieldOptions === "undefined" ? defaultFieldOpts : fieldOptions;
 
     // empty viewParams obj if none present
     // only the first field is checked, all fields in
     // the request should use the same viewParams
     if (!("viewParams" in optsFields[0])) {
-      console.warn("vp out");
       optsFields[0].viewParams = {};
     }
 
@@ -366,3 +362,28 @@ window.app = {};
 app = window.app;
 app.map = map;
 app.e = e;
+
+app.sampleGroupOpts1 = {
+  wfsUrl: "http://149.165.157.200:8080/geoserver/wfs",
+  geoserverWorkspace: "solap",
+  geoserverLayer: "demographics",
+  geoidField: "tract_geoid"
+};
+app.sampleFieldOpts1 = [
+  {
+    propertyName: "total"
+  }
+];
+
+app.sampleGroupOpts2 = {
+  wfsUrl: "http://149.165.157.200:8080/geoserver/wfs",
+  geoserverWorkspace: "solap",
+  geoserverLayer: "caces_pollutants",
+  geoidField: "tract_geoid"
+};
+app.sampleFieldOpts2 = [
+  {
+    propertyName: "data_value",
+    viewParams: { pollutant: "so2", year: 2005 }
+  }
+];
