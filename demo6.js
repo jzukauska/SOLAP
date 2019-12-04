@@ -17,7 +17,8 @@ import { Vector as VectorSource, XYZ } from "ol/source";
 import { Stroke, Fill, Style } from "ol/style";
 import colorbrewer from "colorbrewer";
 import { quantiles, quantileGroups } from "qquantile";
-
+import { equalTo as equalToFilter } from "ol/format/filter";
+import { PassThrough } from "stream";
 /**
  * A CARTO basemap
  */
@@ -272,6 +273,71 @@ class EnumUnitData {
       this[level][featProps.geoid] = featProps;
       delete this[level][featProps.geoid].geometry;
     }
+  }
+
+  /**
+   * Get class breaks for some data
+   * @param {number[]} data array of numeric values
+   * @param {numbrer} classCount number of classes to divide into (3-9)
+   * @param {string} classMethod "quantile" or "equalinterval" method
+   * @returns {Object} keys of geoid and prop:value within
+   */
+  getClasses(data, classCount, classMethod) {
+    if (classMethod !== "quantile") {
+      console.error("getClasses - only quanitle breaks supported");
+      return;
+    }
+    return;
+  }
+
+  /**
+   * Get data from WFS, return key on geoid with values in subobj
+   * @param {Object} groupOptions high-level info for data to re
+   * @param {Object[]} fieldOptions one or more objects representing field(s) to retrieve
+   */
+  async getFromWFS(groupOptions, fieldOptions) {
+    const defaultGroupOpts = {
+        wfsUrl: "http://149.165.157.200:8080/geoserver/wfs",
+        geoserverWorkspace: "solap",
+        geoserverLayer: "demographics",
+        geoidField: "tract_geoid"
+      },
+      defaultFieldOpts = [
+        {
+          propertyName: "total"
+        }
+      ];
+    let result = {};
+
+    const optsGroup = Object.assign({}, defaultGroupOpts, groupOptions);
+    const optsFields = defaultFieldOpts; // TODO get arg later
+
+    // assemble request options
+    const featureRequest = new WFS().writeGetFeature({
+      featurePrefix: optsGroup.geoserverWorkspace,
+      featureTypes: [optsGroup.geoserverLayer],
+      propertyNames: optsFields
+        .map(x => x.propertyName)
+        .concat(optsGroup.geoidField), // always add the join key to the request
+      outputFormat: "application/json"
+    });
+
+    const theFetch = fetch(optsGroup.wfsUrl, {
+      method: "POST",
+      body: new XMLSerializer().serializeToString(featureRequest)
+    });
+
+    const theResponse = await theFetch.then(async function(response) {
+      return response.json();
+    });
+
+    let featProps, key;
+    for (let i = 0; i < theResponse.features.length; i++) {
+      featProps = theResponse.features[i].properties;
+      result[featProps[optsGroup.geoidField]] = Object.assign({}, featProps);
+    }
+
+    return result;
   }
 }
 
