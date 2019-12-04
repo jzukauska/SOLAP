@@ -13,6 +13,7 @@ import {
   TextInput
 } from "grommet";
 
+import RangeSlider from './RangeSlider'
 import { capitalize } from "../helpers/utils";
 
 const renderFieldBasedOnType = (field, value, onChange) => {
@@ -23,7 +24,7 @@ const renderFieldBasedOnType = (field, value, onChange) => {
           name={field.name}
           placeholder={field.placeholder}
           value={value}
-          //onChange={onChange}
+        //onChange={onChange}
         />
       );
     case "range":
@@ -71,23 +72,7 @@ const renderFieldBasedOnType = (field, value, onChange) => {
       return (
         <Box pad="xsmall" background="light-2">
           <Stack>
-            <Box direction="row" justify="between">
-              {[0, 15, 30, 45, 60, 75].map(val => (
-                <Box key={val} pad="xsmall" border={false}>
-                  <Text style={{ fontFamily: "monospace" }}>{val}</Text>
-                </Box>
-              ))}
-            </Box>
-            <RangeSelector
-              name={field.name}
-              min={field.min}
-              max={field.max}
-              step={field.step}
-              size="full"
-              round="small"
-              values={value || [0, 5]}
-              onChange={numArr => onChange({ value: numArr, name: field.name })}
-            />
+            <RangeSlider value={value} onChange={onChange} name={field.name} />
           </Stack>
         </Box>
       );
