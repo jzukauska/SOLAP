@@ -1,0 +1,791 @@
+[
+  {
+    "name": "Chatbot",
+    "type": "textInput",
+    "placeholder": "Chatbot"
+  },
+  {
+    "name": "Time Period",
+    "type": "select",
+    "placeholder": "Select Available Time Period",
+    "fieldOptions": []
+  },
+  {
+    "name": "Geographic Unit",
+    "type": "radio",
+    "fieldOptions": [
+      {
+        "label": "County",
+        "value": "County"
+      },
+      {
+        "label": "Census Tracts",
+        "value": "Census Tracts"
+      }
+    ]
+  },
+  {
+    "name": "demographic",
+    "options": [
+      {
+        "name": "total Population",
+        "options": [
+          {
+            "name": "totalPopulation",
+            "type": "radio",
+            "dataType": "polygon",
+            "geoserver_layer": "demographics",
+            "functions": [
+              "choropleth"
+            ],
+            "fieldOptions": [
+              {
+                "label": "Total Population",
+                "value": "total",
+                "year": [
+                  2000,
+                  2010
+                ]
+              },
+              {
+                "label": "Total Females",
+                "value": "female",
+                "year": [
+                  2000,
+                  2010
+                ]
+              },
+              {
+                "label": "Total Males",
+                "value": "male",
+                "year": [
+                  2000,
+                  2010
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Race Demographics",
+            "type": "radio",
+            "geoserver_layer": "demographics",
+            "dataType": "polygon",
+            "functions": [
+              "choropleth"
+            ],
+            "fieldOptions": [
+              {
+                "label": "White",
+                "value": "white_alone",
+                "year": [
+                  2000,
+                  2010
+                ]
+              },
+              {
+                "label": "Black",
+                "value": "black_alone",
+                "year": [
+                  2000,
+                  2010
+                ]
+              },
+              {
+                "label": "American Indian",
+                "value": "american_indian_alone",
+                "year": [
+                  2000,
+                  2010
+                ]
+              },
+              {
+                "label": "Asian",
+                "value": "asian_alone",
+                "year": [
+                  2000,
+                  2010
+                ]
+              },
+              {
+                "label": "Hawaiian & Pacific Islander",
+                "value": "hawaiian_pi_alone",
+                "year": [
+                  2000,
+                  2010
+                ]
+              },
+              {
+                "label": "Other",
+                "value": "sor_alone",
+                "year": [
+                  2000,
+                  2010
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Population By Age",
+        "options": [
+          {
+            "name": "populationByAge",
+            "type": "rangeSelector",
+            "dataType": "polygon",
+            "geoserver_tract_layer": "mn_tract_2010",
+            "geoserver_county_layer": "mn_county_2010",
+            "functions": [
+              "choropleth"
+            ],
+            "min": 0,
+            "max": 80,
+            "step": 5,
+            "Population By Age": {
+              "values": [
+                0,
+                5,
+                10,
+                15,
+                17,
+                19,
+                20
+              ],
+              "variables": [
+                {
+                  "min": 0,
+                  "max": 5,
+                  "fields": [
+                    "person_under_5_years"
+                  ]
+                },
+                {
+                  "min": 5,
+                  "max": 10,
+                  "fields": [
+                    "person_5_to_9_years"
+                  ]
+                },
+                {
+                  "min": 10,
+                  "max": 15,
+                  "fields": [
+                    "person_10_to_14_years"
+                  ]
+                },
+                {
+                  "min": 15,
+                  "max": 17,
+                  "fields": [
+                    "person_15_to_17_years"
+                  ]
+                },
+                {
+                  "min": 17,
+                  "max": 19,
+                  "fields": [
+                    "person_18_to_19_years"
+                  ]
+                },
+                {
+                  "min": 20,
+                  "max": 20,
+                  "fields": [
+                    "person_20_years"
+                  ]
+                },
+                {
+                  "min": 15,
+                  "max": 20,
+                  "fields": [
+                    "person_15_to_17_years",
+                    "person_18_to_19_years",
+                    "person_20_years"
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Neighborhood",
+    "options": [
+      {
+        "name": "Neighborhood",
+        "type": "radio",
+        "dataType": "point",
+        "functions": [
+          "count",
+          "heatmap",
+          "point"
+        ],
+        "fieldOptions": [
+          {
+            "label": "Alcohol Retailors",
+            "value": "Alcohol Retailors",
+            "Year": [
+              2019
+            ],
+            "table_name": "alcohol_outlet",
+            "geoserver_layer": "alcohol_outlet"
+          },
+          {
+            "label": "Libraries",
+            "value": "Libraries",
+            "Year": [
+              2019
+            ],
+            "table_name": "library",
+            "geoserver_layer": "alcohol_outlet"
+          },
+          {
+            "label": "Tobacco Retailors",
+            "value": "Tobacco Retailors",
+            "Year": [
+              2019
+            ],
+            "table_name": "tobacco_outlets",
+            "geoserver_layer": "mn_tobacco_outlets"
+          },
+          {
+            "label": "Religious Sites",
+            "value": "Religious Sites",
+            "Year": [
+              2019
+            ],
+            "table_name": "religious",
+            "geoserver_layer": "religious"
+          },
+          {
+            "label": "YMCA",
+            "value": "YMCA",
+            "Year": [
+              2019
+            ],
+            "table_name": "ymca",
+            "geoserver_layer": "ymca"
+          },
+          {
+            "label": "Veterans Facilities (VFW)",
+            "value": "Veterans Facilities (VFW)",
+            "Year": [
+              2019
+            ],
+            "table_name": "vfw",
+            "geoserver_layer": "vfs"
+          },
+          {
+            "label": "American Legions",
+            "value": "American Legions",
+            "Year": [
+              2019
+            ],
+            "table_name": "american_legion",
+            "geoserver_layer": "american_legion"
+          },
+          {
+            "label": "Traffic Stops",
+            "value": "Traffic Stope",
+            "year": [
+              2016,
+              2017,
+              2018,
+              2019
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Health Behaviors",
+    "options": [
+      {
+        "name": "Health Behaviors",
+        "type": "radio",
+        "dataType": "polygon",
+        "functions": [
+          "choropleth"
+        ],
+        "geoserver_layer": "health_behavior",
+        "fieldOptions": [
+          {
+            "label": "Physical health not good for >=14 days among adults aged >=18 Years",
+            "value": "Physical health not good for >=14 days among adults aged >=18 Years",
+            "year": [
+              2014,
+              2015,
+              2016
+            ],
+            "parameter": "Physical"
+          },
+          {
+            "label": "Current lack of health insurance among adults aged 18-64 Years",
+            "value": "Current lack of health insurance among adults aged 18-64 Years",
+            "year": [
+              2014,
+              2015,
+              2016
+            ],
+            "parameter": "Insurance"
+          },
+          {
+            "label": "Obesity among adults aged >=18 Years",
+            "value": "Obesity among adults aged >=18 Years",
+            "year": [
+              2014,
+              2015,
+              2016
+            ],
+            "parameter": "Obesity"
+          },
+          {
+            "label": "Mental health not good for >=14 days among adults aged >=18 Years",
+            "value": "Mental health not good for >=14 days among adults aged >=18 Years",
+            "year": [
+              2014,
+              2015,
+              2016
+            ],
+            "parameter": "Mental"
+          },
+          {
+            "label": "Visits to doctor for routine checkup within the past Year among adults aged >=18 Years",
+            "value": "Visits to doctor for routine checkup within the past Year among adults aged >=18 Years",
+            "year": [
+              2014,
+              2015,
+              2016
+            ],
+            "parameter": "Checkup"
+          },
+          {
+            "label": "Binge drinking among adults aged >=18 Years",
+            "value": "Binge drinking among adults aged >=18 Years",
+            "year": [
+              2014,
+              2015,
+              2016
+            ],
+            "parameter": "Drinking"
+          },
+          {
+            "label": "Current smoking among adults aged >=18 Years",
+            "value": "Current smoking among adults aged >=18 Years",
+            "year": [
+              2014,
+              2015,
+              2016
+            ],
+            "parameter": "Smoking"
+          },
+          {
+            "label": "No leisure-time physical activity among adults aged >=18 Years",
+            "value": "No leisure-time physical activity among adults aged >=18 Years",
+            "year": [
+              2014,
+              2015,
+              2016
+            ],
+            "parameter": "Inactivity"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Environment",
+    "options": [
+      {
+        "name": "Environmental Exposures",
+        "options": [
+          {
+            "name": "Pollutant",
+            "type": "radio",
+            "dataType": "polygon",
+            "functions": [
+              "choropleth"
+            ],
+            "fieldOptions": [
+              {
+                "label": "Ozone",
+                "value": "Ozone",
+                "year": [
+                  2000,
+                  2001,
+                  2002,
+                  2003,
+                  2004,
+                  2005,
+                  2006,
+                  2007,
+                  2008,
+                  2009,
+                  2010,
+                  2011,
+                  2012,
+                  2013,
+                  2014,
+                  2015
+                ],
+                "geoserver_layer": "caces_pollutants",
+                "parameter": "o3"
+              },
+              {
+                "label": "Carbon Monoxide",
+                "value": "Carbon Monoxide",
+                "year": [
+                  2000,
+                  2001,
+                  2002,
+                  2003,
+                  2004,
+                  2005,
+                  2006,
+                  2007,
+                  2008,
+                  2009,
+                  2010,
+                  2011,
+                  2012,
+                  2013,
+                  2014,
+                  2015
+                ],
+                "geoserver_layer": "caces_pollutants",
+                "parameter": "co"
+              },
+              {
+                "label": "Sulfur Dioxide",
+                "value": "Sulfur Dioxide",
+                "year": [
+                  2000,
+                  2001,
+                  2002,
+                  2003,
+                  2004,
+                  2005,
+                  2006,
+                  2007,
+                  2008,
+                  2009,
+                  2010,
+                  2011,
+                  2012,
+                  2013,
+                  2014,
+                  2015
+                ],
+                "geoserver_layer": "caces_pollutants",
+                "parameter": "so2"
+              },
+              {
+                "label": "Nitrous Dioxide",
+                "value": "Nitrous Dioxide",
+                "year": [
+                  2000,
+                  2001,
+                  2002,
+                  2003,
+                  2004,
+                  2005,
+                  2006,
+                  2007,
+                  2008,
+                  2009,
+                  2010,
+                  2011,
+                  2012,
+                  2013,
+                  2014,
+                  2015
+                ],
+                "geoserver_layer": "caces_pollutants",
+                "parameter": "no2"
+              },
+              {
+                "label": "Particulate Matter 10",
+                "value": "Particulate Matter 10",
+                "year": [
+                  2000,
+                  2001,
+                  2002,
+                  2003,
+                  2004,
+                  2005,
+                  2006,
+                  2007,
+                  2008,
+                  2009,
+                  2010,
+                  2011,
+                  2012,
+                  2013,
+                  2014,
+                  2015
+                ],
+                "geoserver_layer": "caces_pollutants",
+                "parameter": "pm10"
+              },
+              {
+                "label": "Particulate Matter 2.5",
+                "value": "Particulate Matter 2.5",
+                "year": [
+                  2000,
+                  2001,
+                  2002,
+                  2003,
+                  2004,
+                  2005,
+                  2006,
+                  2007,
+                  2008,
+                  2009,
+                  2010,
+                  2011,
+                  2012,
+                  2013,
+                  2014,
+                  2015
+                ],
+                "geoserver_layer": "caces_pollutants",
+                "parameter": "pm25"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Satellite Imagery",
+        "options": [
+          {
+            "name": "Global Landcover 2000",
+            "options": [
+              {
+                "name": "Landcover Types",
+                "type": "radio",
+                "dataType": "polygon",
+                "functions": [
+                  "summary",
+                  "raster_sld"
+                ],
+                "fieldOptions": [
+                  {
+                    "label": "All Landcover",
+                    "value": "Global Landcover 2000",
+                    "Name": "Global Landcover 2000",
+                    "opacity": 1,
+                    "year": [
+                      2000
+                    ],
+                    "parameter": []
+                  },
+                  {
+                    "label": "No Data",
+                    "value": "No Data",
+                    "opacity": 1,
+                    "year": [
+                      2000
+                    ],
+                    "parameter": [
+                      "lcnodata"
+                    ]
+                  },
+                  {
+                    "label": "Forest",
+                    "value": "Forest",
+                    "opacity": 0,
+                    "year": [
+                      2000
+                    ],
+                    "parameter": [
+                      "lcbrdevgrn",
+                      "lcdecidcl",
+                      "lcdecidop",
+                      "lcndlevgrn",
+                      "lcndldecid",
+                      "lcmxlftree"
+                    ]
+                  },
+                  {
+                    "label": "Water",
+                    "value": "Water",
+                    "opacity": 0,
+                    "year": [
+                      2000
+                    ],
+                    "parameter": [
+                      "lcnwater"
+                    ]
+                  },
+                  {
+                    "label": "Built Environment",
+                    "value": "Built Environment",
+                    "opacity": 0,
+                    "year": [
+                      2000
+                    ],
+                    "parameter": [
+                      "lcartif"
+                    ]
+                  },
+                  {
+                    "label": "Bare Areas",
+                    "value": "Bare Areas",
+                    "opacity": 0,
+                    "year": [
+                      2000
+                    ],
+                    "parameter": "lcbare"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Meris",
+            "options": [
+              {
+                "name": "Landcover Types",
+                "type": "radio",
+                "dataType": "polygon",
+                "functions": [
+                  "summary",
+                  "raster_sld"
+                ],
+                "fieldOptions": [
+                  {
+                    "label": "All Categories",
+                    "value": "All Categories",
+                    "opacity": 1,
+                    "year": [
+                      2000,
+                      2005,
+                      2010,
+                      2015
+                    ],
+                    "parameter": []
+                  },
+                  {
+                    "label": "No Data",
+                    "value": "No Data",
+                    "opacity": 1,
+                    "year": [
+                      2000,
+                      2005,
+                      2010,
+                      2015
+                    ],
+                    "parameter": []
+                  },
+                  {
+                    "label": "Forest",
+                    "value": "Forest",
+                    "opacity": 0,
+                    "year": [
+                      2000,
+                      2005,
+                      2010,
+                      2015
+                    ],
+                    "parameter": []
+                  },
+                  {
+                    "label": "Water",
+                    "value": "Water",
+                    "opacity": 0,
+                    "year": [
+                      2000,
+                      2005,
+                      2010,
+                      2015
+                    ],
+                    "parameter": []
+                  },
+                  {
+                    "label": "Built Environment",
+                    "value": "Built Environment",
+                    "opacity": 0,
+                    "year": [
+                      2000,
+                      2005,
+                      2010,
+                      2015
+                    ],
+                    "parameter": []
+                  },
+                  {
+                    "label": "Bare Areas",
+                    "value": "Bare Areas",
+                    "opacity": 0,
+                    "year": [
+                      2000,
+                      2005,
+                      2010,
+                      2015
+                    ],
+                    "parameter": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Socio-Economic Indicators",
+    "options": [
+      {
+        "name": "Socio-Economic",
+        "type": "radio",
+        "dataType": "polygon",
+        "functions": [
+          "choropleth"
+        ],
+        "fieldOptions": [
+          {
+            "label": "Population with Access to Grocery Store Greater than (1m Urban & 10m Rural)",
+            "value": " Population with Access to Grocery Store Greater than (1m Urban & 10m Rural)",
+            "Year": [
+              2015
+            ],
+            "geoserver_layer": "food_access",
+            "parameter": "low_access_population_urban_1_rural_10"
+          },
+          {
+            "label": "Population with Access to Grocery Store Greater than(0.5m Urban & 10m Rural)",
+            "value": "Population with Access to Grocery Store Greater than(0.5m Urban & 10m Rural)",
+            "Year": [
+              2015
+            ],
+            "geoserver_layer": "food_access",
+            "parameter": "low_access_population_urban_05_rural_10"
+          },
+          {
+            "label": "Population with Access to Grocery Store Greater than (1m Urban & 20m Rural)",
+            "value": "Population with Access to Grocery Store Greater than (1m Urban & 20m Rural)",
+            "Year": [
+              2015
+            ],
+            "geoserver_layer": "food_access",
+            "parameter": "low_access_income_population_urban_1_rural_20"
+          },
+          {
+            "label": "Population count beyond 0.5 m from Grocery Store",
+            "value": "Population count beyond 0.5 m from Grocery Store",
+            "Year": [
+              2015
+            ],
+            "geoserver_layer": "food_access",
+            "parameter": "population_05_supermarket"
+          }
+        ]
+      }
+    ]
+  }
+]

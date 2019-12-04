@@ -97,7 +97,7 @@ const App = () => {
       {/* <> */}
       {/* {value === 0 && ( */}
       <div>
-        <Grommet theme={theme} full>
+        <Grommet theme={theme}>
           <VizController variableName={currentVariable}>
             <FilterContextProvider variableName={currentVariable}>
               <ViewBox />
