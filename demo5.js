@@ -161,8 +161,8 @@ checkSize();
  * @param {string} options.featurePrefix prefix for feature types, e.g. GeoServer workspace name
  * @param {string} options.featureType features name, e.g. GeoServer layer names; expects only one
  * @param {string[]} options.propertyNames property names to retrieve from layer
- * @param {Object} options.viewParams key:value pairs for viewParams in request (eg, {pollutant:"so2"})
- * @returns {Object} tracts and counties top-level keys, geoid as second-level, value as third
+ * @param {Object} options.viewParams key:value pairs for viewParams in request (eg, {pollutant:"so2", year: 2005})
+ * @returns {Object} tracts and counties top-level keys, geoid with value below
  */
 const getFeaturePropertiesFromWfs = async function(options) {
   // const defaultOpts = {
@@ -241,8 +241,8 @@ const getFeaturePropertiesFromWfs = async function(options) {
 // populate additional attributes to an existing vector source
 document
   .querySelector(".demo-button-add-attrs")
-  .addEventListener("click", function(e) {
-    const result = getFeaturePropertiesFromWfs(); // real implementation would need params; these are testOpts in the function def
+  .addEventListener("click", async function(e) {
+    const result = await getFeaturePropertiesFromWfs(); // real implementation would need params; these are testOpts in the function def
     console.log("result :", result);
   });
 
