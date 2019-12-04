@@ -292,6 +292,8 @@ class EnumUnitData {
 
   /**
    * Get data from WFS, return key on geoid with values in subobj
+   * Handles parameterized (viewParams) requests, assuming all vars
+   * are available for one set of viewParams
    * @param {Object} groupOptions high-level info for data to re
    * @param {Object[]} fieldOptions one or more objects representing field(s) to retrieve
    */
@@ -299,26 +301,43 @@ class EnumUnitData {
     const defaultGroupOpts = {
         wfsUrl: "http://149.165.157.200:8080/geoserver/wfs",
         geoserverWorkspace: "solap",
-        geoserverLayer: "demographics",
+        // geoserverLayer: "demographics",
+        geoserverLayer: "caces_pollutants",
         geoidField: "tract_geoid"
       },
       defaultFieldOpts = [
         {
-          propertyName: "total"
+          // propertyName: "total"
+          propertyName: "data_value",
+          viewParams: { pollutant: "so2", year: 2005 }
         }
       ];
     let result = {};
 
     const optsGroup = Object.assign({}, defaultGroupOpts, groupOptions);
-    const optsFields = defaultFieldOpts; // TODO get arg later
+    const optsFields =
+      typeof fieldOptions === "undefined" ? defaultFieldOpts : defaultFieldOpts; // TODO get arg later
+
+    // empty viewParams obj if none present
+    // only the first field is checked, all fields in
+    // the request should use the same viewParams
+    if (!("viewParams" in optsFields[0])) {
+      console.warn("vp out");
+      optsFields[0].viewParams = {};
+    }
 
     // assemble request options
     const featureRequest = new WFS().writeGetFeature({
+      viewParams: false,
       featurePrefix: optsGroup.geoserverWorkspace,
       featureTypes: [optsGroup.geoserverLayer],
       propertyNames: optsFields
         .map(x => x.propertyName)
         .concat(optsGroup.geoidField), // always add the join key to the request
+      viewParams: Object.keys(optsFields[0].viewParams)
+        .map(x => `${x}:${optsFields[0].viewParams[x]}`)
+        .join(";"), // colon-separated key:value pairs, semicolon delimited
+
       outputFormat: "application/json"
     });
 
