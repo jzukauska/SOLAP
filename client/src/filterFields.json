@@ -28,7 +28,7 @@
     "name": "demographic",
     "options": [
       {
-        "name": "total Population",
+        "name": "Population By Sex",
         "options": [
           {
             "name": "totalPopulation",
@@ -64,23 +64,23 @@
                 ]
               }
             ]
-          },
+          }
+        ]
+      },
+      {
+        "name": "Population By Race",
+        "options": [
           {
-            "name": "Race Demographics",
+            "name": "Race",
             "type": "radio",
             "geoserver_layer": "demographics",
             "dataType": "polygon",
-            "functions": [
-              "choropleth"
-            ],
+            "functions": "choropleth",
             "fieldOptions": [
               {
                 "label": "White",
                 "value": "white_alone",
-                "year": [
-                  2000,
-                  2010
-                ]
+                "year" : [2000,2010]
               },
               {
                 "label": "Black",
@@ -123,6 +123,7 @@
                 ]
               }
             ]
+
           }
         ]
       },
@@ -130,81 +131,65 @@
         "name": "Population By Age",
         "options": [
           {
-            "name": "populationByAge",
+            "name": "Population By Age",
             "type": "rangeSelector",
             "dataType": "polygon",
-            "geoserver_tract_layer": "mn_tract_2010",
-            "geoserver_county_layer": "mn_county_2010",
+            "aggregation_method": "sum",
+            "geoserver_layer": "demographics",
             "functions": [
               "choropleth"
             ],
             "min": 0,
             "max": 80,
             "step": 5,
-            "Population By Age": {
-              "values": [
-                0,
-                5,
-                10,
-                15,
-                17,
-                19,
-                20
-              ],
-              "variables": [
-                {
-                  "min": 0,
-                  "max": 5,
-                  "fields": [
-                    "person_under_5_years"
-                  ]
-                },
-                {
-                  "min": 5,
-                  "max": 10,
-                  "fields": [
-                    "person_5_to_9_years"
-                  ]
-                },
-                {
-                  "min": 10,
-                  "max": 15,
-                  "fields": [
-                    "person_10_to_14_years"
-                  ]
-                },
-                {
-                  "min": 15,
-                  "max": 17,
-                  "fields": [
-                    "person_15_to_17_years"
-                  ]
-                },
-                {
-                  "min": 17,
-                  "max": 19,
-                  "fields": [
-                    "person_18_to_19_years"
-                  ]
-                },
-                {
-                  "min": 20,
-                  "max": 20,
-                  "fields": [
-                    "person_20_years"
-                  ]
-                },
-                {
-                  "min": 15,
-                  "max": 20,
-                  "fields": [
-                    "person_15_to_17_years",
-                    "person_18_to_19_years",
-                    "person_20_years"
-                  ]
-                }
-              ]
-            }
+            "Population By Age": [
+              "Male_Under_5_years",
+              "Male_5_to_9_years",
+              "Male_10_to_14_years",
+              "Male_15_to_17_years",
+              "Male_18_and_19_years",
+              "Male_20_years",
+              "Male_21_years",
+              "Male_22_to_24_years",
+              "Male_25_to_29_years",
+              "Male_30_to_34_years",
+              "Male_35_to_39_years",
+              "Male_40_to_44_years",
+              "Male_45_to_49_years",
+              "Male_50_to_54_years",
+              "Male_55_to_59_years",
+              "Male_60_and_61_years",
+              "Male_62_to_64_years",
+              "Male_65_and_66_years",
+              "Male_67_to_69_years",
+              "Male_70_to_74_years",
+              "Male_75_to_79_years",
+              "Male_80_to_84_years",
+              "Male_85_years_and_over",
+              "Male_Under_5_years",
+              "Male_5_to_9_years",
+              "Male_10_to_14_years",
+              "Male_15_to_17_years",
+              "Male_18_and_19_years",
+              "Male_20_years",
+              "Male_21_years",
+              "Male_22_to_24_years",
+              "Male_25_to_29_years",
+              "Male_30_to_34_years",
+              "Male_35_to_39_years",
+              "Male_40_to_44_years",
+              "Male_45_to_49_years",
+              "Male_50_to_54_years",
+              "Male_55_to_59_years",
+              "Male_60_and_61_years",
+              "Male_62_to_64_years",
+              "Male_65_and_66_years",
+              "Male_67_to_69_years",
+              "Male_70_to_74_years",
+              "female_75_to_79_years",
+              "female_80_to_84_years",
+              "female_85_years_and_over"
+            ]
           }
         ]
       }
@@ -214,88 +199,257 @@
     "name": "Neighborhood",
     "options": [
       {
-        "name": "Neighborhood",
-        "type": "radio",
-        "dataType": "point",
-        "functions": [
-          "count",
-          "heatmap",
-          "point"
-        ],
-        "fieldOptions": [
+        "name": "Points",
+        "options": [
           {
-            "label": "Alcohol Retailors",
-            "value": "Alcohol Retailors",
-            "Year": [
-              2019
-            ],
-            "table_name": "alcohol_outlet",
-            "geoserver_layer": "alcohol_outlet"
-          },
-          {
-            "label": "Libraries",
-            "value": "Libraries",
-            "Year": [
-              2019
-            ],
-            "table_name": "library",
-            "geoserver_layer": "alcohol_outlet"
-          },
-          {
-            "label": "Tobacco Retailors",
-            "value": "Tobacco Retailors",
-            "Year": [
-              2019
-            ],
-            "table_name": "tobacco_outlets",
-            "geoserver_layer": "mn_tobacco_outlets"
-          },
-          {
-            "label": "Religious Sites",
-            "value": "Religious Sites",
-            "Year": [
-              2019
-            ],
-            "table_name": "religious",
-            "geoserver_layer": "religious"
-          },
-          {
-            "label": "YMCA",
-            "value": "YMCA",
-            "Year": [
-              2019
-            ],
-            "table_name": "ymca",
-            "geoserver_layer": "ymca"
-          },
-          {
-            "label": "Veterans Facilities (VFW)",
-            "value": "Veterans Facilities (VFW)",
-            "Year": [
-              2019
-            ],
-            "table_name": "vfw",
-            "geoserver_layer": "vfs"
-          },
-          {
-            "label": "American Legions",
-            "value": "American Legions",
-            "Year": [
-              2019
-            ],
-            "table_name": "american_legion",
-            "geoserver_layer": "american_legion"
-          },
-          {
-            "label": "Traffic Stops",
-            "value": "Traffic Stope",
-            "year": [
-              2016,
-              2017,
-              2018,
-              2019
-            ]
+            "name": "Points",
+            "type": "radio",
+            "dataType": "point",
+            "functions": ["point"],
+            "fieldOptions": [
+            {
+              "label": "Alcohol Retailors",
+              "value": "Alcohol Retailors",
+              "year": [
+                2019
+              ],
+              "table_name": "alcohol_outlet"
+            },
+            {
+              "label": "Tobacco Retailors",
+              "value": "Tobacco Retailors",
+              "year": [
+                2019
+              ]
+            },
+            {
+              "label": "Religious Sites",
+              "value": "Religious Sites",
+              "year": [
+                2019
+              ]
+            },
+            {
+              "label": "YMCA",
+              "value": "YMCA",
+              "year": [
+                2019
+              ]
+            },
+            {
+              "label": "Veterans Facilities (VFW)",
+              "value": "Veterans Facilities (VFW)",
+              "year": [
+                2019
+              ]
+            },
+            {
+              "label": "American Legions",
+              "value": "American Legions",
+              "year": [
+                2019
+              ]
+            },
+            {
+              "label": "Traffic Stops",
+              "value": "Traffic Stope",
+              "year": [
+                2016,
+                2017,
+                2018,
+                2019
+              ]
+            }
+          ]
           }
+        ]
+      },
+      {
+        "name": "HeatMap Visualization",
+        "options": [
+          {
+            "name": "HeatMap",
+            "type": "radio",
+            "dataType": "point",
+            "functions": ["HeatMap"],
+            "fieldOptions": [
+            {
+              "label": "Alcohol Retailors",
+              "value": "Alcohol Retailors",
+              "geoserver_layer": "alcohol_outlet",
+              "year": [
+                2019
+              ],
+              "table_name": "alcohol_outlet"
+            },
+            {
+              "label": "Tobacco Retailors",
+              "value": "Tobacco Retailors",
+              "geoserver_layer": "tobacco_outlet",
+              "year": [
+                2019
+              ]
+            },
+            {
+              "label": "Religious Sites",
+              "value": "Religious Sites",
+              "geoserver_layer": "religious",
+              "year": [
+                2019
+              ]
+            },
+            {
+              "label": "YMCA",
+              "value": "YMCA",
+              "geoserver_layer": "ymca",
+              "year": [
+                2019
+              ]
+            },
+            {
+              "label": "Veterans Facilities (VFW)",
+              "value": "Veterans Facilities (VFW)",
+              "geoserver_layer": "vfw",
+              "year": [
+                2019
+              ]
+            },
+            {
+              "label": "American Legions",
+              "value": "American Legions",
+              "geoserver_layer": "american_legion",
+              "year": [
+                2019
+              ]
+            },
+            {
+              "label": "Libraries",
+              "value": "Libraries",
+              "geoserver_layer": "library",
+              "year": [
+                2019
+              ]
+            },
+            {
+              "label": "Traffic Stops",
+              "value": "Traffic Stops",
+              "year": [
+                2016,
+                2017,
+                2018,
+                2019
+              ]
+            }
+          ]
+          }
+        ]
+      },
+      {
+        "name": "Spatial Analysis",
+        "options": [
+          {
+            "name": "Count Features",
+            "type": "radio",
+            "dataType": "point",
+            "geoserver_layer" : "neighborhood_count",
+            "functions": ["count"],
+            "fieldOptions": [
+            {
+              "label": "Alcohol Retailors",
+              "value": "Alcohol Retailors",
+              "year": [
+                2019
+              ],
+              "table_name": "alcohol_outlet"
+            },
+            {
+              "label": "Tobacco Retailors",
+              "value": "Tobacco Retailors",
+              "year": [
+                2019
+              ]
+            },
+            {
+              "label": "Religious Sites",
+              "value": "Religious Sites",
+              "year": [
+                2019
+              ]
+            },
+            {
+              "label": "YMCA",
+              "value": "YMCA",
+              "year": [
+                2019
+              ]
+            },
+            {
+              "label": "Veterans Facilities (VFW)",
+              "value": "Veterans Facilities (VFW)",
+              "year": [
+                2019
+              ]
+            },
+            {
+              "label": "American Legions",
+              "value": "American Legions",
+              "year": [
+                2019
+              ]
+            },
+            {
+              "label": "Traffic Stops",
+              "value": "Traffic Stope",
+              "year": [
+                2016,
+                2017,
+                2018,
+                2019
+              ]
+            }
+          ]
+          }
+        ]
+      }
+
+    ]
+  },
+  {
+    "name": "SocioEconomics",
+    "options": [
+      {
+        "name": "SocioEconomics",
+        "type": "radio",
+        "dataType": "polygon",
+        "functions": "choropleth",
+        "fieldOptions" : [
+            {
+                "label": "Population with Access to Grocery Store Greater than (1m Urban & 10m Rural)",
+                "value": "low_access_population_urban_1_rural_10",
+                "year": [2015],
+                "geoserver_layer": "food_access",
+                "aggregation_method": "sum"
+            },
+            {
+                "label": "Population with Access to Grocery Store Greater than(0.5m Urban & 10m Rural)",
+                "value": "low_access_population_urban_05_rural_10",
+                "year": [2015], 
+                "geoserver_layer": "food_access",
+                "aggregation_method": "sum"
+            },
+            {
+                "label":"Population with Access to Grocery Store Greater than (1m Urban & 20m Rural)",
+                "value": "low_access_income_population_urban_1_rural_20",
+                "year": [2015], 
+                "geoserver_layer": "food_access",
+                "aggregation_method": "sum"                
+            },
+            {
+                "label":"Population count beyond 0.5 m from Grocery Store",
+                "value": "population_05_supermarket",
+                "year": [2015], 
+                "geoserver_layer": "sum"
+            }
         ]
       }
     ]
@@ -307,90 +461,103 @@
         "name": "Health Behaviors",
         "type": "radio",
         "dataType": "polygon",
-        "functions": [
-          "choropleth"
-        ],
-        "geoserver_layer": "health_behavior",
+        "functions": ["choropleth"],
         "fieldOptions": [
-          {
+            {
             "label": "Physical health not good for >=14 days among adults aged >=18 Years",
             "value": "Physical health not good for >=14 days among adults aged >=18 Years",
+            "geoserver_layer": "health_behaviors",
             "year": [
               2014,
               2015,
               2016
             ],
-            "parameter": "Physical"
+            "parameter": ["Physical"],
+            "aggregation_method" : "average"
           },
           {
             "label": "Current lack of health insurance among adults aged 18-64 Years",
             "value": "Current lack of health insurance among adults aged 18-64 Years",
+            "geoserver_layer": "health_behaviors",
             "year": [
               2014,
               2015,
               2016
             ],
-            "parameter": "Insurance"
+            "parameter": ["Insurance"],
+            "aggregation_method" : "average"
           },
           {
             "label": "Obesity among adults aged >=18 Years",
             "value": "Obesity among adults aged >=18 Years",
+            "geoserver_layer": "health_behaviors",
             "year": [
               2014,
               2015,
               2016
             ],
-            "parameter": "Obesity"
+            "parameter": ["Obesity"],
+            "aggregation_method" : "average"
           },
           {
             "label": "Mental health not good for >=14 days among adults aged >=18 Years",
             "value": "Mental health not good for >=14 days among adults aged >=18 Years",
+            "table_name": "health_behaviors",
             "year": [
               2014,
               2015,
               2016
             ],
-            "parameter": "Mental"
+            "parameter": ["Mental"],
+            "aggregation_method" : "average"
           },
           {
             "label": "Visits to doctor for routine checkup within the past Year among adults aged >=18 Years",
             "value": "Visits to doctor for routine checkup within the past Year among adults aged >=18 Years",
+            "geoserver_layer": "health_behaviors",
             "year": [
               2014,
               2015,
               2016
             ],
-            "parameter": "Checkup"
+            "parameter": ["Checkup"],
+            "aggregation_method" : "average"
           },
           {
             "label": "Binge drinking among adults aged >=18 Years",
             "value": "Binge drinking among adults aged >=18 Years",
+            "geoserver_layer": "health_behaviors",
             "year": [
               2014,
               2015,
               2016
             ],
-            "parameter": "Drinking"
+            "parameter": ["Drinking"],
+            "aggregation_method" : "average"
           },
           {
             "label": "Current smoking among adults aged >=18 Years",
             "value": "Current smoking among adults aged >=18 Years",
+            "geoserver_layer": "health_behaviors",
             "year": [
               2014,
               2015,
               2016
             ],
-            "parameter": "Smoking"
+            "parameter": ["Smoking"],
+            "aggregation_method" : "average"
           },
           {
             "label": "No leisure-time physical activity among adults aged >=18 Years",
             "value": "No leisure-time physical activity among adults aged >=18 Years",
+            "geoserver_layer": "health_behaviors",
             "year": [
               2014,
               2015,
               2016
             ],
-            "parameter": "Inactivity"
+            "parameter": ["Inactivity"],
+            "aggregation_method" : "average"
           }
         ]
       }
@@ -401,16 +568,14 @@
     "options": [
       {
         "name": "Environmental Exposures",
-        "options": [
-          {
-            "name": "Pollutant",
-            "type": "radio",
-            "dataType": "polygon",
-            "functions": [
-              "choropleth"
-            ],
-            "fieldOptions": [
+        "options" : [
               {
+                "name": "Pollutant",
+                "type": "radio",
+                "dataType": "polygon",
+                "functions": [ "choropleth" ],
+                "fieldOptions": [
+                            {
                 "label": "Ozone",
                 "value": "Ozone",
                 "year": [
@@ -432,7 +597,8 @@
                   2015
                 ],
                 "geoserver_layer": "caces_pollutants",
-                "parameter": "o3"
+                "parameter": ["o3"],
+                "aggregation_method" : "average"
               },
               {
                 "label": "Carbon Monoxide",
@@ -456,7 +622,8 @@
                   2015
                 ],
                 "geoserver_layer": "caces_pollutants",
-                "parameter": "co"
+                "parameter": ["co"],
+                "aggregation_method" : "average"
               },
               {
                 "label": "Sulfur Dioxide",
@@ -480,7 +647,8 @@
                   2015
                 ],
                 "geoserver_layer": "caces_pollutants",
-                "parameter": "so2"
+                "parameter": ["so2"],
+                "aggregation_method" : "average"
               },
               {
                 "label": "Nitrous Dioxide",
@@ -504,7 +672,8 @@
                   2015
                 ],
                 "geoserver_layer": "caces_pollutants",
-                "parameter": "no2"
+                "parameter": ["no2"],
+                "aggregation_method" : "average"
               },
               {
                 "label": "Particulate Matter 10",
@@ -528,7 +697,8 @@
                   2015
                 ],
                 "geoserver_layer": "caces_pollutants",
-                "parameter": "pm10"
+                "parameter": ["pm10"],
+                "aggregation_method" : "average"
               },
               {
                 "label": "Particulate Matter 2.5",
@@ -552,97 +722,75 @@
                   2015
                 ],
                 "geoserver_layer": "caces_pollutants",
-                "parameter": "pm25"
+                "parameter": ["pm25"],
+                "aggregation_method" : "average"
               }
             ]
           }
-        ]
+        ]       
       },
       {
         "name": "Satellite Imagery",
-        "options": [
+        "options" : [
           {
             "name": "Global Landcover 2000",
             "options": [
               {
                 "name": "Landcover Types",
                 "type": "radio",
-                "dataType": "polygon",
-                "functions": [
-                  "summary",
-                  "raster_sld"
-                ],
+                "dataType": "raster",
+                "geoserver_layer": "glc:GLC",
+                "functions": ["summary", "raster_sld" ],
                 "fieldOptions": [
-                  {
-                    "label": "All Landcover",
-                    "value": "Global Landcover 2000",
-                    "Name": "Global Landcover 2000",
-                    "opacity": 1,
-                    "year": [
-                      2000
-                    ],
-                    "parameter": []
-                  },
-                  {
-                    "label": "No Data",
-                    "value": "No Data",
-                    "opacity": 1,
-                    "year": [
-                      2000
-                    ],
-                    "parameter": [
-                      "lcnodata"
-                    ]
-                  },
-                  {
-                    "label": "Forest",
-                    "value": "Forest",
-                    "opacity": 0,
-                    "year": [
-                      2000
-                    ],
-                    "parameter": [
-                      "lcbrdevgrn",
-                      "lcdecidcl",
-                      "lcdecidop",
-                      "lcndlevgrn",
-                      "lcndldecid",
-                      "lcmxlftree"
-                    ]
-                  },
-                  {
-                    "label": "Water",
-                    "value": "Water",
-                    "opacity": 0,
-                    "year": [
-                      2000
-                    ],
-                    "parameter": [
-                      "lcnwater"
-                    ]
-                  },
-                  {
-                    "label": "Built Environment",
-                    "value": "Built Environment",
-                    "opacity": 0,
-                    "year": [
-                      2000
-                    ],
-                    "parameter": [
-                      "lcartif"
-                    ]
-                  },
-                  {
-                    "label": "Bare Areas",
-                    "value": "Bare Areas",
-                    "opacity": 0,
-                    "year": [
-                      2000
-                    ],
-                    "parameter": "lcbare"
-                  }
-                ]
-              }
+                    {
+                      "label": "All Landcover",
+                      "value": "Global Landcover 2000",
+                      "Name": "Global Landcover 2000",
+                      "opacity": 1,
+                      "year": [2000],
+                      "parameter": []
+                    },
+                    {
+                      "label": "Forest",
+                      "value": "Forest",
+                      "opacity": 1,
+                      "year": [2000],
+                      "parameter": [
+                        "lcbrdevgrn",
+                        "lcdecidcl",
+                        "lcdecidop",
+                        "lcndlevgrn",
+                        "lcndldecid",
+                        "lcmxlftree"
+                        ]
+                    },
+                    {
+                      "label": "Water",
+                      "value": "Water",
+                      "opacity": 1,
+                      "year": [2000],
+                      "parameter": [
+                        "lcnwater"
+                      ]
+                    },
+                    {
+                      "label": "Built Environment",
+                      "value": "Built Environment",
+                      "opacity": 1,
+                      "year": [2000],
+                      "parameter": [
+                        "lcartif"
+                      ]
+                    },
+                    {
+                      "label": "Bare Areas",
+                      "value": "Bare Areas",
+                      "opacity": 1,
+                      "year": [2000],
+                      "parameter": "lcbare"
+                    }
+                  ]
+                }
             ]
           },
           {
@@ -651,141 +799,63 @@
               {
                 "name": "Landcover Types",
                 "type": "radio",
-                "dataType": "polygon",
-                "functions": [
-                  "summary",
-                  "raster_sld"
-                ],
+                "dataType": "raster",
+                "geoserver_layer": "meris_YYYY:landcover.meris_YYYY_mosaic",
+                "functions": ["summary", "raster_sld" ],
                 "fieldOptions": [
-                  {
-                    "label": "All Categories",
-                    "value": "All Categories",
-                    "opacity": 1,
-                    "year": [
-                      2000,
-                      2005,
-                      2010,
-                      2015
-                    ],
-                    "parameter": []
-                  },
-                  {
-                    "label": "No Data",
-                    "value": "No Data",
-                    "opacity": 1,
-                    "year": [
-                      2000,
-                      2005,
-                      2010,
-                      2015
-                    ],
-                    "parameter": []
-                  },
-                  {
-                    "label": "Forest",
-                    "value": "Forest",
-                    "opacity": 0,
-                    "year": [
-                      2000,
-                      2005,
-                      2010,
-                      2015
-                    ],
-                    "parameter": []
-                  },
-                  {
-                    "label": "Water",
-                    "value": "Water",
-                    "opacity": 0,
-                    "year": [
-                      2000,
-                      2005,
-                      2010,
-                      2015
-                    ],
-                    "parameter": []
-                  },
-                  {
-                    "label": "Built Environment",
-                    "value": "Built Environment",
-                    "opacity": 0,
-                    "year": [
-                      2000,
-                      2005,
-                      2010,
-                      2015
-                    ],
-                    "parameter": []
-                  },
-                  {
-                    "label": "Bare Areas",
-                    "value": "Bare Areas",
-                    "opacity": 0,
-                    "year": [
-                      2000,
-                      2005,
-                      2010,
-                      2015
-                    ],
-                    "parameter": []
-                  }
-                ]
-              }
+                    {
+                      "label": "All Categories",
+                      "value": "All Categories",
+                      "opacity": 1,
+                      "year": [2000, 2005, 2010, 2015],
+                      "parameter": []
+                    },
+                    {
+                      "label": "Cropland",
+                      "value": "No Data",
+                      "opacity": 1,
+                      "year": [2000, 2005, 2010, 2015],
+                      "parameter": ["lccroprain", "lccropirripofld" ]
+                    },
+                    {
+                      "label": "Forest",
+                      "value": "Forest",
+                      "opacity": 1,
+                      "year": [2000, 2005, 2010, 2015],
+                      "parameter": ["lcmocropnatvege", "lcmonatvegecrop", "lctreebrevgrncto",
+                        "lctreebrdecicto", "lctreebrdecic", "lctreebrdecio", "lctreeneedevgrncto",
+                        "lctreeneedevgrnc", "lctreeneedevgrno", "lctreeneeddecicto"
+                        ]
+                    },
+                    {
+                      "label": "Water",
+                      "value": "Water",
+                      "opacity": 1,
+                      "year": [2000, 2005, 2010, 2015],
+                      "parameter": [ "lcwater"                      
+                      ]
+                    },
+                    {
+                      "label": "Built Environment",
+                      "value": "Built Environment",
+                      "opacity": 1,
+                      "year": [2000, 2005, 2010, 2015],
+                      "parameter": [ "lcurban"
+                      ]
+                    },
+                    {
+                      "label": "Bare Areas",
+                      "value": "Bare Areas",
+                      "opacity": 1,
+                      "year": [2000, 2005, 2010, 2015],
+                      "parameter": ["lcbare"]
+                    }
+                  ]
+                }
             ]
           }
         ]
       }
     ]
-  },
-  {
-    "name": "Socio-Economic Indicators",
-    "options": [
-      {
-        "name": "Socio-Economic",
-        "type": "radio",
-        "dataType": "polygon",
-        "functions": [
-          "choropleth"
-        ],
-        "fieldOptions": [
-          {
-            "label": "Population with Access to Grocery Store Greater than (1m Urban & 10m Rural)",
-            "value": " Population with Access to Grocery Store Greater than (1m Urban & 10m Rural)",
-            "Year": [
-              2015
-            ],
-            "geoserver_layer": "food_access",
-            "parameter": "low_access_population_urban_1_rural_10"
-          },
-          {
-            "label": "Population with Access to Grocery Store Greater than(0.5m Urban & 10m Rural)",
-            "value": "Population with Access to Grocery Store Greater than(0.5m Urban & 10m Rural)",
-            "Year": [
-              2015
-            ],
-            "geoserver_layer": "food_access",
-            "parameter": "low_access_population_urban_05_rural_10"
-          },
-          {
-            "label": "Population with Access to Grocery Store Greater than (1m Urban & 20m Rural)",
-            "value": "Population with Access to Grocery Store Greater than (1m Urban & 20m Rural)",
-            "Year": [
-              2015
-            ],
-            "geoserver_layer": "food_access",
-            "parameter": "low_access_income_population_urban_1_rural_20"
-          },
-          {
-            "label": "Population count beyond 0.5 m from Grocery Store",
-            "value": "Population count beyond 0.5 m from Grocery Store",
-            "Year": [
-              2015
-            ],
-            "geoserver_layer": "food_access",
-            "parameter": "population_05_supermarket"
-          }
-        ]
-      }
-    ]
-  }
+  }   
 ]
