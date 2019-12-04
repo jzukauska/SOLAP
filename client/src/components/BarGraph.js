@@ -1,5 +1,6 @@
-import React, {Component} from 'react';
+import React, {Component} from "react";
 import * as d3 from "d3";
+import ColorBrewerStyles from "./OpenLayers/Style/ColorBrewerStyles";
 
 class BarGraph extends Component {
   componentDidMount() {
@@ -7,14 +8,38 @@ class BarGraph extends Component {
   }
 
   drawChart() {
-    const data = [12, 5, 6, 6, 9, 10];
+    var svgWidth = d3.select("#graph").node().offsetWidth - 50;
+    var svgHeight = 100;
 
-    const svg = d3.select("body")
-    .append("svg")
+    const svg = d3.select("#graph")
+      .append("svg")
+      .attr("width", svgWidth)
+      .attr("height", svgHeight);
+
+    var dataset = [80, 100, 56, 120, 180];
+
+    var barPadding = 5;
+    var barWidth = (svgWidth / dataset.length);
+
+    var barChart = svg.selectAll("rect")
+      .data(dataset)
+      .enter()
+      .append("rect")
+      .attr("y", function(d) {
+          return svgHeight - d
+      })
+      .attr("height", function(d) {
+          return d;
+      })
+      .attr("width", barWidth - barPadding)
+      .attr("transform", function (d, i) {
+           var translate = [barWidth * i, 0];
+           return "translate("+ translate +")";
+      });
   }
 
   render(){
-    return <div id={"#" + this.props.id}></div>
+    return <div id="graph"></div>
   }
 }
 
