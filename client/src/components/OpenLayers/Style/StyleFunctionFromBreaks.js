@@ -2,9 +2,12 @@ import ColorBrewerStyles from "./ColorBrewerStyles";
 import BivariatePolygon from "./BivariatePolygon";
 
 /**
+ * TODO
  * Return a custom style function using a ColorBrewer ramp for univariate
  * and a single-option set of colors (3x3) for bivariate cases.
- * @param {string[][]} breaks one-item or two-item array of class breaks (high end, <=)
+ * @param {Object[]} breaks one-item or two-item array of class breaks (high end, <=)
+ * @param {number} breaks[].minVal min value for class
+ * @param {number[]} breaks[].breaks <= break values
  * @param {Object} options config options
  * @param {string[]} options.prop1Names primary property name(s) to check values
  * @param {string} [options.prop2Name] second property name to check values for; bivariate use
@@ -24,14 +27,14 @@ export default function(breaks, options) {
     return function(feature) {
       let testVal = 0,
         featProps = feature.getProperties(),
-        numClasses = breaks[0].length;
+        numClasses = breaks[0].breaks.length;
 
       for (let i = 0; i < opts.prop1Names.length; i++) {
         testVal += parseFloat(featProps[opts.prop1Names[i]]);
       }
 
       for (let i = 0; i < numClasses; i++) {
-        if (testVal <= breaks[0][i]) {
+        if (testVal <= breaks[0].breaks[i]) {
           return ColorBrewerStyles[opts.colorbrewerRampId][numClasses][i];
         }
       }
@@ -53,9 +56,9 @@ export default function(breaks, options) {
       testVal2 = featProps[opts.prop2Name];
 
       for (let i = 0; i < numClasses; i++) {
-        if (testVal1 <= breaks[0][i]) {
+        if (testVal1 <= breaks[0].breaks[i]) {
           for (let j = 0; j < numClasses; j++) {
-            if (testVal2 <= breaks[1][j]) {
+            if (testVal2 <= breaks[1].breaks[j]) {
               return BivariatePolygon[i][j];
             }
           }
