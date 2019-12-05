@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import filterFields from "../filterFields.json";
+import { commonFields, scopedFilterFields } from "../filterFields";
 
 const FilterContext = React.createContext();
 
@@ -7,35 +7,28 @@ export default class FilterContextProvider extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstVariable: { filterFields, filterValues: {} },
-      secondVariable: { filterFields, filterValues: {} }
+      firstVariable: { scopedFilterFields, filterValues: {} },
+      secondVariable: { scopedFilterFields, filterValues: {} },
+      commonFilterValues: {}
     };
   }
 
   handleInputChange = async ({ name, value, yearOptions }) => {
     const canAddFilter = () => {
       if (
-        this.state[this.props.variableName].filterValues.hasOwnProperty(
-          "Time Period"
-        ) &&
-        this.state[this.props.variableName].filterValues.hasOwnProperty(
-          "Geographic Unit"
-        ) &&
-        Object.keys(this.state[this.props.variableName].filterValues).length < 4
+        this.state.commonFilterValues.hasOwnProperty("Time Period") &&
+        this.state.commonFilterValues.hasOwnProperty("Geographic Unit") &&
+        Object.keys(this.state[this.props.variableName].filterValues).length < 2
       )
         return true;
       else if (
-        this.state[this.props.variableName].filterValues.hasOwnProperty(
-          "Time Period"
-        ) &&
-        Object.keys(this.state[this.props.variableName].filterValues).length < 3
+        this.state.commonFilterValues.hasOwnProperty("Time Period") &&
+        Object.keys(this.state[this.props.variableName].filterValues).length < 1
       )
         return true;
       else if (
-        this.state[this.props.variableName].filterValues.hasOwnProperty(
-          "Geographic Unit"
-        ) &&
-        Object.keys(this.state[this.props.variableName].filterValues).length < 3
+        this.state.commonFilterValues.hasOwnProperty("Geographic Unit") &&
+        Object.keys(this.state[this.props.variableName].filterValues).length < 1
       )
         return true;
       else if (
@@ -117,7 +110,10 @@ export default class FilterContextProvider extends Component {
     return (
       <FilterContext.Provider
         value={{
-          filterFields: this.state[this.props.variableName].filterFields,
+          filterFields: [
+            ...commonFields,
+            ...this.state[this.props.variableName].scopedFilterFields
+          ],
           filterValues: this.state[this.props.variableName].filterValues,
           handleInputChange: this.handleInputChange,
           handleColorChange: this.handleColorChange,
