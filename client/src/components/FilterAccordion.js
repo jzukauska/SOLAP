@@ -12,8 +12,9 @@ import {
   CheckBox,
   TextInput
 } from "grommet";
-
-import RangeSlider from './RangeSlider'
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
+import RangeSlider from "./RangeSlider";
 import { capitalize } from "../helpers/utils";
 
 const renderFieldBasedOnType = (field, value, onChange) => {
@@ -24,7 +25,7 @@ const renderFieldBasedOnType = (field, value, onChange) => {
           name={field.name}
           placeholder={field.placeholder}
           value={value}
-        //onChange={onChange}
+          //onChange={onChange}
         />
       );
     case "range":
@@ -93,12 +94,14 @@ const renderFieldBasedOnType = (field, value, onChange) => {
 
 const Filter = ({ field, value, onChange }) => {
   return (
-    <React.Fragment key={field.name}>
-      <div>
-        {capitalize(field.name)}: {value === 0 ? "Pick a year" : value}
-      </div>
-      {renderFieldBasedOnType(field, value, onChange)}
-    </React.Fragment>
+    <div style={{ padding: "0.5rem" }}>
+      <React.Fragment key={field.name}>
+        <div>
+          {capitalize(field.name)}: {value === 0 ? "Pick a year" : value}
+        </div>
+        {renderFieldBasedOnType(field, value, onChange)}
+      </React.Fragment>
+    </div>
   );
 };
 
@@ -120,21 +123,28 @@ const YearFilter = ({ field, value, onChange, filterValues }) => {
   };
   return (
     <React.Fragment key={field.name}>
-      <Text>
-        {capitalize(field.name)}: {value === 0 ? "Pick a year" : value}
-      </Text>
-      <Select
-        name={field.name}
-        placeholder={field.placeholder}
-        options={buildYearOptions()}
-        value={value}
-        onChange={e => onChange({ name: e.target.name, value: e.option })}
-      />
+      <div style={{ paddingLeft: "0.5rem" }}>
+        <Text style={{}}>
+          {capitalize(field.name)}: {value === 0 ? "Pick a year" : value}
+        </Text>
+        <Select
+          name={field.name}
+          placeholder={field.placeholder}
+          options={buildYearOptions()}
+          value={value}
+          onChange={e => onChange({ name: e.target.name, value: e.option })}
+        />
+      </div>
     </React.Fragment>
   );
 };
 
-const FilterAccordion = ({ filterFields, filterValues, handleInputChange }) => {
+const FilterAccordion = ({
+  filterFields,
+  filterValues,
+  handleInputChange,
+  tab
+}) => {
   return filterFields.map(field => {
     // Base case for recursive component
     if (!field.options) {
@@ -149,6 +159,20 @@ const FilterAccordion = ({ filterFields, filterValues, handleInputChange }) => {
             onChange={handleInputChange}
             filterValues={filterValues}
           />
+        );
+      }
+      if (field.name === "MultiVarible Tab") {
+        return (
+          <Tabs
+            value={tab.currentTab}
+            onChange={tab.changeTab}
+            indicatorColor="primary"
+            textColor="primary"
+            aria-label="variable tabs"
+          >
+            <Tab label="Variable 1" key="variable1" />
+            <Tab label="Variable 2" key="variable2" />
+          </Tabs>
         );
       }
       return (

@@ -121,7 +121,8 @@ export default class FilterContextProvider extends Component {
           filterValues: this.state[this.props.variableName].filterValues,
           handleInputChange: this.handleInputChange,
           handleColorChange: this.handleColorChange,
-          clearFilter: this.clearFilter
+          clearFilter: this.clearFilter,
+          tab: this.props.tab
         }}
       >
         {children}
