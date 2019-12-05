@@ -61,10 +61,15 @@ const renderFieldBasedOnType = (field, value, onChange) => {
             const yearOptions = field.fieldOptions.find(
               option => option.value === e.target.value
             ).year;
+            const fieldOptions = field.fieldOptions.find(option => option.value === e.target.value)
+            const { ["fieldOptions"]: removedKey, ...groupOptions } = field;
             onChange({
               name: e.target.name,
               value: e.target.value,
-              yearOptions
+              yearOptions,
+              groupOptions,
+              fieldOptions
+
             });
           }}
         />

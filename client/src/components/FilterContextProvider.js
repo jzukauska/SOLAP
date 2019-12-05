@@ -13,55 +13,50 @@ export default class FilterContextProvider extends Component {
     };
   }
 
-  handleInputChange = async ({ name, value, yearOptions }) => {
-    const canAddFilter = () => {
-      if (
-        Object.keys(this.state[this.props.variableName].filterValues).length < 2
-      )
-        return true;
-      else if (
-        Object.keys(this.state[this.props.variableName].filterValues).length < 1
-      )
-        return true;
-      else if (
-        Object.keys(this.state[this.props.variableName].filterValues).length < 1
-      )
-        return true;
-      else if (
-        Object.keys(this.state[this.props.variableName].filterValues).length <
-          2 ||
-        name === "Time Period" ||
-        name === "Geographic Unit"
-      )
-        return true;
-      else if (
-        this.state[this.props.variableName].filterValues.hasOwnProperty(name)
-      )
-        return true;
-      else return false;
-    };
-    const canAdd = canAddFilter();
+  handleInputChange = async ({
+    name,
+    value,
+    yearOptions,
+    groupOptions,
+    fieldOptions
+  }) => {
     const { variableName } = this.props;
-    if (canAdd === true) {
+
+    if (name === "Time Period" || name === "Geographic Unit") {
       await this.setState({
-        [variableName]: {
-          ...this.state[variableName],
-          filterValues: {
-            ...this.state[variableName].filterValues,
-            [name]: {
-              ...this.state[variableName].filterValues[name],
-              value,
-              yearOptions,
-              colors: ""
-            }
+        commonFilterValues: {
+          ...this.state.commonFilterValues,
+          [name]: {
+            ...this.state[variableName].filterValues[name],
+            name,
+            value,
+            yearOptions,
+            colors: ""
           }
         }
       });
-      this.props.handleMapChange({ name, value, yearOptions });
-    } else {
-      console.log("more than 2 objects choosen");
-      alert("Please delete a filter before adding another");
     }
+    await this.setState({
+      [variableName]: {
+        ...this.state[variableName],
+        filterValues: {
+          [name]: {
+            ...this.state[variableName].filterValues[name],
+            name,
+            value,
+            yearOptions,
+            colors: ""
+          }
+        }
+      }
+    });
+    this.props.handleMapChange({
+      name,
+      value,
+      yearOptions,
+      groupOptions,
+      fieldOptions
+    });
   };
 
   clearFilter = name => {
