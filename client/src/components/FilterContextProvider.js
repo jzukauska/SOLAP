@@ -96,6 +96,7 @@ export default class FilterContextProvider extends Component {
           }
         }
       })
+      this.props.handleMapChange({ name, value, yearOptions, groupOptions, fieldOptions });
     }
   };
 
