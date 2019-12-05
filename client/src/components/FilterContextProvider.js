@@ -16,18 +16,14 @@ export default class FilterContextProvider extends Component {
   handleInputChange = async ({ name, value, yearOptions }) => {
     const canAddFilter = () => {
       if (
-        this.state.commonFilterValues.hasOwnProperty("Time Period") &&
-        this.state.commonFilterValues.hasOwnProperty("Geographic Unit") &&
         Object.keys(this.state[this.props.variableName].filterValues).length < 2
       )
         return true;
       else if (
-        this.state.commonFilterValues.hasOwnProperty("Time Period") &&
         Object.keys(this.state[this.props.variableName].filterValues).length < 1
       )
         return true;
       else if (
-        this.state.commonFilterValues.hasOwnProperty("Geographic Unit") &&
         Object.keys(this.state[this.props.variableName].filterValues).length < 1
       )
         return true;
