@@ -12,7 +12,7 @@ export default class FilterContextProvider extends Component {
     };
   }
 
-  handleInputChange = async ({ name, value, yearOptions }) => {
+  handleInputChange = async ({ name, value, yearOptions, groupOptions, fieldOptions }) => {
     const canAddFilter = () => {
       if (
         this.state[this.props.variableName].filterValues.hasOwnProperty(
@@ -68,7 +68,7 @@ export default class FilterContextProvider extends Component {
           }
         }
       });
-      this.props.handleMapChange({ name, value, yearOptions });
+       this.props.handleMapChange({ name, value, yearOptions, groupOptions, fieldOptions });
     } else {
       console.log("more than 2 objects choosen");
       alert("Please delete a filter before adding another");
