@@ -13,6 +13,7 @@ const commonFields = [
   {
     name: "Geographic Unit",
     type: "radio",
+    value: "County",
     fieldOptions: [
       {
         label: "County",

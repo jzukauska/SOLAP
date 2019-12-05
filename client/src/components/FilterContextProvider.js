@@ -22,12 +22,15 @@ export default class FilterContextProvider extends Component {
   }) => {
     const { variableName } = this.props;
 
-    if (name === "Time Period" || name === "Geographic Unit") {
+    if (
+      name === "Time Period" ||
+      name === "Geographic Unit" ||
+      name === "Chatbot"
+    ) {
       await this.setState({
         commonFilterValues: {
           ...this.state.commonFilterValues,
           [name]: {
-            ...this.state[variableName].filterValues[name],
             name,
             value,
             yearOptions,
@@ -35,21 +38,22 @@ export default class FilterContextProvider extends Component {
           }
         }
       });
-    }
-    await this.setState({
-      [variableName]: {
-        ...this.state[variableName],
-        filterValues: {
-          [name]: {
-            ...this.state[variableName].filterValues[name],
-            name,
-            value,
-            yearOptions,
-            colors: ""
+    } else {
+      await this.setState({
+        [variableName]: {
+          ...this.state[variableName],
+          filterValues: {
+            [name]: {
+              ...this.state[variableName].filterValues[name],
+              name,
+              value,
+              yearOptions,
+              colors: ""
+            }
           }
         }
-      }
-    });
+      });
+    }
     this.props.handleMapChange({
       name,
       value,
@@ -105,7 +109,10 @@ export default class FilterContextProvider extends Component {
             ...commonFields,
             ...this.state[this.props.variableName].scopedFilterFields
           ],
-          filterValues: this.state[this.props.variableName].filterValues,
+          filterValues: {
+            ...this.state.commonFilterValues,
+            ...this.state[this.props.variableName].filterValues
+          },
           handleInputChange: this.handleInputChange,
           handleColorChange: this.handleColorChange,
           clearFilter: this.clearFilter,

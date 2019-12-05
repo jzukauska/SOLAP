@@ -56,12 +56,14 @@ const renderFieldBasedOnType = (field, value, onChange) => {
         <RadioButtonGroup
           name={field.name}
           options={field.fieldOptions}
-          value={value}
+          value={value || field.value}
           onChange={e => {
             const yearOptions = field.fieldOptions.find(
               option => option.value === e.target.value
             ).year;
-            const fieldOptions = field.fieldOptions.find(option => option.value === e.target.value)
+            const fieldOptions = field.fieldOptions.find(
+              option => option.value === e.target.value
+            );
             const { ["fieldOptions"]: removedKey, ...groupOptions } = field;
             onChange({
               name: e.target.name,
@@ -69,7 +71,6 @@ const renderFieldBasedOnType = (field, value, onChange) => {
               yearOptions,
               groupOptions,
               fieldOptions
-
             });
           }}
         />
