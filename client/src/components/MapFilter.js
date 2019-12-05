@@ -1,12 +1,11 @@
-import React from 'react'
-import { FilterConsumer } from './FilterContextProvider'
+import React from "react";
+import { FilterConsumer } from "./FilterContextProvider";
 
-import { Box } from 'grommet'
+import { Box } from "grommet";
 
-import FilterTable from './FilterTable'
-import FilterAccordion from './FilterAccordion'
-import styled from 'styled-components'
-import BarGraph from "./BarGraph"
+import FilterTable from "./FilterTable";
+import FilterAccordion from "./FilterAccordion";
+import styled from "styled-components";
 
 const MapFilterContainer = styled.div`
   height: 75%;
@@ -21,7 +20,7 @@ const MapGraphContainer = styled.div`
 const MapFilterGraphContainer = styled.div`
   height: 100%;
   overflow: auto;
-`
+`;
 
 const MapFilter = ({ width }) => {
   return (
@@ -31,7 +30,8 @@ const MapFilter = ({ width }) => {
         filterValues,
         handleInputChange,
         handleColorChange,
-        clearFilter
+        clearFilter,
+        tab
       }) => (
           <MapFilterGraphContainer>
             <MapFilterContainer>
@@ -39,6 +39,7 @@ const MapFilter = ({ width }) => {
                 filterFields={filterFields}
                 filterValues={filterValues}
                 handleInputChange={handleInputChange}
+                tab={tab}
               />
 
               <FilterTable
@@ -53,8 +54,7 @@ const MapFilter = ({ width }) => {
                 justify="center"
                 align="center"
                 direction="row"
-              >
-              </Box>
+              ></Box>
             </MapFilterContainer>
             <MapGraphContainer>
               <BarGraph />
@@ -62,7 +62,7 @@ const MapFilter = ({ width }) => {
           </MapFilterGraphContainer>
         )}
     </FilterConsumer>
-  )
-}
+  );
+};
 
-export default MapFilter
+export default MapFilter;

@@ -12,7 +12,9 @@ import {
   CheckBox,
   TextInput
 } from "grommet";
-
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
+import RangeSlider from "./RangeSlider";
 import { capitalize } from "../helpers/utils";
 
 import BarGraph from "./BarGraph"
@@ -57,15 +59,21 @@ const renderFieldBasedOnType = (field, value, onChange) => {
         <RadioButtonGroup
           name={field.name}
           options={field.fieldOptions}
-          value={value}
+          value={value || field.value}
           onChange={e => {
             const yearOptions = field.fieldOptions.find(
               option => option.value === e.target.value
             ).year;
+            const fieldOptions = field.fieldOptions.find(
+              option => option.value === e.target.value
+            );
+            const { ["fieldOptions"]: removedKey, ...groupOptions } = field;
             onChange({
               name: e.target.name,
               value: e.target.value,
-              yearOptions
+              yearOptions,
+              groupOptions,
+              fieldOptions
             });
           }}
         />
@@ -74,23 +82,7 @@ const renderFieldBasedOnType = (field, value, onChange) => {
       return (
         <Box pad="xsmall" background="light-2">
           <Stack>
-            <Box direction="row" justify="between">
-              {[0, 15, 30, 45, 60, 75].map(val => (
-                <Box key={val} pad="xsmall" border={false}>
-                  <Text style={{ fontFamily: "monospace" }}>{val}</Text>
-                </Box>
-              ))}
-            </Box>
-            <RangeSelector
-              name={field.name}
-              min={field.min}
-              max={field.max}
-              step={field.step}
-              size="full"
-              round="small"
-              values={value || [0, 5]}
-              onChange={numArr => onChange({ value: numArr, name: field.name })}
-            />
+            <RangeSlider value={value} onChange={onChange} name={field.name} />
           </Stack>
         </Box>
       );
@@ -111,12 +103,14 @@ const renderFieldBasedOnType = (field, value, onChange) => {
 
 const Filter = ({ field, value, onChange }) => {
   return (
-    <React.Fragment key={field.name}>
-      <div>
-        {capitalize(field.name)}: {value === 0 ? "Pick a year" : value}
-      </div>
-      {renderFieldBasedOnType(field, value, onChange)}
-    </React.Fragment>
+    <div style={{ padding: "0.5rem" }}>
+      <React.Fragment key={field.name}>
+        <div>
+          {capitalize(field.name)}: {value === 0 ? "Pick a year" : value}
+        </div>
+        {renderFieldBasedOnType(field, value, onChange)}
+      </React.Fragment>
+    </div>
   );
 };
 
@@ -138,21 +132,28 @@ const YearFilter = ({ field, value, onChange, filterValues }) => {
   };
   return (
     <React.Fragment key={field.name}>
-      <Text>
-        {capitalize(field.name)}: {value === 0 ? "Pick a year" : value}
-      </Text>
-      <Select
-        name={field.name}
-        placeholder={field.placeholder}
-        options={buildYearOptions()}
-        value={value}
-        onChange={e => onChange({ name: e.target.name, value: e.option })}
-      />
+      <div style={{ paddingLeft: "0.5rem" }}>
+        <Text style={{}}>
+          {capitalize(field.name)}: {value === 0 ? "Pick a year" : value}
+        </Text>
+        <Select
+          name={field.name}
+          placeholder={field.placeholder}
+          options={buildYearOptions()}
+          value={value}
+          onChange={e => onChange({ name: e.target.name, value: e.option })}
+        />
+      </div>
     </React.Fragment>
   );
 };
 
-const FilterAccordion = ({ filterFields, filterValues, handleInputChange }) => {
+const FilterAccordion = ({
+  filterFields,
+  filterValues,
+  handleInputChange,
+  tab
+}) => {
   return filterFields.map(field => {
     // Base case for recursive component
     if (!field.options) {
@@ -167,6 +168,20 @@ const FilterAccordion = ({ filterFields, filterValues, handleInputChange }) => {
             onChange={handleInputChange}
             filterValues={filterValues}
           />
+        );
+      }
+      if (field.name === "MultiVarible Tab") {
+        return (
+          <Tabs
+            value={tab.currentTab}
+            onChange={tab.changeTab}
+            indicatorColor="primary"
+            textColor="primary"
+            aria-label="variable tabs"
+          >
+            <Tab label="Variable 1" key="variable1" />
+            <Tab label="Variable 2" key="variable2" />
+          </Tabs>
         );
       }
       return (

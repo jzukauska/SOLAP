@@ -103,7 +103,8 @@ export default class VizController extends Component {
     const styleData = await this.symbolizeOn({
       prop1Names: [value]
     });
-    this.generateStyleForLegend({ title: `${value}`, styleData });
+    //Stops generate sytle error in development branch
+    //this.generateStyleForLegend({ title: `${value}`, styleData });
   };
 
   /**
@@ -118,7 +119,7 @@ export default class VizController extends Component {
    * @param {number} classCount number of classes to break data into
    */
 
-  symbolizeOn = async function(options, classCount = 5) {
+  symbolizeOn = async function (options, classCount = 5) {
     // are all properties required in the features? just check one feature
     const layer = this.state[this.props.variableName].layers.CurrentLayer;
     const checkFeature = layer
@@ -133,7 +134,7 @@ export default class VizController extends Component {
     if (propsNeeded) {
       this.getFeaturePropertiesFromWfs({
         propertyNames: options.prop1Names
-      }).then(async function() {
+      }).then(async function () {
         const symbolConfig = {
           classCount: classCount,
           prop1Names: options.prop1Names
@@ -171,7 +172,7 @@ export default class VizController extends Component {
   /**
    * Reset layer styling to basic polygon style
    */
-  clearStyling = function() {
+  clearStyling = function () {
     this.setStyle(BasicPolygon);
   };
 
@@ -191,7 +192,7 @@ export default class VizController extends Component {
    * @param {string} options.joinKeySource key field on original ol/Source/Vector to use when joining
    * @param {string} options.joinKeyExtras key field on additional propertie retrieved to use when joining
    */
-  getFeaturePropertiesFromWfs = function(options) {
+  getFeaturePropertiesFromWfs = function (options) {
     const defaultOpts = {
       wfsUrl: "http://149.165.157.200:8080/geoserver/wfs",
       featurePrefix: "solap",
@@ -221,11 +222,11 @@ export default class VizController extends Component {
       body: new XMLSerializer().serializeToString(featureRequest)
     });
 
-    const theResponse = theFetch.then(function(response) {
+    const theResponse = theFetch.then(function (response) {
       return response.json();
     });
 
-    const theJoin = theResponse.then(function(json) {
+    const theJoin = theResponse.then(function (json) {
       const features = new GeoJSON().readFeatures(json);
       const origFeatures = opts.vectorSourceToUpdate.getFeatures();
 
