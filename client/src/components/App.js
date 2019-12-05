@@ -83,43 +83,18 @@ const App = () => {
   };
   return (
     <div className={classes.root}>
-      <Tabs
-        value={value}
-        onChange={handleChange}
-        indicatorColor="primary"
-        textColor="primary"
-        aria-label="variable tabs"
-        style={{ backgroundColor: "#0ca7d3" }}
-      >
-        <Tab label="Variable 1" {...a11yProps(0)} />
-        <Tab label="Variable 2" {...a11yProps(1)} />
-      </Tabs>
-      {/* <> */}
-      {/* {value === 0 && ( */}
       <div>
         <Grommet theme={theme}>
           <VizController variableName={currentVariable}>
-            <FilterContextProvider variableName={currentVariable}>
+            <FilterContextProvider
+              variableName={currentVariable}
+              tab={{ changeTab: handleChange, currentTab: value }}
+            >
               <ViewBox />
             </FilterContextProvider>
           </VizController>
         </Grommet>
       </div>
-      {/* )}
-      </> */}
-      {/* <>
-        {value === 1 && (
-          <div>
-            <Grommet theme={theme} full>
-              <VizController variableName={"secondVariable"}>
-                <FilterContextProvider variableName={"secondVariable"}>
-                  <ViewBox />
-                </FilterContextProvider>
-              </VizController>
-            </Grommet>
-          </div>
-        )}
-      </> */}
     </div>
   );
 };
