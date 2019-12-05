@@ -12,7 +12,7 @@ export default class FilterContextProvider extends Component {
     };
   }
 
-  handleInputChange = async ({ name, value, yearOptions, groupOptions, fieldOptions }) => {
+  handleInputChange = async ({ name, value, yearOptions, groupOptions, fieldOptions }) => {
     const canAddFilter = () => {
       if (
         this.state[this.props.variableName].filterValues.hasOwnProperty(
@@ -21,26 +21,26 @@ export default class FilterContextProvider extends Component {
         this.state[this.props.variableName].filterValues.hasOwnProperty(
           "Geographic Unit"
         ) &&
-        Object.keys(this.state[this.props.variableName].filterValues).length < 4
+        Object.keys(this.state[this.props.variableName].filterValues).length < 3
       )
         return true;
       else if (
         this.state[this.props.variableName].filterValues.hasOwnProperty(
           "Time Period"
         ) &&
-        Object.keys(this.state[this.props.variableName].filterValues).length < 3
+        Object.keys(this.state[this.props.variableName].filterValues).length < 2
       )
         return true;
       else if (
         this.state[this.props.variableName].filterValues.hasOwnProperty(
           "Geographic Unit"
         ) &&
-        Object.keys(this.state[this.props.variableName].filterValues).length < 3
+        Object.keys(this.state[this.props.variableName].filterValues).length < 2
       )
         return true;
       else if (
         Object.keys(this.state[this.props.variableName].filterValues).length <
-          2 ||
+        1 ||
         name === "Time Period" ||
         name === "Geographic Unit"
       )
@@ -50,7 +50,8 @@ export default class FilterContextProvider extends Component {
       )
         return true;
       else return false;
-    };
+     
+    }; 
     const canAdd = canAddFilter();
     const { variableName } = this.props;
     if (canAdd === true) {
@@ -61,17 +62,40 @@ export default class FilterContextProvider extends Component {
             ...this.state[variableName].filterValues,
             [name]: {
               ...this.state[variableName].filterValues[name],
+              name,
+              value,
+              yearOptions,
+              colors: "",
+            }
+          }
+        }
+      });
+      this.props.handleMapChange({ name, value, yearOptions, groupOptions, fieldOptions });
+    } else {
+      Object.values(this.state[variableName].filterValues).forEach(val => {        
+        if (val.name) {
+          if (val.name !== "Time Period" && val.name !== "Geographic Unit"  ) 
+          {
+            delete this.state[variableName].filterValues[val.name]
+          }
+        }
+
+      })
+      await this.setState({
+        [variableName]: {
+          ...this.state[variableName],
+          filterValues: {
+            ...this.state[variableName].filterValues,
+            [name]: {
+              ...this.state[variableName].filterValues[name],
+              name,
               value,
               yearOptions,
               colors: ""
             }
           }
         }
-      });
-       this.props.handleMapChange({ name, value, yearOptions, groupOptions, fieldOptions });
-    } else {
-      console.log("more than 2 objects choosen");
-      alert("Please delete a filter before adding another");
+      })
     }
   };
 
