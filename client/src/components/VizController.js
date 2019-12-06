@@ -143,15 +143,20 @@ export default class VizController extends Component {
         geoserverLayer: groupOptions.geoserver_layer
         // geoidField: `${currentLayerUnit}_geoid`
       },
-      [{ propertyName: fieldOptions.value }]
+      [
+        {
+          propertyName:
+            "parameter" in fieldOptions && fieldOptions.parameter.length === 1
+              ? fieldOptions.parameter[0]
+              : fieldOptions.value,
+          propertyIsViewParam:
+            "parameter" in fieldOptions && fieldOptions.parameter.length === 1
+              ? true
+              : false
+        }
+      ]
     );
 
-    // all other cases, only work for basic, single vars
-    // TODO handle years changes
-    // TODO get field(s) with sources to symbolizeOn
-    // const styleData = await this.symbolizeOn({
-    //   prop1Names: [value]
-    // });
     //Stops generate sytle error in development branch
     //this.generateStyleForLegend({ title: `${value}`, styleData });
   };

@@ -89,7 +89,6 @@ class EnumUnitData {
     classCount = 5,
     classMethod = "quantile"
   ) {
-    console.log("updateViz");
     if (classMethod !== "quantile") {
       console.error("updateViz - only quanitle breaks supported");
       return;
@@ -99,6 +98,9 @@ class EnumUnitData {
       console.error("updateViz - only 3-9 classes supported");
       return;
     }
+
+    console.log("groupOptions :", groupOptions);
+    console.log("fieldOptions :", fieldOptions);
 
     const defaultGroupOpts = {
         wfsUrl: "http://149.165.157.200:8080/geoserver/wfs",
@@ -170,12 +172,10 @@ class EnumUnitData {
         new Set(Object.keys(data).map(x => x.slice(0, 5)))
       );
 
-      console.log("normedNames :", normedNames);
       // for each field
       let perFieldSums, perFieldCounts, perFieldAverages;
-      console.log("normedNameAggMethod :", normedNameAggMethod);
+
       for (let field in normedNameAggMethod) {
-        console.log("aggregating field :", field);
         perFieldSums = {};
         perFieldCounts = {};
         perFieldAverages = {};
@@ -188,7 +188,6 @@ class EnumUnitData {
         // count occurences and sum to county
         for (let geoid in this.tract) {
           if (field in this.tract[geoid]) {
-            console.warn("field in tract");
             perFieldSums[geoid.slice(0, 5)] += this.tract[geoid][field];
             perFieldCounts[geoid.slice(0, 5)] += 1;
           }
@@ -234,15 +233,11 @@ class EnumUnitData {
       Object.values(symbolizePairs)
     );
 
-    console.log("breaks :", breaks);
-
     // populate layer source with symbolize property
     const layerFeatures = toLayer.getSource().getFeatures();
     let lfGeoid;
-    console.log("layerFeatures.length :", layerFeatures.length);
     for (let i = 0; i < layerFeatures.length; i++) {
       lfGeoid = layerFeatures[i].getProperties().geoid;
-      // console.log("lfGeoid :", lfGeoid);
       if (lfGeoid in symbolizePairs) {
         await layerFeatures[i].setProperties({
           [this.symbolizePropName]: symbolizePairs[lfGeoid]
@@ -292,8 +287,8 @@ class EnumUnitData {
   async getFromWFS(optsGroup, optsFields) {
     let result = {};
 
-    console.log("optsGroup :", optsGroup);
-    console.log("optsFields :", optsFields);
+    // console.log("optsGroup :", optsGroup);
+    // console.log("optsFields :", optsFields);
 
     // assemble request options
     const featureRequest = new WFS().writeGetFeature({
