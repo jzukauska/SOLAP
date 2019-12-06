@@ -17,6 +17,9 @@ import Tab from "@material-ui/core/Tab";
 import RangeSlider from "./RangeSlider";
 import { capitalize } from "../helpers/utils";
 
+import BarGraph from "./BarGraph"
+
+
 const renderFieldBasedOnType = (field, value, onChange) => {
   switch (field.type) {
     case "textInput":
