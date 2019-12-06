@@ -103,8 +103,7 @@ class EnumUnitData {
     const defaultGroupOpts = {
         wfsUrl: "http://149.165.157.200:8080/geoserver/wfs",
         geoserverWorkspace: "solap",
-        geoserverLayer: "demographics",
-        geoidField: "tract_geoid"
+        geoidField: "tract_geoid" // should always be tract, we aggregate up
       },
       defaultFieldOpts = [
         {
@@ -123,8 +122,17 @@ class EnumUnitData {
       optsFields[0].viewParams = {};
     }
 
+    // assume agggregation_method is "sum"
+    // TODO get agg method all into filterfields
+    for (let i = 0; i < optsFields.length; i++) {
+      if (!("aggregation_method" in optsFields[i])) {
+        optsFields[i].aggregation_method = "sum";
+      }
+    }
+
     // get normalized field names for all parameters to rekey data
     const normedNames = {};
+    const normedNameAggMethod = {};
     for (let i = 0; i < optsFields.length; i++) {
       normedNames[optsFields[i].propertyName] = this.normalizeFieldName({
         geoserverWorkspace: optsGroup.geoserverWorkspace,
@@ -133,9 +141,11 @@ class EnumUnitData {
         viewParams:
           "viewParams" in optsFields[i] ? optsFields[i].viewParams : {}
       });
+      normedNameAggMethod[normedNames[optsFields[i].propertyName]] =
+        optsFields[i].aggregation_method;
     }
 
-    // TODO add field check; handle population fields from source?
+    // TODO add field check
     const featureData = this.getFromWFS(optsGroup, optsFields);
 
     // add feature data to this.tract or this.county
@@ -149,12 +159,61 @@ class EnumUnitData {
         }
       }
 
-      // assign into this.tract or this.county
+      // add to this.tract
       for (let geoid in data) {
-        this[level][geoid] = Object.assign({}, this[level][geoid], data[geoid]);
+        this.tract[geoid] = Object.assign({}, this.tract[geoid], data[geoid]);
       }
 
       // TODO aggregation to county here
+      // get unique geoids from tract geoids
+      let countyGeoids = Array.from(
+        new Set(Object.keys(data).map(x => x.slice(0, 5)))
+      );
+
+      console.log("normedNames :", normedNames);
+      // for each field
+      let perFieldSums, perFieldCounts, perFieldAverages;
+      console.log("normedNameAggMethod :", normedNameAggMethod);
+      for (let field in normedNameAggMethod) {
+        console.log("aggregating field :", field);
+        perFieldSums = {};
+        perFieldCounts = {};
+        perFieldAverages = {};
+        for (let i = 0; i < countyGeoids.length; i++) {
+          perFieldSums[countyGeoids[i]] = 0;
+          perFieldCounts[countyGeoids[i]] = 0;
+          perFieldAverages[countyGeoids[i]] = null;
+        }
+
+        // count occurences and sum to county
+        for (let geoid in this.tract) {
+          if (field in this.tract[geoid]) {
+            console.warn("field in tract");
+            perFieldSums[geoid.slice(0, 5)] += this.tract[geoid][field];
+            perFieldCounts[geoid.slice(0, 5)] += 1;
+          }
+        }
+
+        // populate this.county with average else sum
+        if (normedNameAggMethod[field] === "average") {
+          for (let geoid in perFieldCounts) {
+            if (perFieldCounts[geoid] > 0) {
+              perFieldAverages[geoid] =
+                perFieldSums[geoid] / perFieldCounts[geoid];
+            }
+            this.county[geoid] = Object.assign({}, this.county[geoid], {
+              [field]: perFieldAverages[geoid]
+            });
+          }
+        } else {
+          // else we use the sumsum
+          for (let geoid in perFieldCounts) {
+            this.county[geoid] = Object.assign({}, this.county[geoid], {
+              [field]: perFieldSums[geoid]
+            });
+          }
+        }
+      }
     });
 
     // get array of values to determine classes from
@@ -180,8 +239,10 @@ class EnumUnitData {
     // populate layer source with symbolize property
     const layerFeatures = toLayer.getSource().getFeatures();
     let lfGeoid;
+    console.log("layerFeatures.length :", layerFeatures.length);
     for (let i = 0; i < layerFeatures.length; i++) {
       lfGeoid = layerFeatures[i].getProperties().geoid;
+      // console.log("lfGeoid :", lfGeoid);
       if (lfGeoid in symbolizePairs) {
         await layerFeatures[i].setProperties({
           [this.symbolizePropName]: symbolizePairs[lfGeoid]
@@ -230,6 +291,9 @@ class EnumUnitData {
    */
   async getFromWFS(optsGroup, optsFields) {
     let result = {};
+
+    console.log("optsGroup :", optsGroup);
+    console.log("optsFields :", optsFields);
 
     // assemble request options
     const featureRequest = new WFS().writeGetFeature({

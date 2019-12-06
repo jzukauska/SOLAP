@@ -140,8 +140,8 @@ export default class VizController extends Component {
       currentLayerUnit,
       this.state[this.props.variableName].layers.CurrentLayer,
       {
-        geoserverLayer: groupOptions.geoserver_layer,
-        geoidField: `${currentLayerUnit}_geoid`
+        geoserverLayer: groupOptions.geoserver_layer
+        // geoidField: `${currentLayerUnit}_geoid`
       },
       [{ propertyName: fieldOptions.value }]
     );
