@@ -9,7 +9,7 @@ export default class FilterContextProvider extends Component {
     this.state = {
       firstVariable: { scopedFilterFields, filterValues: {} },
       secondVariable: { scopedFilterFields, filterValues: {} },
-      commonFilterValues: {}
+      commonFilterValues: { firstVariable: {}, secondVariable: {} }
     };
   }
 
@@ -29,12 +29,14 @@ export default class FilterContextProvider extends Component {
     ) {
       await this.setState({
         commonFilterValues: {
-          ...this.state.commonFilterValues,
-          [name]: {
-            name,
-            value,
-            yearOptions,
-            colors: ""
+          [variableName]: {
+            ...this.state.commonFilterValues[variableName],
+            [name]: {
+              name,
+              value,
+              yearOptions,
+              colors: ""
+            }
           }
         }
       });
@@ -110,7 +112,7 @@ export default class FilterContextProvider extends Component {
             ...this.state[this.props.variableName].scopedFilterFields
           ],
           filterValues: {
-            ...this.state.commonFilterValues,
+            ...this.state.commonFilterValues[this.props.variableName],
             ...this.state[this.props.variableName].filterValues
           },
           handleInputChange: this.handleInputChange,
