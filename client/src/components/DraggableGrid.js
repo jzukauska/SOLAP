@@ -18,7 +18,7 @@ const DraggableItem = styled.div.attrs({
 })`
   display: block;
   position: absolute;
-  height: ${windowHeight - 98}px;
+  height: ${windowHeight - 50}px;
   z-index: 1;
   background-color: #dddbe0;
 `;
