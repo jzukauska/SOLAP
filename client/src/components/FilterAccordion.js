@@ -17,8 +17,7 @@ import Tab from "@material-ui/core/Tab";
 import RangeSlider from "./RangeSlider";
 import { capitalize } from "../helpers/utils";
 
-import BarGraph from "./BarGraph"
-
+import BarGraph from "./BarGraph";
 
 const renderFieldBasedOnType = (field, value, onChange) => {
   switch (field.type) {
@@ -179,8 +178,16 @@ const FilterAccordion = ({
             textColor="primary"
             aria-label="variable tabs"
           >
-            <Tab label="Variable 1" key="variable1" />
-            <Tab label="Variable 2" key="variable2" />
+            <Tab
+              label="Variable 1"
+              key="variable1"
+              style={{ backgroundColor: "#EAF0CE" }}
+            />
+            <Tab
+              label="Variable 2"
+              key="variable2"
+              style={{ backgroundColor: "#9AD1D4" }}
+            />
           </Tabs>
         );
       }
