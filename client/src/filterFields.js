@@ -364,7 +364,6 @@ const scopedFilterFields = [
             value: "population_05_supermarket",
             year: [2015],
             aggregation_method: "sum"
-            
           }
         ]
       }
@@ -378,7 +377,7 @@ const scopedFilterFields = [
         type: "radio",
         dataType: "polygon",
         functions: ["choropleth"],
-        geoserver_layer: "health_behaviors",
+        geoserver_layer: "health_behavior",
         parameterKey: "behavior",
         fieldOptions: [
           {
