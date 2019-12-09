@@ -92,16 +92,6 @@ const scopedFilterFields = [
                 label: "Asian",
                 value: "asian_alone",
                 year: [2000, 2010]
-              },
-              {
-                label: "Hawaiian & Pacific Islander",
-                value: "hawaiian_pi_alone",
-                year: [2000, 2010]
-              },
-              {
-                label: "Other",
-                value: "sor_alone",
-                year: [2000, 2010]
               }
             ]
           }
@@ -346,13 +336,13 @@ const scopedFilterFields = [
         type: "radio",
         dataType: "polygon",
         functions: "choropleth",
+        geoserver_layer: "food_access",
         fieldOptions: [
           {
             label:
               "Population with Access to Grocery Store Greater than (1m Urban & 10m Rural)",
             value: "low_access_population_urban_1_rural_10",
             year: [2015],
-            geoserver_layer: "food_access",
             aggregation_method: "sum"
           },
           {
@@ -360,7 +350,6 @@ const scopedFilterFields = [
               "Population with Access to Grocery Store Greater than(0.5m Urban & 10m Rural)",
             value: "low_access_population_urban_05_rural_10",
             year: [2015],
-            geoserver_layer: "food_access",
             aggregation_method: "sum"
           },
           {
@@ -368,14 +357,14 @@ const scopedFilterFields = [
               "Population with Access to Grocery Store Greater than (1m Urban & 20m Rural)",
             value: "low_access_income_population_urban_1_rural_20",
             year: [2015],
-            geoserver_layer: "food_access",
             aggregation_method: "sum"
           },
           {
             label: "Population count beyond 0.5 m from Grocery Store",
             value: "population_05_supermarket",
             year: [2015],
-            geoserver_layer: "sum"
+            aggregation_method: "sum"
+            
           }
         ]
       }
@@ -389,13 +378,14 @@ const scopedFilterFields = [
         type: "radio",
         dataType: "polygon",
         functions: ["choropleth"],
+        geoserver_layer: "health_behaviors",
+        parameterKey: "behavior",
         fieldOptions: [
           {
             label:
               "Physical health not good for >=14 days among adults aged >=18 Years",
             value:
               "Physical health not good for >=14 days among adults aged >=18 Years",
-            geoserver_layer: "health_behaviors",
             year: [2014, 2015, 2016],
             parameter: ["Physical"],
             aggregation_method: "average"
@@ -405,7 +395,6 @@ const scopedFilterFields = [
               "Current lack of health insurance among adults aged 18-64 Years",
             value:
               "Current lack of health insurance among adults aged 18-64 Years",
-            geoserver_layer: "health_behaviors",
             year: [2014, 2015, 2016],
             parameter: ["Insurance"],
             aggregation_method: "average"
@@ -413,7 +402,6 @@ const scopedFilterFields = [
           {
             label: "Obesity among adults aged >=18 Years",
             value: "Obesity among adults aged >=18 Years",
-            geoserver_layer: "health_behaviors",
             year: [2014, 2015, 2016],
             parameter: ["Obesity"],
             aggregation_method: "average"
@@ -433,7 +421,6 @@ const scopedFilterFields = [
               "Visits to doctor for routine checkup within the past Year among adults aged >=18 Years",
             value:
               "Visits to doctor for routine checkup within the past Year among adults aged >=18 Years",
-            geoserver_layer: "health_behaviors",
             year: [2014, 2015, 2016],
             parameter: ["Checkup"],
             aggregation_method: "average"
@@ -441,7 +428,6 @@ const scopedFilterFields = [
           {
             label: "Binge drinking among adults aged >=18 Years",
             value: "Binge drinking among adults aged >=18 Years",
-            geoserver_layer: "health_behaviors",
             year: [2014, 2015, 2016],
             parameter: ["Drinking"],
             aggregation_method: "average"
@@ -449,7 +435,6 @@ const scopedFilterFields = [
           {
             label: "Current smoking among adults aged >=18 Years",
             value: "Current smoking among adults aged >=18 Years",
-            geoserver_layer: "health_behaviors",
             year: [2014, 2015, 2016],
             parameter: ["Smoking"],
             aggregation_method: "average"
@@ -459,7 +444,6 @@ const scopedFilterFields = [
               "No leisure-time physical activity among adults aged >=18 Years",
             value:
               "No leisure-time physical activity among adults aged >=18 Years",
-            geoserver_layer: "health_behaviors",
             year: [2014, 2015, 2016],
             parameter: ["Inactivity"],
             aggregation_method: "average"
@@ -479,6 +463,8 @@ const scopedFilterFields = [
             type: "radio",
             dataType: "polygon",
             functions: ["choropleth"],
+            geoserver_layer: "caces_pollutants",
+            parameterKey: "pollutant",
             fieldOptions: [
               {
                 label: "Ozone",
@@ -501,7 +487,6 @@ const scopedFilterFields = [
                   2014,
                   2015
                 ],
-                geoserver_layer: "caces_pollutants",
                 parameter: ["o3"],
                 aggregation_method: "average"
               },
@@ -526,7 +511,6 @@ const scopedFilterFields = [
                   2014,
                   2015
                 ],
-                geoserver_layer: "caces_pollutants",
                 parameter: ["co"],
                 aggregation_method: "average"
               },
@@ -551,7 +535,6 @@ const scopedFilterFields = [
                   2014,
                   2015
                 ],
-                geoserver_layer: "caces_pollutants",
                 parameter: ["so2"],
                 aggregation_method: "average"
               },
@@ -576,7 +559,6 @@ const scopedFilterFields = [
                   2014,
                   2015
                 ],
-                geoserver_layer: "caces_pollutants",
                 parameter: ["no2"],
                 aggregation_method: "average"
               },
@@ -601,7 +583,6 @@ const scopedFilterFields = [
                   2014,
                   2015
                 ],
-                geoserver_layer: "caces_pollutants",
                 parameter: ["pm10"],
                 aggregation_method: "average"
               },
@@ -626,7 +607,6 @@ const scopedFilterFields = [
                   2014,
                   2015
                 ],
-                geoserver_layer: "caces_pollutants",
                 parameter: ["pm25"],
                 aggregation_method: "average"
               }
