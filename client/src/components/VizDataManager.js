@@ -320,13 +320,12 @@ class EnumUnitData {
    */
   async getFromWFS(optsGroup, optsFields) {
     let result = {};
-
-    // console.log("optsGroup :", optsGroup);
-    // console.log("optsFields :", optsFields);
+    let viewParams = Object.keys(optsFields[0].viewParams)
+      .map(x => `${x}:${optsFields[0].viewParams[x]}`)
+      .join(";");
 
     // assemble request options
     const featureRequest = new WFS().writeGetFeature({
-      viewParams: false,
       featurePrefix: optsGroup.geoserverWorkspace,
       featureTypes: [optsGroup.geoserverLayer],
       propertyNames: optsFields

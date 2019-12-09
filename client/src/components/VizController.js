@@ -137,23 +137,35 @@ export default class VizController extends Component {
         ? "county"
         : "tract";
 
+    // build up view parameters
+    const fieldViewParams = {};
+    // if there's a >length-one array of years, parameterize it
+    if ("year" in fieldOptions && fieldOptions.year.length > 1) {
+      fieldViewParams.year = fieldOptions.year[fieldOptions.year.length - 1];
+    }
+
+    if ("parameterKey" in groupOptions) {
+      fieldViewParams[groupOptions.parameterKey] = fieldOptions.parameter[0];
+    }
+
     await this.state.dataManager.updateViz({
       level: currentLayerUnit,
       toLayer: this.state[this.props.variableName].layers.CurrentLayer,
       groupOptions: {
-        geoserverLayer: groupOptions.geoserver_layer
-        // geoidField: `${currentLayerUnit}_geoid`
+        geoserverLayer: groupOptions.geoserver_layer,
+        parameterKey: groupOptions.parameterKey
       },
       fieldOptions: [
         {
           propertyName:
             "parameter" in fieldOptions && fieldOptions.parameter.length === 1
-              ? fieldOptions.parameter[0]
+              ? "data_value"
               : fieldOptions.value,
           propertyIsViewParam:
             "parameter" in fieldOptions && fieldOptions.parameter.length === 1
               ? true
-              : false
+              : false,
+          viewParams: fieldViewParams
         }
       ]
     });
