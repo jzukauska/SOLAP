@@ -137,14 +137,14 @@ export default class VizController extends Component {
         ? "county"
         : "tract";
 
-    await this.state.dataManager.updateViz(
-      currentLayerUnit,
-      this.state[this.props.variableName].layers.CurrentLayer,
-      {
+    await this.state.dataManager.updateViz({
+      level: currentLayerUnit,
+      toLayer: this.state[this.props.variableName].layers.CurrentLayer,
+      groupOptions: {
         geoserverLayer: groupOptions.geoserver_layer
         // geoidField: `${currentLayerUnit}_geoid`
       },
-      [
+      fieldOptions: [
         {
           propertyName:
             "parameter" in fieldOptions && fieldOptions.parameter.length === 1
@@ -156,7 +156,7 @@ export default class VizController extends Component {
               : false
         }
       ]
-    );
+    });
 
     const lastBreaks = this.state.dataManager.lastBreaks; // array for future bivariate support
     this.generateStyleForLegend({ title: `${value}`, styleData: lastBreaks });

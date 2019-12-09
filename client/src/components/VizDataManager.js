@@ -82,14 +82,14 @@ class EnumUnitData {
 
   // field (later fields) to vsualize
   // one field only for now
-  async updateViz(
+  async updateViz({
     level, // county or tract
     toLayer, // layer to update
     groupOptions,
     fieldOptions,
     classCount = 5,
     classMethod = "quantile"
-  ) {
+  }) {
     if (classMethod !== "quantile") {
       console.error("updateViz - only quanitle breaks supported");
       return;
