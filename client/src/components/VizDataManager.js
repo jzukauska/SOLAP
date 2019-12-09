@@ -147,71 +147,75 @@ class EnumUnitData {
         optsFields[i].aggregation_method;
     }
 
-    // TODO add field check
-    const featureData = this.getFromWFS(optsGroup, optsFields);
-
-    // add feature data to this.tract or this.county
-    await featureData.then(data => {
-      // first pass, rename to normalized
-      for (let geoid in data) {
-        delete data[geoid][optsGroup.geoidField]; // delete extra key prop
-        for (let origField in normedNames) {
-          data[geoid][normedNames[origField]] = data[geoid][origField];
-          delete data[geoid][origField];
-        }
-      }
-
-      // add to this.tract
-      for (let geoid in data) {
-        this.tract[geoid] = Object.assign({}, this.tract[geoid], data[geoid]);
-      }
-
-      // get unique geoids from tract geoids
-      let countyGeoids = Array.from(
-        new Set(Object.keys(data).map(x => x.slice(0, 5)))
-      );
-
-      let perFieldSums, perFieldCounts, perFieldAverages;
-
-      for (let field in normedNameAggMethod) {
-        perFieldSums = {};
-        perFieldCounts = {};
-        perFieldAverages = {};
-        for (let i = 0; i < countyGeoids.length; i++) {
-          perFieldSums[countyGeoids[i]] = 0;
-          perFieldCounts[countyGeoids[i]] = 0;
-          perFieldAverages[countyGeoids[i]] = null;
-        }
-
-        // count occurences and sum to county
-        for (let geoid in this.tract) {
-          if (field in this.tract[geoid]) {
-            perFieldSums[geoid.slice(0, 5)] += this.tract[geoid][field];
-            perFieldCounts[geoid.slice(0, 5)] += 1;
+    // if all the normed names exist in both this.tract and this.county
+    // we don't need to retrieve data; only check one tract and one county
+    // as null-valued attrs should be present
+    const retrievalNeeded = !this.fieldsPresent(Object.values(normedNames));
+    if (retrievalNeeded) {
+      const featureData = this.getFromWFS(optsGroup, optsFields);
+      // add feature data to this.tract or this.county
+      await featureData.then(data => {
+        // first pass, rename to normalized
+        for (let geoid in data) {
+          delete data[geoid][optsGroup.geoidField]; // delete extra key prop
+          for (let origField in normedNames) {
+            data[geoid][normedNames[origField]] = data[geoid][origField];
+            delete data[geoid][origField];
           }
         }
 
-        // populate this.county with average else sum
-        if (normedNameAggMethod[field] === "average") {
-          for (let geoid in perFieldCounts) {
-            if (perFieldCounts[geoid] > 0) {
-              perFieldAverages[geoid] =
-                perFieldSums[geoid] / perFieldCounts[geoid];
+        // add to this.tract
+        for (let geoid in data) {
+          this.tract[geoid] = Object.assign({}, this.tract[geoid], data[geoid]);
+        }
+
+        // get unique geoids from tract geoids
+        let countyGeoids = Array.from(
+          new Set(Object.keys(data).map(x => x.slice(0, 5)))
+        );
+
+        let perFieldSums, perFieldCounts, perFieldAverages;
+
+        for (let field in normedNameAggMethod) {
+          perFieldSums = {};
+          perFieldCounts = {};
+          perFieldAverages = {};
+          for (let i = 0; i < countyGeoids.length; i++) {
+            perFieldSums[countyGeoids[i]] = 0;
+            perFieldCounts[countyGeoids[i]] = 0;
+            perFieldAverages[countyGeoids[i]] = null;
+          }
+
+          // count occurences and sum to county
+          for (let geoid in this.tract) {
+            if (field in this.tract[geoid]) {
+              perFieldSums[geoid.slice(0, 5)] += this.tract[geoid][field];
+              perFieldCounts[geoid.slice(0, 5)] += 1;
             }
-            this.county[geoid] = Object.assign({}, this.county[geoid], {
-              [field]: perFieldAverages[geoid]
-            });
           }
-        } else {
-          // else we use the sumsum
-          for (let geoid in perFieldCounts) {
-            this.county[geoid] = Object.assign({}, this.county[geoid], {
-              [field]: perFieldSums[geoid]
-            });
+
+          // populate this.county with average else sum
+          if (normedNameAggMethod[field] === "average") {
+            for (let geoid in perFieldCounts) {
+              if (perFieldCounts[geoid] > 0) {
+                perFieldAverages[geoid] =
+                  perFieldSums[geoid] / perFieldCounts[geoid];
+              }
+              this.county[geoid] = Object.assign({}, this.county[geoid], {
+                [field]: perFieldAverages[geoid]
+              });
+            }
+          } else {
+            // else we use the sumsum
+            for (let geoid in perFieldCounts) {
+              this.county[geoid] = Object.assign({}, this.county[geoid], {
+                [field]: perFieldSums[geoid]
+              });
+            }
           }
         }
-      }
-    });
+      });
+    }
 
     // get array of values to determine classes from
     // TODO support multiple values, e.g. grouped pop by age by sex
@@ -232,6 +236,7 @@ class EnumUnitData {
     );
 
     this.lastBreaks = breaks;
+    console.log("this.lastBreaks :", this.lastBreaks);
 
     // populate layer source with symbolize property
     const layerFeatures = toLayer.getSource().getFeatures();
@@ -249,6 +254,35 @@ class EnumUnitData {
     toLayer.setStyle(
       StyleFunctionFromBreaks(breaks, { prop1Names: [this.symbolizePropName] })
     );
+  }
+
+  /**
+   * Check for the presence of one or more fields in counties and tracts
+   * @param {string[]} fieldNames array of fieldnames
+   * @returns bool Are all the fields present?
+   */
+  fieldsPresent(fieldNames) {
+    // no tract and/or counties so no field
+    if (
+      Object.keys(this.tract).length === 0 ||
+      Object.keys(this.county).length === 0
+    ) {
+      return false;
+    }
+
+    const testTract = Object.keys(this.tract)[0];
+    const testCounty = Object.keys(this.county)[0];
+
+    // all present?
+    for (let i = 0; i < fieldNames.length; i++) {
+      if (
+        !(fieldNames[i] in this.tract[testTract]) ||
+        !(fieldNames[i] in this.county[testCounty])
+      ) {
+        return false;
+      }
+    }
+    return true;
   }
 
   /**
