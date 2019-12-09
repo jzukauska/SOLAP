@@ -125,8 +125,7 @@ class EnumUnitData {
       optsFields[0].viewParams = {};
     }
 
-    // assume agggregation_method is "sum"
-    // TODO get agg method all into filterfields
+    // default agggregation_method is "sum"
     for (let i = 0; i < optsFields.length; i++) {
       if (!("aggregation_method" in optsFields[i])) {
         optsFields[i].aggregation_method = "sum";
@@ -167,13 +166,11 @@ class EnumUnitData {
         this.tract[geoid] = Object.assign({}, this.tract[geoid], data[geoid]);
       }
 
-      // TODO aggregation to county here
       // get unique geoids from tract geoids
       let countyGeoids = Array.from(
         new Set(Object.keys(data).map(x => x.slice(0, 5)))
       );
 
-      // for each field
       let perFieldSums, perFieldCounts, perFieldAverages;
 
       for (let field in normedNameAggMethod) {
