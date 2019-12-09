@@ -87,7 +87,7 @@ class EnumUnitData {
     toLayer, // layer to update
     groupOptions,
     fieldOptions,
-    classCount = 5,
+    classCount = 3,
     classMethod = "quantile"
   }) {
     if (classMethod !== "quantile") {
