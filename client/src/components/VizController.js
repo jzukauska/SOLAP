@@ -49,12 +49,13 @@ export default class VizController extends Component {
   generateStyleForLegend({ title, styleData }) {
     const { variableName } = this.props;
     const legend = [];
-    for (let i = 0; i < styleData[0].length; i++) {
+    for (let i = 0; i < styleData[0].breaks.length; i++) {
       const data = {
         stroke:
-          ColorBrewerStyles["YlGnBu"][styleData[0].length][i].fill_.color_,
-        lowerBound: i === 0 ? 0 : styleData[0][i - 1],
-        upperBound: styleData[0][i]
+          ColorBrewerStyles["YlGnBu"][styleData[0].breaks.length][i].fill_
+            .color_,
+        lowerBound: i === 0 ? styleData[0].minVal : styleData[0].breaks[i - 1],
+        upperBound: styleData[0].breaks[i]
       };
       legend.push(data);
     }
@@ -73,12 +74,12 @@ export default class VizController extends Component {
     groupOptions,
     fieldOptions
   }) => {
-    console.warn("<<<< HMC <<<<<<<<<<<<<<<<<<<<<<");
-    console.log("name :", name);
-    console.log("value :", value);
-    console.log("yearOptions :", yearOptions);
-    console.log("groupOptions :", groupOptions);
-    console.log("fieldOptions :", fieldOptions);
+    // console.warn("<<<< HMC <<<<<<<<<<<<<<<<<<<<<<");
+    // console.log("name :", name);
+    // console.log("value :", value);
+    // console.log("yearOptions :", yearOptions);
+    // console.log("groupOptions :", groupOptions);
+    // console.log("fieldOptions :", fieldOptions);
     const { variableName } = this.props;
     if (name === "Geographic Unit") {
       if (value === "County") {
@@ -157,8 +158,8 @@ export default class VizController extends Component {
       ]
     );
 
-    //Stops generate sytle error in development branch
-    //this.generateStyleForLegend({ title: `${value}`, styleData });
+    const lastBreaks = this.state.dataManager.lastBreaks; // array for future bivariate support
+    this.generateStyleForLegend({ title: `${value}`, styleData: lastBreaks });
   };
 
   render() {

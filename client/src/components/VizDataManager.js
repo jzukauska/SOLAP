@@ -7,6 +7,7 @@ class EnumUnitData {
     this.tract = {};
     this.county = {};
     this.symbolizePropName = "solap_symbolize_on";
+    this.lastBreaks = null;
   }
 
   /**
@@ -99,8 +100,8 @@ class EnumUnitData {
       return;
     }
 
-    console.log("groupOptions :", groupOptions);
-    console.log("fieldOptions :", fieldOptions);
+    // console.log("groupOptions :", groupOptions);
+    // console.log("fieldOptions :", fieldOptions);
 
     const defaultGroupOpts = {
         wfsUrl: "http://149.165.157.200:8080/geoserver/wfs",
@@ -232,6 +233,8 @@ class EnumUnitData {
       classMethod,
       Object.values(symbolizePairs)
     );
+
+    this.lastBreaks = breaks;
 
     // populate layer source with symbolize property
     const layerFeatures = toLayer.getSource().getFeatures();
