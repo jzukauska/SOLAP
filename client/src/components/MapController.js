@@ -34,12 +34,12 @@ const MapController = ({ view, layers, legend }) => {
       {legend && (
         <div
           style={{
-            bottom: "0.5em",
-            left: "0.5em",
+            top: "0.5em",
+            right: "0.5em",
             padding: "0.5em 1em",
             maxWidth: "250px",
             backgroundColor: "#ffffff",
-            border: "thin solid rgba(0, 0, 0, 0.2)",
+            border: "medium solid #dddbe0",
             position: "fixed"
           }}
         >
