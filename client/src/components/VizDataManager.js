@@ -1,4 +1,3 @@
-import { quantiles } from "qquantile";
 import { WFS } from "ol/format";
 import StyleFunctionFromBreaks from "./OpenLayers/Style/StyleFunctionFromBreaks";
 import colorbrewer from "colorbrewer";
@@ -11,6 +10,7 @@ class EnumUnitData {
     this.symbolizePropName = "solap_symbolize_on";
     this.lastBreaks = null;
     this.graphData = {};
+    this.classer = new classybrew();
   }
 
   /**
@@ -59,27 +59,37 @@ class EnumUnitData {
   }
 
   /**
-   * TODO make this work with equal breaks
-   * Given a set of features, find class breaks for quantiles.
+   * TODO resume bivariate support
+   * Given a set of features, find class breaks for some data.
    * Normalization (e.g. pop density from separate fields) is
    * supported, along with a normalization multipler. Univariate
    * and bivariate cases handled. Breaks are <= upper limits.
    * @param {number} classCount number of classes to find breaks for
+   * @param {string} classMethod method to use (quantile, equal_interval, or jenks)
    * @param {number[]} vals1 list of primary values to determine breaks from
    * @param {number[]} [vals2] second property name to check values for; bivariate use
    * @returns {Object[]} one or two objects in an array with lowval and breaks
    */
   getClassBreaks(classCount, classMethod, vals1, vals2) {
     if (typeof vals2 === "undefined") {
+      this.classer.setSeries(vals1);
+      this.classer.setNumClasses(classCount);
+      this.classer.setColorCode("YlGnBu"); // TODO color scheme support
       return [
-        { minVal: Math.min(...vals1), breaks: quantiles(vals1, classCount) }
+        {
+          minVal: Math.min(...vals1),
+          breaks: this.classer.classify(classMethod).slice(1)
+          // TODO slice(1) for support with old; minVal can go away with changes elsewhere
+        }
       ];
     } else {
-      // always three-class/nine-class for bivariate
-      return [
-        { minVal: Math.min(...vals1), breaks: quantiles(vals1, 3) },
-        { minVal: Math.min(...vals2), breaks: quantiles(vals2, 3) }
-      ];
+      console.error("bivariate not supported yet");
+      return;
+      // // always three-class/nine-class for bivariate
+      // return [
+      //   { minVal: Math.min(...vals1), breaks: quantiles(vals1, 3) },
+      //   { minVal: Math.min(...vals2), breaks: quantiles(vals2, 3) }
+      // ];
     }
   }
 
@@ -91,13 +101,8 @@ class EnumUnitData {
     groupOptions,
     fieldOptions,
     classCount = 5,
-    classMethod = "quantile"
+    classMethod = "equal_interval"
   }) {
-    if (classMethod !== "quantile") {
-      console.error("updateViz - only quanitle breaks supported");
-      return;
-    }
-
     if (classCount < 3 || classCount > 9) {
       console.error("updateViz - only 3-9 classes supported");
       return;
@@ -279,8 +284,6 @@ class EnumUnitData {
         color: colorbrewer.YlGnBu[condClassCount][i] // TODO doesn't support varying ColorBrewer schemes
       });
     }
-
-    console.log("this.lastBreaks :", this.lastBreaks);
 
     // populate layer source with symbolize property
     const layerFeatures = toLayer.getSource().getFeatures();
