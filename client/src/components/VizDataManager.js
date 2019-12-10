@@ -247,6 +247,10 @@ class EnumUnitData {
         await layerFeatures[i].setProperties({
           [this.symbolizePropName]: symbolizePairs[lfGeoid]
         });
+      } else {
+        await layerFeatures[i].setProperties({
+          [this.symbolizePropName]: null
+        });
       }
     }
 
