@@ -2,6 +2,7 @@ import { quantiles } from "qquantile";
 import { WFS } from "ol/format";
 import StyleFunctionFromBreaks from "./OpenLayers/Style/StyleFunctionFromBreaks";
 import colorbrewer from "colorbrewer";
+import classybrew from "classybrew";
 
 class EnumUnitData {
   constructor() {
@@ -89,7 +90,7 @@ class EnumUnitData {
     toLayer, // layer to update
     groupOptions,
     fieldOptions,
-    classCount = 3,
+    classCount = 5,
     classMethod = "quantile"
   }) {
     if (classMethod !== "quantile") {
@@ -230,16 +231,21 @@ class EnumUnitData {
       }
     }
 
+    // is there enough data for the number of requested classes?
+    // if low, go with three classes
+    const condClassCount =
+      Object.values(symbolizePairs).length > 10 ? classCount : 3;
+
     // get class breaks
     const breaks = this.getClassBreaks(
-      classCount,
+      condClassCount,
       classMethod,
       Object.values(symbolizePairs)
     );
 
     this.lastBreaks = breaks;
     this.graphData.xLabel = fieldOptions[0].label; // TODO assumes multiple field options passed
-    const classGroups = new Array(classCount).fill(0);
+    const classGroups = new Array(condClassCount).fill(0);
     const dataVals = Object.values(symbolizePairs);
 
     // TODO better grouping approach?
@@ -270,7 +276,7 @@ class EnumUnitData {
       this.graphData.data.push({
         x: groupLabel,
         y: classGroups[i],
-        color: colorbrewer.YlGnBu[classCount][i] // TODO doesn't support varying ColorBrewer schemes
+        color: colorbrewer.YlGnBu[condClassCount][i] // TODO doesn't support varying ColorBrewer schemes
       });
     }
 
