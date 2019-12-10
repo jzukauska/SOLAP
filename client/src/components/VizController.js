@@ -2,7 +2,6 @@ import React, { Component } from "react";
 
 import { equalTo as equalToFilter } from "ol/format/filter";
 import StyleFunctionFromBreaks from "./OpenLayers/Style/StyleFunctionFromBreaks";
-import FindQuantileBreaks from "./OpenLayers/FindQuantileBreaks";
 import { GeoJSON, WFS } from "ol/format";
 import BasicPolygon from "./OpenLayers/Style/BasicPolygon";
 
