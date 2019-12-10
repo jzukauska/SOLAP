@@ -144,9 +144,20 @@ export default class VizController extends Component {
       fieldViewParams.year = fieldOptions.year[fieldOptions.year.length - 1];
     }
 
+    // TODO filterfields/WFS consistency can make this easier
+    // filterfields sometimes parameter, sometimes not, even when
+    // needs to be parameterized; assume the field's value is the param value
     if ("parameterKey" in groupOptions) {
-      fieldViewParams[groupOptions.parameterKey] = fieldOptions.parameter[0];
+      if ("parameter" in fieldOptions) {
+        fieldViewParams[groupOptions.parameterKey] = fieldOptions.parameter[0];
+      } else {
+        fieldViewParams[groupOptions.parameterKey] = fieldOptions.value;
+      }
     }
+
+    const isParameterized =
+      ("parameter" in fieldOptions && fieldOptions.parameter.length) ||
+      "parameterKey" in groupOptions;
 
     await this.state.dataManager.updateViz({
       level: currentLayerUnit,
@@ -157,14 +168,10 @@ export default class VizController extends Component {
       },
       fieldOptions: [
         {
-          propertyName:
-            "parameter" in fieldOptions && fieldOptions.parameter.length === 1
-              ? "data_value"
-              : fieldOptions.value,
-          propertyIsViewParam:
-            "parameter" in fieldOptions && fieldOptions.parameter.length === 1
-              ? true
-              : false,
+          propertyName: isParameterized ? "data_value" : fieldOptions.value,
+
+          // TODO filterfields/WFS consistency can make this easier
+          propertyIsViewParam: isParameterized ? true : false,
           viewParams: fieldViewParams
         }
       ]
