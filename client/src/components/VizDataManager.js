@@ -1,6 +1,7 @@
 import { quantiles } from "qquantile";
 import { WFS } from "ol/format";
 import StyleFunctionFromBreaks from "./OpenLayers/Style/StyleFunctionFromBreaks";
+import colorbrewer from "colorbrewer";
 
 class EnumUnitData {
   constructor() {
@@ -8,6 +9,7 @@ class EnumUnitData {
     this.county = {};
     this.symbolizePropName = "solap_symbolize_on";
     this.lastBreaks = null;
+    this.graphData = {};
   }
 
   /**
@@ -236,6 +238,42 @@ class EnumUnitData {
     );
 
     this.lastBreaks = breaks;
+    this.graphData.xLabel = fieldOptions[0].label; // TODO assumes multiple field options passed
+    const classGroups = new Array(classCount).fill(0);
+    const dataVals = Object.values(symbolizePairs);
+
+    // TODO better grouping approach?
+    // count into classes
+    for (let i = 0; i < dataVals.length; i++) {
+      groupLoop: for (let g = 0; g < breaks[0].breaks.length; g++) {
+        if (dataVals[i] <= breaks[0].breaks[g]) {
+          classGroups[g] += 1;
+          break groupLoop;
+        }
+      }
+    }
+
+    // label counts into graphData
+    let groupLabel;
+    this.graphData.data = [];
+    for (let i = 0; i < classGroups.length; i++) {
+      if (i === 0) {
+        groupLabel = `${breaks[0].minVal.toLocaleString()} &ndash; ${breaks[0].breaks[
+          i
+        ].toLocaleString()}`;
+      } else {
+        groupLabel = `${breaks[0].breaks[
+          i - 1
+        ].toLocaleString()} &ndash; ${breaks[0].breaks[i].toLocaleString()}`;
+      }
+
+      this.graphData.data.push({
+        x: groupLabel,
+        y: classGroups[i],
+        color: colorbrewer.YlGnBu[classCount][i] // TODO doesn't support varying ColorBrewer schemes
+      });
+    }
+
     console.log("this.lastBreaks :", this.lastBreaks);
 
     // populate layer source with symbolize property
@@ -246,6 +284,10 @@ class EnumUnitData {
       if (lfGeoid in symbolizePairs) {
         await layerFeatures[i].setProperties({
           [this.symbolizePropName]: symbolizePairs[lfGeoid]
+        });
+      } else {
+        await layerFeatures[i].setProperties({
+          [this.symbolizePropName]: null
         });
       }
     }
