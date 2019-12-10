@@ -151,7 +151,7 @@ const RangeSlider = (props) => {
         direction='horizontal'
         invert={false}
         min={0}
-        max={100}
+        max={85}
         size='full'
         round='small'
         values={value || [0, 5]}
