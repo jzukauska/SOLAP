@@ -178,7 +178,10 @@ export default class VizController extends Component {
     });
 
     const lastBreaks = this.state.dataManager.lastBreaks; // array for future bivariate support
-    this.generateStyleForLegend({ title: `${value}`, styleData: lastBreaks });
+    this.generateStyleForLegend({
+      title: fieldOptions.label,
+      styleData: lastBreaks
+    });
   };
 
   render() {
