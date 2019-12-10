@@ -16,6 +16,7 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import RangeSlider from "./RangeSlider";
 import { capitalize } from "../helpers/utils";
+import Slider from "@material-ui/core/Slider";
 
 import { ageGroups } from "../constants/sliderValues"
 
@@ -118,6 +119,7 @@ const Filter = ({ field, value, onChange }) => {
 const YearFilter = ({ field, value, onChange, filterValues }) => {
   const buildYearOptions = () => {
     let yearOptions = [];
+    let yearOptionsFormatted = [];
     Object.values(filterValues).forEach(val => {
       if (val.yearOptions) {
         if (yearOptions.length === 0) {
@@ -125,11 +127,14 @@ const YearFilter = ({ field, value, onChange, filterValues }) => {
         } else {
           yearOptions = yearOptions.filter(year =>
             val.yearOptions.includes(year)
-          );
+          )
         }
       }
     });
-    return yearOptions;
+    yearOptions.forEach(function (item, index) {
+      yearOptionsFormatted.push({ value: item })
+    })
+    return yearOptionsFormatted;
   };
   return (
     <React.Fragment key={field.name}>
@@ -137,13 +142,17 @@ const YearFilter = ({ field, value, onChange, filterValues }) => {
         <Text style={{}}>
           {capitalize(field.name)}: {value === 0 ? "Pick a year" : value}
         </Text>
-        <Select
-          name={field.name}
-          placeholder={field.placeholder}
-          options={buildYearOptions()}
-          value={value}
-          onChange={e => onChange({ name: e.target.name, value: e.option })}
-        />
+        <Slider
+        name={field.name}
+        value={value}
+        valueLabelDisplay="auto"
+        onChange={(e, newValue) => onChange({ name: field.name, value: newValue })}
+        min={1999}
+        max={2020}
+        defaultValue={2000}
+        marks={buildYearOptions()}
+        step={null}
+      />
       </div>
     </React.Fragment>
   );

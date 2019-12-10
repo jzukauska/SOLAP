@@ -51,7 +51,7 @@ const RangeSlider = (props) => {
   return (
     <Stack >
       <Box direction='row' justify='between'>
-        {[0, 10, 20, 30, 40, 50, 60, 70, 85, 100].map(value => (
+        {[0, 10, 20, 30, 40, 50, 60, 70, 85].map(value => (
           <Box key={value} pad='small' border={false}>
             <Text style={{ fontFamily: 'monospace' }}>{value}</Text>
           </Box>
@@ -62,10 +62,10 @@ const RangeSlider = (props) => {
         direction='horizontal'
         invert={false}
         min={0}
-        max={100}
+        max={85}
         size='full'
         round='small'
-        values={value || [0, 5]}
+        values={value || [0, 25]}
         onChange={nextValues => adjustValues(nextValues)} //this.setState({ values: nextValues })
       />
     </Stack >
