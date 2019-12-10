@@ -172,12 +172,15 @@ export default class VizController extends Component {
 
           // TODO filterfields/WFS consistency can make this easier
           propertyIsViewParam: isParameterized ? true : false,
-          viewParams: fieldViewParams
+          viewParams: fieldViewParams,
+          label: fieldOptions.label
         }
       ]
     });
 
     const lastBreaks = this.state.dataManager.lastBreaks; // array for future bivariate support
+    const graphData = this.state.dataManager.graphData;
+
     this.generateStyleForLegend({
       title: fieldOptions.label,
       styleData: lastBreaks
