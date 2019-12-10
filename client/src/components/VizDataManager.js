@@ -101,7 +101,7 @@ class EnumUnitData {
     groupOptions,
     fieldOptions,
     classCount = 5,
-    classMethod = "equal_interval"
+    classMethod = "jenks"
   }) {
     if (classCount < 3 || classCount > 9) {
       console.error("updateViz - only 3-9 classes supported");
