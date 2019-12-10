@@ -337,6 +337,7 @@ const scopedFilterFields = [
         dataType: "polygon",
         functions: "choropleth",
         geoserver_layer: "food_access",
+        parameterKey: "data_value",
         fieldOptions: [
           {
             label:
@@ -395,7 +396,7 @@ const scopedFilterFields = [
             value:
               "Current lack of health insurance among adults aged 18-64 Years",
             year: [2014, 2015, 2016],
-            parameter: ["Insurance"],
+            parameter: ["Health"],
             aggregation_method: "average"
           },
           {
