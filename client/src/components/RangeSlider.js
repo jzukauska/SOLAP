@@ -140,7 +140,7 @@ const RangeSlider = (props) => {
   return (
     <Stack >
       <Box direction='row' justify='between'>
-        {[0, 10, 20, 30, 40, 50, 60, 70, 85, 100].map(value => (
+        {[0, 10, 20, 30, 40, 50, 60, 70, 85].map(value => (
           <Box key={value} pad='small' border={false}>
             <Text style={{ fontFamily: 'monospace' }}>{value}</Text>
           </Box>
