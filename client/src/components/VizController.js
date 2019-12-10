@@ -1,10 +1,5 @@
 import React, { Component } from "react";
 
-import { equalTo as equalToFilter } from "ol/format/filter";
-import StyleFunctionFromBreaks from "./OpenLayers/Style/StyleFunctionFromBreaks";
-import { GeoJSON, WFS } from "ol/format";
-import BasicPolygon from "./OpenLayers/Style/BasicPolygon";
-
 import BasemapLayer from "./OpenLayers/BasemapLayer";
 import { layer1Tract, layer2Tract } from "./OpenLayers/MnTractLayer";
 import { layer1County, layer2County } from "./OpenLayers/MnCountyLayer";
@@ -117,17 +112,6 @@ export default class VizController extends Component {
         return;
       }
     }
-    const sampleGroupOpts1 = {
-      wfsUrl: "http://149.165.157.200:8080/geoserver/wfs",
-      geoserverWorkspace: "solap",
-      geoserverLayer: "demographics",
-      geoidField: "tract_geoid"
-    };
-    const sampleFieldOpts1 = [
-      {
-        propertyName: "total"
-      }
-    ];
 
     const currentLayerUnit =
       this.state[this.props.variableName].layers.CurrentLayer ===
