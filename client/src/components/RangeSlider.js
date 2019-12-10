@@ -4,75 +4,18 @@ import { Box, RangeSelector, Stack, Text } from 'grommet';
 
 const RangeSlider = (props) => {
 
-  let { value, onChange, name } = props
+  let { value, onChange, name, groups } = props
 
+  const propGroups = groups || [{
+    value: 0,
+    label: "0"
+  }]
 
   const adjustValues = (newValue) => {
-    const ageGroups = [
-      {
-        value: 0,
-        label: "0"
-      },
-      {
-        value: 5,
-        label: "5"
-      },
-      {
-        value: 10,
-        label: "10"
-      },
-      {
-        value: 15,
-        label: "15"
-      },
-      {
-        value: 17,
-        label: "17"
-      },
-      {
-        value: 19,
-        label: "19"
-      },
-      {
-        value: 20,
-        label: "20"
-      },
-      {
-        value: 21,
-        label: "21"
-      },
-      {
-        value: 24,
-        label: "24"
-      },
-      {
-        value: 30,
-        label: "30"
-      },
-      {
-        value: 34,
-        label: "34"
-      },
-      {
-        value: 39,
-        label: "39"
-      },
-      {
-        value: 44,
-        label: "44"
-      },
-      {
-        value: 54,
-        label: "54"
-      },
-      {
-        value: 59,
-        label: "59"
-      }
-    ];
+
     var ageDistance = {};
     var counter = 0;
-    ageGroups.forEach(function (arrayItem) {
+    propGroups.forEach(function (arrayItem) {
       var varDistance1 = arrayItem.value - newValue[1];
       var varDistance2 = arrayItem.value - newValue[0];
       ageDistance[counter] = {
