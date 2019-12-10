@@ -18,6 +18,8 @@ import RangeSlider from "./RangeSlider";
 import { capitalize } from "../helpers/utils";
 import Slider from "@material-ui/core/Slider";
 
+import { ageGroups } from "../constants/sliderValues"
+
 import BarGraph from "./BarGraph";
 
 const renderFieldBasedOnType = (field, value, onChange) => {
@@ -28,7 +30,7 @@ const renderFieldBasedOnType = (field, value, onChange) => {
           name={field.name}
           placeholder={field.placeholder}
           value={value}
-          //onChange={onChange}
+        //onChange={onChange}
         />
       );
     case "range":
@@ -82,7 +84,7 @@ const renderFieldBasedOnType = (field, value, onChange) => {
       return (
         <Box pad="xsmall" background="light-2">
           <Stack>
-            <RangeSlider value={value} onChange={onChange} name={field.name} />
+            <RangeSlider value={value} onChange={onChange} name={field.name} groups={ageGroups} />
           </Stack>
         </Box>
       );
