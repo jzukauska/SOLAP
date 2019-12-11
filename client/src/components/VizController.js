@@ -149,6 +149,7 @@ export default class VizController extends Component {
               CurrentLayer: imageLayer,
               BasemapLayer: BasemapLayer
             },
+            legend: null,
             prevEnumLayer: this.state[variableName].prevEnumLayer
           }
         }),
