@@ -102,7 +102,8 @@ export default class FilterContextProvider extends Component {
     const children = React.Children.map(this.props.children, child =>
       React.cloneElement(child, {
         layers: this.props.layers,
-        legend: this.props.legend
+        legend: this.props.legend,
+        graphData: this.props.graphData
       })
     );
 

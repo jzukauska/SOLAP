@@ -23,7 +23,7 @@ const MapFilterGraphContainer = styled.div`
   overflow: auto;
 `;
 
-const MapFilter = ({ width }) => {
+const MapFilter = ({ width, graphData }) => {
   return (
     <FilterConsumer>
       {({
@@ -58,7 +58,7 @@ const MapFilter = ({ width }) => {
             ></Box>
           </MapFilterContainer>
           <MapGraphContainer>
-            <BarGraph />
+            <BarGraph graphData={graphData}/>
           </MapGraphContainer>
         </MapFilterGraphContainer>
       )}
