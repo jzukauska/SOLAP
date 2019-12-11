@@ -5,6 +5,7 @@ import { layer1Tract, layer2Tract } from "./OpenLayers/MnTractLayer";
 import { layer1County, layer2County } from "./OpenLayers/MnCountyLayer";
 import ColorBrewerStyles from "./OpenLayers/Style/ColorBrewerStyles";
 import VizDataManager from "./VizDataManager";
+import BasicPolygon from "./OpenLayers/Style/BasicPolygon";
 const VizContext = React.createContext();
 
 // TODO:
@@ -66,7 +67,8 @@ export default class VizController extends Component {
     value,
     yearOptions,
     groupOptions,
-    fieldOptions
+    fieldOptions,
+    clearMap
   }) => {
     // console.warn("<<<< HMC <<<<<<<<<<<<<<<<<<<<<<");
     // console.log("name :", name);
@@ -75,6 +77,29 @@ export default class VizController extends Component {
     // console.log("groupOptions :", groupOptions);
     // console.log("fieldOptions :", fieldOptions);
     const { variableName } = this.props;
+
+    // reset the current variable to county map, set basic style, remove legend
+    if (typeof clearMap !== "undefined" && clearMap) {
+      variableName === "firstVariable"
+        ? layer1County.setStyle(BasicPolygon)
+        : layer2County.setStyle(BasicPolygon);
+      this.setState(
+        (state, props) => ({
+          [variableName]: {
+            ...state[variableName],
+            layers: {
+              CurrentLayer:
+                variableName === "firstVariable" ? layer1County : layer2County,
+              BasemapLayer: BasemapLayer
+            },
+            legend: null
+          }
+        }),
+        () => this.forceUpdate()
+      );
+      return;
+    }
+
     if (name === "Geographic Unit") {
       if (value === "County") {
         this.setState(
