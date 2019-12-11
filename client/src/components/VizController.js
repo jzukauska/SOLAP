@@ -295,7 +295,8 @@ export default class VizController extends Component {
       React.cloneElement(child, {
         layers: this.state[this.props.variableName].layers,
         legend: this.state[this.props.variableName].legend,
-        handleMapChange: this.handleMapChange
+        handleMapChange: this.handleMapChange,
+        graphData: this.state.dataManager.graphData
       })
     );
 

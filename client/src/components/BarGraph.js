@@ -1,21 +1,29 @@
 import React, { Component } from "react";
-import { FlexibleXYPlot, XAxis, YAxis, VerticalBarSeries } from "react-vis";
+import {
+  FlexibleXYPlot,
+  XAxis,
+  YAxis,
+  VerticalBarSeries,
+  ChartLabel
+} from "react-vis";
 
 class BarGraph extends Component {
   render() {
-    const data = [
-      { y: 5, x: "A", color: "#46019B" },
-      { y: 10, x: "B", color: "#007EFE" },
-      { y: 25, x: "C", color: "00BB00" },
-      { y: 20, x: "D", color: "FEF601" },
-      { y: 10, x: "E", color: "DD0000" }
-    ];
-    const colors = ["#46019B", "#007EFE", "00BB00", "FEF601", "DD0000"];
+    var data = this.props.graphData.data;
+    const xLabel = this.props.graphData.xLabel;
+
+    if (data != null) {
+      for (var i = 0; i < data.length; i++) {
+        data[i]["x"] = data[i]["x"].replace(" &ndash; ", "-");
+      }
+    }
+
     return (
-      <FlexibleXYPlot xType="ordinal" colorType="category" colorRange={colors}>
-        <XAxis />
+      <FlexibleXYPlot xType="ordinal" colorType="literal">
+        <XAxis tickLabelAngle={-10} />
         <YAxis />
         <VerticalBarSeries data={data} />
+        <ChartLabel text={xLabel} xPercent={0.5} />
       </FlexibleXYPlot>
     );
   }
