@@ -179,37 +179,43 @@ const scopedFilterFields = [
                 label: "Alcohol Retailors",
                 value: "Alcohol Retailors",
                 year: [2019],
-                table_name: "alcohol_outlet"
+                geoserver_layer: "alcohol_outlet"
               },
               {
                 label: "Tobacco Retailors",
                 value: "Tobacco Retailors",
-                year: [2019]
+                year: [2019],
+                geoserver_layer: "tobacco_outlet"
               },
               {
                 label: "Religious Sites",
                 value: "Religious Sites",
-                year: [2019]
+                year: [2019],
+                geoserver_layer: "religious"
               },
               {
                 label: "YMCA",
                 value: "YMCA",
-                year: [2019]
+                year: [2019],
+                geoserver_layer: "ymca"
               },
               {
                 label: "Veterans Facilities (VFW)",
                 value: "Veterans Facilities (VFW)",
-                year: [2019]
+                year: [2019],
+                geoserver_layer: "vfw"
               },
               {
                 label: "American Legions",
                 value: "American Legions",
-                year: [2019]
+                year: [2019],
+                geoserver_layer: "american_legion"
               },
               {
                 label: "Traffic Stops",
                 value: "Traffic Stope",
-                year: [2016, 2017, 2018, 2019]
+                year: [2016, 2017, 2018, 2019],
+                geoserver_layer: "traffic_stops"
               }
             ]
           }
@@ -228,8 +234,7 @@ const scopedFilterFields = [
                 label: "Alcohol Retailors",
                 value: "Alcohol Retailors",
                 geoserver_layer: "alcohol_outlet",
-                year: [2019],
-                table_name: "alcohol_outlet"
+                year: [2019]
               },
               {
                 label: "Tobacco Retailors",
@@ -270,7 +275,8 @@ const scopedFilterFields = [
               {
                 label: "Traffic Stops",
                 value: "Traffic Stops",
-                year: [2016, 2017, 2018, 2019]
+                year: [2016, 2017, 2018, 2019],
+                geoserver_layer: "traffic_stops"
               }
             ]
           }
@@ -290,37 +296,43 @@ const scopedFilterFields = [
                 label: "Alcohol Retailors",
                 value: "Alcohol Retailors",
                 year: [2019],
-                table_name: "alcohol_outlet"
+                geoserver_layer: "alcohol_outlet"
               },
               {
                 label: "Tobacco Retailors",
                 value: "Tobacco Retailors",
-                year: [2019]
+                year: [2019],
+                geoserver_layer: "tobacco_outlet"
               },
               {
                 label: "Religious Sites",
                 value: "Religious Sites",
-                year: [2019]
+                year: [2019],
+                geoserver_layer: "religious"
               },
               {
                 label: "YMCA",
                 value: "YMCA",
-                year: [2019]
+                year: [2019],
+                geoserver_layer: "ymca"
               },
               {
                 label: "Veterans Facilities (VFW)",
                 value: "Veterans Facilities (VFW)",
-                year: [2019]
+                year: [2019],
+                geoserver_layer: "vfw"
               },
               {
                 label: "American Legions",
                 value: "American Legions",
-                year: [2019]
+                year: [2019],
+                geoserver_layer: "american_legion"
               },
               {
                 label: "Traffic Stops",
                 value: "Traffic Stope",
-                year: [2016, 2017, 2018, 2019]
+                year: [2016, 2017, 2018, 2019],
+                geoserver_layer: "traffic_stops"
               }
             ]
           }
