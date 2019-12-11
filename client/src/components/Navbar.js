@@ -6,17 +6,21 @@ import logo from "./che_long.png";
 import Grid from "@material-ui/core/Grid";
 import styled from "styled-components";
 
-const NavbarContainer = styled(Box)`
-  height: 50px;
-  width: 100%;
-  background-color: #acddde;
-`;
-
-const Navbar = () => {
+const Navbar = ({ tab }) => {
   const [year, setYear] = useState("[Year]");
   const [area, setArea] = useState("[Geographic Unit]");
+  const [NavbarContainer] = useState(
+    styled(Box)`
+      height: 50px;
+      width: 100%;
+    `
+  );
+
   return (
-    <NavbarContainer pad="small">
+    <NavbarContainer
+      pad="small"
+      background={parseInt(tab.currentTab) === 1 ? "#FFE7C7" : "#ACDDDE"}
+    >
       <Grid container>
         <Grid item xs={6}>
           <div>
@@ -31,6 +35,7 @@ const Navbar = () => {
           Mapping: {year} for {area}
         </Grid>
       </Grid>
+
       <FilterConsumer>
         {({
           filterFields,

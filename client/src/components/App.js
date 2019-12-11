@@ -90,7 +90,7 @@ const App = () => {
               variableName={currentVariable}
               tab={{ changeTab: handleChange, currentTab: value }}
             >
-              <ViewBox />
+              <ViewBox tab={{ currentTab: value }} />
             </FilterContextProvider>
           </VizController>
         </Grommet>

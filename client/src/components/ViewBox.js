@@ -5,10 +5,10 @@ import { Box } from "grommet";
 import Navbar from "./Navbar";
 import MapView from "./MapView";
 
-const ViewBox = ({ layers, legend }) => {
+const ViewBox = ({ layers, legend, tab }) => {
   return (
     <Box direction="column" fill>
-      <Navbar />
+      <Navbar tab={tab} />
       <MapView layers={layers} legend={legend} />
     </Box>
   );
