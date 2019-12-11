@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import BasemapLayer from "./OpenLayers/BasemapLayer";
 import { layer1Tract, layer2Tract } from "./OpenLayers/MnTractLayer";
 import { layer1County, layer2County } from "./OpenLayers/MnCountyLayer";
+import { layer1Image, layer2Image } from "./OpenLayers/ImageLayers";
 import ColorBrewerStyles from "./OpenLayers/Style/ColorBrewerStyles";
 import VizDataManager from "./VizDataManager";
 const VizContext = React.createContext();
@@ -19,6 +20,8 @@ app.lt1 = layer1Tract;
 app.lt2 = layer2Tract;
 app.lc1 = layer1County;
 app.lc2 = layer2County;
+app.il1 = layer1Image;
+app.il2 = layer2Image;
 app.dm = VizDataManager;
 
 export default class VizController extends Component {
@@ -119,61 +122,128 @@ export default class VizController extends Component {
       }
     }
 
-    const currentLayerUnit =
-      this.state[this.props.variableName].layers.CurrentLayer ===
-        layer1County ||
-      this.state[this.props.variableName].layers.CurrentLayer === layer2County
-        ? "county"
-        : "tract";
+    // point symbolization
+    if ("dataType" in groupOptions && groupOptions.dataType === "point") {
+      const imageLayer =
+        variableName === "firstVariable" ? layer1Image : layer2Image;
 
-    // build up view parameters
-    const fieldViewParams = {};
-    // if there's a >length-one array of years, parameterize it
-    if ("year" in fieldOptions && fieldOptions.year.length > 1) {
-      fieldViewParams.year = fieldOptions.year[fieldOptions.year.length - 1];
-    }
-
-    // TODO filterfields/WFS consistency can make this easier
-    // filterfields sometimes parameter, sometimes not, even when
-    // needs to be parameterized; assume the field's value is the param value
-    if ("parameterKey" in groupOptions) {
-      if ("parameter" in fieldOptions) {
-        fieldViewParams[groupOptions.parameterKey] = fieldOptions.parameter[0];
-      } else {
-        fieldViewParams[groupOptions.parameterKey] = fieldOptions.value;
+      if (groupOptions.name === "Points") {
+        imageLayer.getSource().updateParams({
+          LAYERS: "solap:" + fieldOptions.geoserver_layer,
+          STYLES: null
+        });
+      } else if (groupOptions.name === "HeatMap") {
+        imageLayer.getSource().updateParams({
+          LAYERS: "solap:" + fieldOptions.geoserver_layer,
+          STYLES: "heatmap"
+        });
       }
+
+      // TODO no point if previously set?
+      // update state to use image layer
+      this.setState(
+        (state, props) => ({
+          [variableName]: {
+            ...state[variableName],
+            layers: {
+              CurrentLayer: imageLayer,
+              BasemapLayer: BasemapLayer
+            },
+            prevEnumLayer: this.state[variableName].prevEnumLayer
+          }
+        }),
+        () => this.forceUpdate()
+      );
     }
 
-    const isParameterized =
-      ("parameter" in fieldOptions && fieldOptions.parameter.length) ||
-      "parameterKey" in groupOptions;
+    // all choropleth
+    if (
+      "functions" in groupOptions &&
+      (groupOptions.functions === "choropleth" ||
+        groupOptions.functions[0] === "choropleth")
+    ) {
+      const currentLayerUnit =
+        this.state[this.props.variableName].layers.CurrentLayer ===
+          layer1County ||
+        this.state[this.props.variableName].layers.CurrentLayer === layer2County
+          ? "county"
+          : "tract";
 
-    await this.state.dataManager.updateViz({
-      level: currentLayerUnit,
-      toLayer: this.state[this.props.variableName].layers.CurrentLayer,
-      groupOptions: {
-        geoserverLayer: groupOptions.geoserver_layer,
-        parameterKey: groupOptions.parameterKey
-      },
-      fieldOptions: [
-        {
-          propertyName: isParameterized ? "data_value" : fieldOptions.value,
+      // build up view parameters
+      const fieldViewParams = {};
+      // if there's a >length-one array of years, parameterize it
+      if ("year" in fieldOptions && fieldOptions.year.length > 1) {
+        fieldViewParams.year = fieldOptions.year[fieldOptions.year.length - 1];
+      }
 
-          // TODO filterfields/WFS consistency can make this easier
-          propertyIsViewParam: isParameterized ? true : false,
-          viewParams: fieldViewParams,
-          label: fieldOptions.label
+      // TODO filterfields/WFS consistency can make this easier
+      // filterfields sometimes parameter, sometimes not, even when
+      // needs to be parameterized; assume the field's value is the param value
+      if ("parameterKey" in groupOptions) {
+        if ("parameter" in fieldOptions) {
+          fieldViewParams[groupOptions.parameterKey] =
+            fieldOptions.parameter[0];
+        } else {
+          fieldViewParams[groupOptions.parameterKey] = fieldOptions.value;
         }
-      ]
-    });
+      }
 
-    const lastBreaks = this.state.dataManager.lastBreaks; // array for future bivariate support
-    const graphData = this.state.dataManager.graphData;
+      const isParameterized =
+        ("parameter" in fieldOptions && fieldOptions.parameter.length) ||
+        "parameterKey" in groupOptions;
 
-    this.generateStyleForLegend({
-      title: fieldOptions.label,
-      styleData: lastBreaks
-    });
+      // TODO doesn't render properly going back to enum units; await something?
+      // if the current layer isn't the enum unit layer switch it back
+      if (
+        this.state[variableName].prevEnumLayer !==
+        this.state[variableName].CurrentLayer
+      ) {
+        this.setState(
+          (state, props) => ({
+            [variableName]: {
+              ...state[variableName],
+              layers: {
+                CurrentLayer:
+                  variableName === "firstVariable"
+                    ? this.state.firstVariable.prevEnumLayer
+                    : this.state.secondVariable.prevEnumLayer,
+                BasemapLayer: BasemapLayer
+              }
+            }
+          }),
+          () => this.forceUpdate()
+        );
+      }
+
+      await this.state.dataManager.updateViz({
+        level: currentLayerUnit,
+        toLayer: this.state[variableName].prevEnumLayer,
+        groupOptions: {
+          geoserverLayer: groupOptions.geoserver_layer,
+          parameterKey: groupOptions.parameterKey
+        },
+        fieldOptions: [
+          {
+            propertyName: isParameterized ? "data_value" : fieldOptions.value,
+
+            // TODO filterfields/WFS consistency can make this easier
+            propertyIsViewParam: isParameterized ? true : false,
+            viewParams: fieldViewParams,
+            label: fieldOptions.label
+          }
+        ]
+      });
+
+      const lastBreaks = this.state.dataManager.lastBreaks; // array for future bivariate support
+      const graphData = this.state.dataManager.graphData;
+
+      this.generateStyleForLegend({
+        title: fieldOptions.label,
+        styleData: lastBreaks
+      });
+
+      return;
+    } // end choropleth
   };
 
   render() {
@@ -197,5 +267,4 @@ export default class VizController extends Component {
     );
   }
 }
-
 export const VizConsumer = VizContext.Consumer;
