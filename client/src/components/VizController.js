@@ -147,8 +147,12 @@ export default class VizController extends Component {
       }
     }
 
-    // point symbolization
-    if ("dataType" in groupOptions && groupOptions.dataType === "point") {
+    // point features and heatmaps
+    if (
+      "dataType" in groupOptions &&
+      groupOptions.dataType === "point" &&
+      (groupOptions.name === "Points" || groupOptions.name === "HeatMap")
+    ) {
       const imageLayer =
         variableName === "firstVariable" ? layer1Image : layer2Image;
 
@@ -180,13 +184,27 @@ export default class VizController extends Component {
         }),
         () => this.forceUpdate()
       );
+      return;
     }
 
-    // all choropleth
+    // count features
+    // if (
+    //   "dataType" in groupOptions &&
+    //   groupOptions.dataType === "point" &&
+    //   groupOptions.name === "Count Features"
+    // ) {
+    //   console.warn("count features");
+    //   return;
+    // }
+
+    // all other choropleth
     if (
-      "functions" in groupOptions &&
-      (groupOptions.functions === "choropleth" ||
-        groupOptions.functions[0] === "choropleth")
+      ("functions" in groupOptions &&
+        (groupOptions.functions === "choropleth" ||
+          groupOptions.functions[0] === "choropleth")) ||
+      ("dataType" in groupOptions &&
+        groupOptions.dataType === "point" &&
+        groupOptions.name === "Count Features")
     ) {
       const currentLayerUnit =
         this.state[this.props.variableName].layers.CurrentLayer ===
