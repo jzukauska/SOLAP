@@ -72,12 +72,17 @@ class EnumUnitData {
    */
   getClassBreaks(classCount, classMethod, vals1, vals2) {
     if (typeof vals2 === "undefined") {
-      this.classer.setSeries(vals1);
+      let vals1NoNulls = [];
+      for (let x of vals1) {
+        x && vals1NoNulls.push(x);
+      }
+
+      this.classer.setSeries(vals1NoNulls);
       this.classer.setNumClasses(classCount);
       this.classer.setColorCode("YlGnBu"); // TODO color scheme support
       return [
         {
-          minVal: Math.min(...vals1),
+          minVal: Math.min(...vals1NoNulls),
           breaks: this.classer.classify(classMethod).slice(1)
           // TODO slice(1) for support with old; minVal can go away with changes elsewhere
         }
