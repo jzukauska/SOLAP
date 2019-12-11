@@ -92,16 +92,6 @@ const scopedFilterFields = [
                 label: "Asian",
                 value: "asian_alone",
                 year: [2000, 2010]
-              },
-              {
-                label: "Hawaiian & Pacific Islander",
-                value: "hawaiian_pi_alone",
-                year: [2000, 2010]
-              },
-              {
-                label: "Other",
-                value: "sor_alone",
-                year: [2000, 2010]
               }
             ]
           }
@@ -186,40 +176,52 @@ const scopedFilterFields = [
             functions: ["point"],
             fieldOptions: [
               {
-                label: "Alcohol Retailors",
-                value: "Alcohol Retailors",
+                label: "Alcohol Retailers",
+                value: "Alcohol Retailers",
                 year: [2019],
-                table_name: "alcohol_outlet"
+                geoserver_layer: "alcohol_outlet"
               },
               {
-                label: "Tobacco Retailors",
-                value: "Tobacco Retailors",
-                year: [2019]
+                label: "Tobacco Retailers",
+                value: "Tobacco Retailers",
+                year: [2019],
+                geoserver_layer: "tobacco_outlet"
               },
               {
                 label: "Religious Sites",
                 value: "Religious Sites",
-                year: [2019]
+                year: [2019],
+                geoserver_layer: "religious"
               },
               {
                 label: "YMCA",
                 value: "YMCA",
-                year: [2019]
+                year: [2019],
+                geoserver_layer: "ymca"
               },
               {
                 label: "Veterans Facilities (VFW)",
                 value: "Veterans Facilities (VFW)",
-                year: [2019]
+                year: [2019],
+                geoserver_layer: "vfw"
               },
               {
                 label: "American Legions",
                 value: "American Legions",
+                year: [2019],
+                geoserver_layer: "american_legion"
+              },
+              {
+                label: "Libraries",
+                value: "Libraries",
+                geoserver_layer: "library",
                 year: [2019]
               },
               {
                 label: "Traffic Stops",
-                value: "Traffic Stope",
-                year: [2016, 2017, 2018, 2019]
+                value: "Traffic Stops",
+                year: [2016, 2017, 2018, 2019],
+                geoserver_layer: "traffic_stops"
               }
             ]
           }
@@ -235,15 +237,14 @@ const scopedFilterFields = [
             functions: ["HeatMap"],
             fieldOptions: [
               {
-                label: "Alcohol Retailors",
-                value: "Alcohol Retailors",
+                label: "Alcohol Retailers",
+                value: "Alcohol Retailers",
                 geoserver_layer: "alcohol_outlet",
-                year: [2019],
-                table_name: "alcohol_outlet"
+                year: [2019]
               },
               {
-                label: "Tobacco Retailors",
-                value: "Tobacco Retailors",
+                label: "Tobacco Retailers",
+                value: "Tobacco Retailers",
                 geoserver_layer: "tobacco_outlet",
                 year: [2019]
               },
@@ -280,7 +281,8 @@ const scopedFilterFields = [
               {
                 label: "Traffic Stops",
                 value: "Traffic Stops",
-                year: [2016, 2017, 2018, 2019]
+                year: [2016, 2017, 2018, 2019],
+                geoserver_layer: "traffic_stops"
               }
             ]
           }
@@ -297,40 +299,52 @@ const scopedFilterFields = [
             functions: ["count"],
             fieldOptions: [
               {
-                label: "Alcohol Retailors",
-                value: "Alcohol Retailors",
+                label: "Alcohol Retailers",
+                value: "Alcohol Retailers",
                 year: [2019],
-                table_name: "alcohol_outlet"
+                geoserver_layer: "alcohol_outlet"
               },
               {
-                label: "Tobacco Retailors",
-                value: "Tobacco Retailors",
-                year: [2019]
+                label: "Tobacco Retailers",
+                value: "Tobacco Retailers",
+                year: [2019],
+                geoserver_layer: "tobacco_outlet"
               },
               {
                 label: "Religious Sites",
                 value: "Religious Sites",
-                year: [2019]
+                year: [2019],
+                geoserver_layer: "religious"
               },
               {
                 label: "YMCA",
                 value: "YMCA",
-                year: [2019]
+                year: [2019],
+                geoserver_layer: "ymca"
               },
               {
                 label: "Veterans Facilities (VFW)",
                 value: "Veterans Facilities (VFW)",
-                year: [2019]
+                year: [2019],
+                geoserver_layer: "vfw"
               },
               {
                 label: "American Legions",
                 value: "American Legions",
+                year: [2019],
+                geoserver_layer: "american_legion"
+              },
+              {
+                label: "Libraries",
+                value: "Libraries",
+                geoserver_layer: "library",
                 year: [2019]
               },
               {
                 label: "Traffic Stops",
-                value: "Traffic Stope",
-                year: [2016, 2017, 2018, 2019]
+                value: "Traffic Stops",
+                year: [2016, 2017, 2018, 2019],
+                geoserver_layer: "traffic_stops"
               }
             ]
           }
@@ -346,36 +360,32 @@ const scopedFilterFields = [
         type: "radio",
         dataType: "polygon",
         functions: "choropleth",
+        geoserver_layer: "food_access",
+        parameterKey: "data_value",
         fieldOptions: [
           {
-            label:
-              "Population with Access to Grocery Store Greater than (1m Urban & 10m Rural)",
+            label: "Grocery Store Access: 1m Urban & 10m Rural",
             value: "low_access_population_urban_1_rural_10",
             year: [2015],
-            geoserver_layer: "food_access",
             aggregation_method: "sum"
           },
           {
-            label:
-              "Population with Access to Grocery Store Greater than(0.5m Urban & 10m Rural)",
+            label: "Grocery Store Access: 0.5m Urban & 10m Rural",
             value: "low_access_population_urban_05_rural_10",
             year: [2015],
-            geoserver_layer: "food_access",
             aggregation_method: "sum"
           },
           {
-            label:
-              "Population with Access to Grocery Store Greater than (1m Urban & 20m Rural)",
+            label: "Grocery Store Access: 1m Urban & 20m Rural",
             value: "low_access_income_population_urban_1_rural_20",
             year: [2015],
-            geoserver_layer: "food_access",
             aggregation_method: "sum"
           },
           {
-            label: "Population count beyond 0.5 m from Grocery Store",
+            label: "Population Count Beyond 0.5m from Grocery Store",
             value: "population_05_supermarket",
             year: [2015],
-            geoserver_layer: "sum"
+            aggregation_method: "sum"
           }
         ]
       }
@@ -389,13 +399,14 @@ const scopedFilterFields = [
         type: "radio",
         dataType: "polygon",
         functions: ["choropleth"],
+        geoserver_layer: "health_behavior",
+        parameterKey: "behavior",
         fieldOptions: [
           {
             label:
               "Physical health not good for >=14 days among adults aged >=18 Years",
             value:
               "Physical health not good for >=14 days among adults aged >=18 Years",
-            geoserver_layer: "health_behaviors",
             year: [2014, 2015, 2016],
             parameter: ["Physical"],
             aggregation_method: "average"
@@ -405,35 +416,28 @@ const scopedFilterFields = [
               "Current lack of health insurance among adults aged 18-64 Years",
             value:
               "Current lack of health insurance among adults aged 18-64 Years",
-            geoserver_layer: "health_behaviors",
             year: [2014, 2015, 2016],
-            parameter: ["Insurance"],
+            parameter: ["Health"],
             aggregation_method: "average"
           },
           {
             label: "Obesity among adults aged >=18 Years",
             value: "Obesity among adults aged >=18 Years",
-            geoserver_layer: "health_behaviors",
             year: [2014, 2015, 2016],
             parameter: ["Obesity"],
             aggregation_method: "average"
           },
           {
-            label:
-              "Mental health not good for >=14 days among adults aged >=18 Years",
-            value:
-              "Mental health not good for >=14 days among adults aged >=18 Years",
+            label: "Mental health not good for >=14 days among adults aged >=18 Years",
+            value: "Mental health not good for >=14 days among adults aged >=18 Years",
             table_name: "health_behaviors",
             year: [2014, 2015, 2016],
             parameter: ["Mental"],
             aggregation_method: "average"
           },
           {
-            label:
-              "Visits to doctor for routine checkup within the past Year among adults aged >=18 Years",
-            value:
-              "Visits to doctor for routine checkup within the past Year among adults aged >=18 Years",
-            geoserver_layer: "health_behaviors",
+            label: "Visits to doctor for routine checkup within the past Year among adults aged >=18 Years",
+            value: "Visits to doctor for routine checkup within the past Year among adults aged >=18 Years",
             year: [2014, 2015, 2016],
             parameter: ["Checkup"],
             aggregation_method: "average"
@@ -441,7 +445,6 @@ const scopedFilterFields = [
           {
             label: "Binge drinking among adults aged >=18 Years",
             value: "Binge drinking among adults aged >=18 Years",
-            geoserver_layer: "health_behaviors",
             year: [2014, 2015, 2016],
             parameter: ["Drinking"],
             aggregation_method: "average"
@@ -449,17 +452,13 @@ const scopedFilterFields = [
           {
             label: "Current smoking among adults aged >=18 Years",
             value: "Current smoking among adults aged >=18 Years",
-            geoserver_layer: "health_behaviors",
             year: [2014, 2015, 2016],
             parameter: ["Smoking"],
             aggregation_method: "average"
           },
           {
-            label:
-              "No leisure-time physical activity among adults aged >=18 Years",
-            value:
-              "No leisure-time physical activity among adults aged >=18 Years",
-            geoserver_layer: "health_behaviors",
+            label: "No leisure-time physical activity among adults aged >=18 Years",
+            value: "No leisure-time physical activity among adults aged >=18 Years",
             year: [2014, 2015, 2016],
             parameter: ["Inactivity"],
             aggregation_method: "average"
@@ -479,9 +478,11 @@ const scopedFilterFields = [
             type: "radio",
             dataType: "polygon",
             functions: ["choropleth"],
+            geoserver_layer: "caces_pollutants",
+            parameterKey: "pollutant",
             fieldOptions: [
               {
-                label: "Ozone",
+                label: "O3 (Ozone)",
                 value: "Ozone",
                 year: [
                   2000,
@@ -501,12 +502,11 @@ const scopedFilterFields = [
                   2014,
                   2015
                 ],
-                geoserver_layer: "caces_pollutants",
                 parameter: ["o3"],
                 aggregation_method: "average"
               },
               {
-                label: "Carbon Monoxide",
+                label: "CO (Carbon Monoxide)",
                 value: "Carbon Monoxide",
                 year: [
                   2000,
@@ -526,12 +526,11 @@ const scopedFilterFields = [
                   2014,
                   2015
                 ],
-                geoserver_layer: "caces_pollutants",
                 parameter: ["co"],
                 aggregation_method: "average"
               },
               {
-                label: "Sulfur Dioxide",
+                label: "SO2 (Sulfur Dioxide)",
                 value: "Sulfur Dioxide",
                 year: [
                   2000,
@@ -551,12 +550,11 @@ const scopedFilterFields = [
                   2014,
                   2015
                 ],
-                geoserver_layer: "caces_pollutants",
                 parameter: ["so2"],
                 aggregation_method: "average"
               },
               {
-                label: "Nitrous Dioxide",
+                label: "NO2 (Nitrous Dioxide)",
                 value: "Nitrous Dioxide",
                 year: [
                   2000,
@@ -576,12 +574,11 @@ const scopedFilterFields = [
                   2014,
                   2015
                 ],
-                geoserver_layer: "caces_pollutants",
                 parameter: ["no2"],
                 aggregation_method: "average"
               },
               {
-                label: "Particulate Matter 10",
+                label: "PM (Particulate Matter) 10",
                 value: "Particulate Matter 10",
                 year: [
                   2000,
@@ -601,12 +598,11 @@ const scopedFilterFields = [
                   2014,
                   2015
                 ],
-                geoserver_layer: "caces_pollutants",
                 parameter: ["pm10"],
                 aggregation_method: "average"
               },
               {
-                label: "Particulate Matter 2.5",
+                label: "PM (Particulate Matter) 2.5",
                 value: "Particulate Matter 2.5",
                 year: [
                   2000,
@@ -626,7 +622,6 @@ const scopedFilterFields = [
                   2014,
                   2015
                 ],
-                geoserver_layer: "caces_pollutants",
                 parameter: ["pm25"],
                 aggregation_method: "average"
               }
