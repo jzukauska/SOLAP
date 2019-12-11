@@ -77,6 +77,8 @@ export default class FilterContextProvider extends Component {
         filterValues
       }
     });
+
+    this.props.handleMapChange({ clearMap: true });
   };
 
   handleColorChange = (name, colorsArr) => {
