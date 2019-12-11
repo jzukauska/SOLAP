@@ -28,14 +28,16 @@ export default class VizController extends Component {
         BasemapLayer: BasemapLayer,
         CurrentLayer: layer1County
       },
-      legend: null
+      legend: null,
+      prevEnumLayer: layer1County
     },
     secondVariable: {
       layers: {
         BasemapLayer: BasemapLayer,
         CurrentLayer: layer2County
       },
-      legend: null
+      legend: null,
+      prevEnumLayer: layer2County
     },
     dataManager: VizDataManager
   };
@@ -87,7 +89,9 @@ export default class VizController extends Component {
                     ? layer1County
                     : layer2County,
                 BasemapLayer: BasemapLayer
-              }
+              },
+              prevEnumLayer:
+                variableName === "firstVariable" ? layer1County : layer2County
             }
           }),
           () => this.forceUpdate()
@@ -104,7 +108,9 @@ export default class VizController extends Component {
                 CurrentLayer:
                   variableName === "firstVariable" ? layer1Tract : layer2Tract,
                 BasemapLayer: BasemapLayer
-              }
+              },
+              prevEnumLayer:
+                variableName === "firstVariable" ? layer1Tract : layer2Tract
             }
           }),
           () => this.forceUpdate()
