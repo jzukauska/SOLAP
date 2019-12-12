@@ -37,7 +37,8 @@ export default class VizController extends Component {
         CurrentLayer: layer1County
       },
       legend: null,
-      prevEnumLayer: layer1County
+      prevEnumLayer: layer1County,
+      graphData: []
     },
     secondVariable: {
       layers: {
@@ -45,7 +46,8 @@ export default class VizController extends Component {
         CurrentLayer: layer2County
       },
       legend: null,
-      prevEnumLayer: layer2County
+      prevEnumLayer: layer2County,
+      graphData: []
     },
     dataManager: VizDataManager
   };
@@ -101,7 +103,8 @@ export default class VizController extends Component {
                 variableName === "firstVariable" ? layer1County : layer2County,
               BasemapLayer: BasemapLayer
             },
-            legend: null
+            legend: null,
+            graphData: []
           }
         }),
         () => this.forceUpdate()
@@ -288,6 +291,18 @@ export default class VizController extends Component {
       const lastBreaks = this.state.dataManager.lastBreaks; // array for future bivariate support
       const graphData = this.state.dataManager.graphData;
 
+      // copy graph data into state
+      var newGraphData = {
+        ...graphData
+      }
+
+      this.setState({
+        [variableName]: {
+          ...this.state[variableName],
+          graphData: newGraphData
+        }
+      });
+      
       this.generateStyleForLegend({
         title: fieldOptions.label,
         styleData: lastBreaks
@@ -380,7 +395,7 @@ export default class VizController extends Component {
         layers: this.state[this.props.variableName].layers,
         legend: this.state[this.props.variableName].legend,
         handleMapChange: this.handleMapChange,
-        graphData: this.state.dataManager.graphData
+        graphData: this.state[this.props.variableName].graphData
       })
     );
 

@@ -23,7 +23,7 @@ class BarGraph extends Component {
         <XAxis tickLabelAngle={-10} />
         <YAxis />
         <VerticalBarSeries data={data} />
-        <ChartLabel text={xLabel} xPercent={0.5} />
+        <ChartLabel text={xLabel} xPercent={0.4} />
       </FlexibleXYPlot>
     );
   }
