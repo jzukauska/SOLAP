@@ -730,7 +730,7 @@ const scopedFilterFields = [
                     value: "Cropland",
                     opacity: 1,
                     year: [2000, 2005, 2010, 2015],
-                    parameter: ["lccroprain", "lccropirripofld"]
+                    parameter: ["lccroprain", "lccropirripofld", "lcherbac", "lcmocropnatvege"]
                   },
                   {
                     label: "Forest",
@@ -738,7 +738,6 @@ const scopedFilterFields = [
                     opacity: 1,
                     year: [2000, 2005, 2010, 2015],
                     parameter: [
-                      "lcmocropnatvege",
                       "lcmonatvegecrop",
                       "lctreebrevgrncto",
                       "lctreebrdecicto",
