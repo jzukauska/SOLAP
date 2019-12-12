@@ -18,7 +18,7 @@ import RangeSlider from "./RangeSlider";
 import { capitalize } from "../helpers/utils";
 import Slider from "@material-ui/core/Slider";
 
-import { ageGroups } from "../constants/sliderValues"
+import { ageGroups } from "../constants/sliderValues";
 
 import BarGraph from "./BarGraph";
 
@@ -30,7 +30,7 @@ const renderFieldBasedOnType = (field, value, onChange) => {
           name={field.name}
           placeholder={field.placeholder}
           value={value}
-        //onChange={onChange}
+          //onChange={onChange}
         />
       );
     case "range":
@@ -84,7 +84,12 @@ const renderFieldBasedOnType = (field, value, onChange) => {
       return (
         <Box pad="xsmall" background="light-2">
           <Stack>
-            <RangeSlider value={value} onChange={onChange} name={field.name} groups={ageGroups} />
+            <RangeSlider
+              value={value}
+              onChange={onChange}
+              name={field.name}
+              groups={ageGroups}
+            />
           </Stack>
         </Box>
       );
@@ -127,13 +132,13 @@ const YearFilter = ({ field, value, onChange, filterValues }) => {
         } else {
           yearOptions = yearOptions.filter(year =>
             val.yearOptions.includes(year)
-          )
+          );
         }
       }
     });
-    yearOptions.forEach(function (item, index) {
-      yearOptionsFormatted.push({ value: item })
-    })
+    yearOptions.forEach(function(item, index) {
+      yearOptionsFormatted.push({ value: item });
+    });
     return yearOptionsFormatted;
   };
   return (
@@ -143,16 +148,18 @@ const YearFilter = ({ field, value, onChange, filterValues }) => {
           {capitalize(field.name)}: {value === 0 ? "Pick a year" : value}
         </Text>
         <Slider
-        name={field.name}
-        value={value}
-        valueLabelDisplay="auto"
-        onChange={(e, newValue) => onChange({ name: field.name, value: newValue })}
-        min={1999}
-        max={2020}
-        defaultValue={2000}
-        marks={buildYearOptions()}
-        step={null}
-      />
+          name={field.name}
+          value={value}
+          valueLabelDisplay="auto"
+          onChange={(e, newValue) =>
+            onChange({ name: field.name, value: newValue })
+          }
+          min={1999}
+          max={2020}
+          defaultValue={2000}
+          marks={buildYearOptions()}
+          step={null}
+        />
       </div>
     </React.Fragment>
   );
@@ -185,19 +192,23 @@ const FilterAccordion = ({
           <Tabs
             value={tab.currentTab}
             onChange={tab.changeTab}
-            indicatorColor="primary"
+            indicatorColor="secondary"
             textColor="primary"
             aria-label="variable tabs"
+            variant="fullWidth"
           >
             <Tab
               label="Variable 1"
               key="variable1"
-              style={{ backgroundColor: "#EAF0CE" }}
+              style={{
+                backgroundColor: "#ACDDDE",
+                width: "100%"
+              }}
             />
             <Tab
               label="Variable 2"
               key="variable2"
-              style={{ backgroundColor: "#9AD1D4" }}
+              style={{ backgroundColor: "#FFE7C7", width: "100%" }}
             />
           </Tabs>
         );
