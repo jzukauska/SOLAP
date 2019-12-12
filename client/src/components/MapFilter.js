@@ -7,6 +7,7 @@ import FilterTable from "./FilterTable";
 import FilterAccordion from "./FilterAccordion";
 import styled from "styled-components";
 import BarGraph from "./BarGraph";
+import Settings from "./Settings";
 
 const MapFilterContainer = styled.div`
   height: 40%;
@@ -14,8 +15,14 @@ const MapFilterContainer = styled.div`
 `;
 
 const GraphContainer = styled.div`
-  height: 22%;
+  height: 19%;
   overflow: auto;
+`;
+
+const SettingsContainer = styled.div`
+  height: 3%;
+  overflow: auto;
+  text-align: right;
 `;
 
 const TitleContainer = styled.div`
@@ -83,6 +90,9 @@ const MapFilter = ({ width, graphData }) => {
               ></Box>
             </FilterContainer>
           </MapFilterContainer>
+          <SettingsContainer>
+            {(graphData.data != null) ? (<Settings />) : (null)}
+          </SettingsContainer>
           <TitleContainer>
             {graphData.xLabel}
           </TitleContainer>
