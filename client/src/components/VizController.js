@@ -187,7 +187,8 @@ export default class VizController extends Component {
               BasemapLayer: BasemapLayer
             },
             legend: null,
-            prevEnumLayer: this.state[variableName].prevEnumLayer
+            prevEnumLayer: this.state[variableName].prevEnumLayer,
+            graphData: []
           }
         }),
         () => this.forceUpdate()
@@ -302,7 +303,7 @@ export default class VizController extends Component {
           graphData: newGraphData
         }
       });
-      
+
       this.generateStyleForLegend({
         title: fieldOptions.label,
         styleData: lastBreaks
@@ -334,7 +335,8 @@ export default class VizController extends Component {
                 BasemapLayer: BasemapLayer
               },
               legend: null,
-              prevEnumLayer: this.state[variableName].prevEnumLayer
+              prevEnumLayer: this.state[variableName].prevEnumLayer,
+              graphData: []
             }
           }),
           () => this.forceUpdate()
@@ -372,7 +374,8 @@ export default class VizController extends Component {
                 BasemapLayer: BasemapLayer
               },
               legend: null,
-              prevEnumLayer: this.state[variableName].prevEnumLayer
+              prevEnumLayer: this.state[variableName].prevEnumLayer,
+              graphData: []
             }
           }),
           () => this.forceUpdate()
