@@ -142,7 +142,7 @@ const layer1Glc = new GlcLayer({
   source: new ImageWMS({
     url: "http://149.165.157.200:8080/geoserver/wms",
     params: {
-      LAYERS: "glc:GLC",
+      LAYERS: "minnesota:MN_GLC_2000",
       env: "lcnodata:0"
     },
     ratio: 1,
@@ -155,7 +155,7 @@ const layer2Glc = new GlcLayer({
   source: new ImageWMS({
     url: "http://149.165.157.200:8080/geoserver/wms",
     params: {
-      LAYERS: "glc:GLC",
+      LAYERS: "minnesota:MN_GLC_2000",
       env: "lcnodata:0"
     },
     ratio: 1,

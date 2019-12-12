@@ -163,10 +163,10 @@ class MerisLandCoverLayer extends Image {
   constructor(opt_options) {
     super(opt_options);
     this.yearLayers = {
-      2000: "meris_2000:landcover.meris_2000_mosaic",
-      2005: "meris_2005:landcover.meris_2005_mosaic",
-      2010: "meris_2010:landcover.meris_2010_mosaic",
-      2015: "meris_2015:landcover.meris_2015_mosaic"
+      2000: "minnesota:MN_MERIS_2000",
+      2005: "minnesota:MN_MERIS_2005",
+      2010: "minnesota:MN_MERIS_2010",
+      2015: "minnesota:MN_MERIS_2015"
     };
   }
 
@@ -292,7 +292,7 @@ const layer1Meris = new MerisLandCoverLayer({
   source: new ImageWMS({
     url: "http://149.165.157.200:8080/geoserver/wms",
     params: {
-      LAYERS: "meris_2015:landcover.meris_2015_mosaic",
+      LAYERS: "minnesota:MN_MERIS_2015",
       env: "lcnodata:0"
     },
     ratio: 1,
@@ -305,7 +305,7 @@ const layer2Meris = new MerisLandCoverLayer({
   source: new ImageWMS({
     url: "http://149.165.157.200:8080/geoserver/wms",
     params: {
-      LAYERS: "meris_2015:landcover.meris_2015_mosaic",
+      LAYERS: "minnesota:MN_MERIS_2015",
       env: "lcnodata:0"
     },
     ratio: 1,
