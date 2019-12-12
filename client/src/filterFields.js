@@ -296,55 +296,64 @@ const scopedFilterFields = [
             type: "radio",
             dataType: "point",
             geoserver_layer: "neighborhood_count",
+            parameterKey: "resource",
             functions: ["count"],
             fieldOptions: [
               {
                 label: "Alcohol Retailers",
                 value: "Alcohol Retailers",
                 year: [2019],
-                geoserver_layer: "alcohol_outlet"
+                geoserver_layer: "alcohol_outlet",
+                parameter : ["alcohol_outlet"]
               },
               {
                 label: "Tobacco Retailers",
                 value: "Tobacco Retailers",
                 year: [2019],
-                geoserver_layer: "tobacco_outlet"
+                geoserver_layer: "tobacco_outlet",
+                parameter : ["tobacco_outlet"]
               },
               {
                 label: "Religious Sites",
                 value: "Religious Sites",
                 year: [2019],
-                geoserver_layer: "religious"
+                geoserver_layer: "religious",
+                parameter : ["religious"]
               },
               {
                 label: "YMCA",
                 value: "YMCA",
                 year: [2019],
-                geoserver_layer: "ymca"
+                geoserver_layer: "ymca",
+                parameter : ["ymca"]
               },
               {
                 label: "Veterans Facilities (VFW)",
                 value: "Veterans Facilities (VFW)",
                 year: [2019],
-                geoserver_layer: "vfw"
+                geoserver_layer: "vfw",
+                parameter : ["vfw"]
               },
               {
                 label: "American Legions",
                 value: "American Legions",
                 year: [2019],
-                geoserver_layer: "american_legion"
+                geoserver_layer: "american_legion",
+                parameter : ["american_legion"]
               },
               {
                 label: "Libraries",
                 value: "Libraries",
                 geoserver_layer: "library",
-                year: [2019]
+                year: [2019],
+                parameter : ["library"]
               },
               {
                 label: "Traffic Stops",
                 value: "Traffic Stops",
                 year: [2016, 2017, 2018, 2019],
-                geoserver_layer: "traffic_stops"
+                geoserver_layer: "traffic_stops",
+                parameter : ["traffic_stops"]
               }
             ]
           }
@@ -366,24 +375,28 @@ const scopedFilterFields = [
           {
             label: "Grocery Store Access: 1m Urban & 10m Rural",
             value: "low_access_population_urban_1_rural_10",
+            parameter: ["low_access_population_urban_1_rural_10"],
             year: [2015],
             aggregation_method: "sum"
           },
           {
             label: "Grocery Store Access: 0.5m Urban & 10m Rural",
             value: "low_access_population_urban_05_rural_10",
+            parameter: ["low_access_population_urban_05_rural_10"],
             year: [2015],
             aggregation_method: "sum"
           },
           {
             label: "Grocery Store Access: 1m Urban & 20m Rural",
             value: "low_access_income_population_urban_1_rural_20",
+            parameter: ["low_access_income_population_urban_1_rural_20"],
             year: [2015],
             aggregation_method: "sum"
           },
           {
             label: "Population Count Beyond 0.5m from Grocery Store",
             value: "population_05_supermarket",
+            parameter: ["population_05_supermarket"],
             year: [2015],
             aggregation_method: "sum"
           }
@@ -708,7 +721,7 @@ const scopedFilterFields = [
                   },
                   {
                     label: "Cropland",
-                    value: "No Data",
+                    value: "Cropland",
                     opacity: 1,
                     year: [2000, 2005, 2010, 2015],
                     parameter: ["lccroprain", "lccropirripofld"]
