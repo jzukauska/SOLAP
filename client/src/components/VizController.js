@@ -117,47 +117,11 @@ export default class VizController extends Component {
     }
 
     if (name === "Geographic Unit") {
-      if (value === "County") {
-        this.setState(
-          (state, props) => ({
-            [variableName]: {
-              ...state[variableName],
-              layers: {
-                CurrentLayer:
-                  variableName === "firstVariable"
-                    ? layer1County
-                    : layer2County,
-                BasemapLayer: BasemapLayer,
-                BoundaryLayer: MnBoundaryLayer
-              },
-              prevEnumLayer:
-                variableName === "firstVariable" ? layer1County : layer2County
-            }
-          }),
-          () => this.forceUpdate()
-        );
-        return;
-      }
-
-      if (value === "Census Tracts") {
-        this.setState(
-          (state, props) => ({
-            [variableName]: {
-              ...state[variableName],
-              layers: {
-                CurrentLayer:
-                  variableName === "firstVariable" ? layer1Tract : layer2Tract,
-                BasemapLayer: BasemapLayer,
-                BoundaryLayer: MnBoundaryLayer
-              },
-              prevEnumLayer:
-                variableName === "firstVariable" ? layer1Tract : layer2Tract
-            }
-          }),
-          () => this.forceUpdate()
-        );
-        return;
-      }
+      this.handleMapChangeGeog({
+        value,
+        variableName
+      });
+      return;
     }
 
     // point features and heatmaps
@@ -167,51 +131,12 @@ export default class VizController extends Component {
       groupOptions.dataType === "point" &&
       (groupOptions.name === "Points" || groupOptions.name === "HeatMap")
     ) {
-      const imageLayer =
-        variableName === "firstVariable" ? layer1Image : layer2Image;
-
-      if (groupOptions.name === "Points") {
-        imageLayer.getSource().updateParams({
-          LAYERS: "solap:" + fieldOptions.geoserver_layer,
-          STYLES: null
-        });
-      } else if (groupOptions.name === "HeatMap") {
-        imageLayer.getSource().updateParams({
-          LAYERS: "solap:" + fieldOptions.geoserver_layer,
-          STYLES: "heatmap"
-        });
-      }
-
-      // TODO no point if previously set?
-      // update state to use image layer
-      this.setState(
-        (state, props) => ({
-          [variableName]: {
-            ...state[variableName],
-            layers: {
-              CurrentLayer: imageLayer,
-              BasemapLayer: BasemapLayer,
-              BoundaryLayer: MnBoundaryLayer
-            },
-            legend: null,
-            prevEnumLayer: this.state[variableName].prevEnumLayer,
-            graphData: []
-          }
-        }),
-        () => this.forceUpdate()
-      );
-      return;
+      this.handleMapChangePointsHeatmaps({
+        variableName,
+        groupOptions,
+        fieldOptions
+      });
     }
-
-    // count features
-    // if (
-    //   "dataType" in groupOptions &&
-    //   groupOptions.dataType === "point" &&
-    //   groupOptions.name === "Count Features"
-    // ) {
-    //   console.warn("count features");
-    //   return;
-    // }
 
     // all other choropleth
     if (
@@ -224,100 +149,11 @@ export default class VizController extends Component {
         groupOptions.dataType === "point" &&
         groupOptions.name === "Count Features")
     ) {
-      const currentLayerUnit =
-        this.state[this.props.variableName].layers.CurrentLayer ===
-          layer1County ||
-        this.state[this.props.variableName].layers.CurrentLayer === layer2County
-          ? "county"
-          : "tract";
-
-      // build up view parameters
-      const fieldViewParams = {};
-      // if there's a >length-one array of years, parameterize it
-      if ("year" in fieldOptions && fieldOptions.year.length > 1) {
-        fieldViewParams.year = fieldOptions.year[fieldOptions.year.length - 1];
-      }
-
-      // TODO filterfields/WFS consistency can make this easier
-      // filterfields sometimes parameter, sometimes not, even when
-      // needs to be parameterized; assume the field's value is the param value
-      if ("parameterKey" in groupOptions) {
-        if ("parameter" in fieldOptions) {
-          fieldViewParams[groupOptions.parameterKey] =
-            fieldOptions.parameter[0];
-        } else {
-          fieldViewParams[groupOptions.parameterKey] = fieldOptions.value;
-        }
-      }
-
-      const isParameterized =
-        ("parameter" in fieldOptions && fieldOptions.parameter.length) ||
-        "parameterKey" in groupOptions;
-
-      // TODO doesn't render properly going back to enum units; await something?
-      // if the current layer isn't the enum unit layer switch it back
-      if (
-        this.state[variableName].prevEnumLayer !==
-        this.state[variableName].CurrentLayer
-      ) {
-        this.setState(
-          (state, props) => ({
-            [variableName]: {
-              ...state[variableName],
-              layers: {
-                CurrentLayer:
-                  variableName === "firstVariable"
-                    ? this.state.firstVariable.prevEnumLayer
-                    : this.state.secondVariable.prevEnumLayer,
-                BasemapLayer: BasemapLayer,
-                BoundaryLayer: MnBoundaryLayer
-              }
-            }
-          }),
-          () => this.forceUpdate()
-        );
-      }
-
-      await this.state.dataManager.updateViz({
-        level: currentLayerUnit,
-        toLayer: this.state[variableName].prevEnumLayer,
-        groupOptions: {
-          geoserverLayer: groupOptions.geoserver_layer,
-          parameterKey: groupOptions.parameterKey
-        },
-        fieldOptions: [
-          {
-            propertyName: isParameterized ? "data_value" : fieldOptions.value,
-
-            // TODO filterfields/WFS consistency can make this easier
-            propertyIsViewParam: isParameterized ? true : false,
-            viewParams: fieldViewParams,
-            label: fieldOptions.label
-          }
-        ]
+      this.handleMapChangeChoropleth({
+        variableName,
+        groupOptions,
+        fieldOptions
       });
-
-      const lastBreaks = this.state.dataManager.lastBreaks; // array for future bivariate support
-      const graphData = this.state.dataManager.graphData;
-
-      // copy graph data into state
-      var newGraphData = {
-        ...graphData
-      }
-
-      this.setState({
-        [variableName]: {
-          ...this.state[variableName],
-          graphData: newGraphData
-        }
-      });
-
-      this.generateStyleForLegend({
-        title: fieldOptions.label,
-        styleData: lastBreaks
-      });
-
-      return;
     } // end choropleth
 
     // MERIS
@@ -328,37 +164,7 @@ export default class VizController extends Component {
       groupOptions.geoserver_layer &&
       groupOptions.geoserver_layer === "meris_YYYY:landcover.meris_YYYY_mosaic"
     ) {
-      console.warn("MERIS");
-      const merisLayer =
-        variableName === "firstVariable" ? layer1Meris : layer2Meris;
-
-      // update state to use image layer
-      if (this.state[variableName].layers.CurrentLayer !== merisLayer) {
-        this.setState(
-          (state, props) => ({
-            [variableName]: {
-              ...state[variableName],
-              layers: {
-                CurrentLayer: merisLayer,
-                BasemapLayer: BasemapLayer,
-                BoundaryLayer: MnBoundaryLayer
-              },
-              legend: null,
-              prevEnumLayer: this.state[variableName].prevEnumLayer,
-              graphData: []
-            }
-          }),
-          () => this.forceUpdate()
-        );
-      }
-
-      if (fieldOptions.parameter.length === 0) {
-        merisLayer.showAllClasses();
-      } else {
-        merisLayer.showClasses(fieldOptions.parameter);
-      }
-
-      return;
+      this.handleMapChangeMeris({ variableName, fieldOptions });
     }
 
     // GLC
@@ -369,37 +175,256 @@ export default class VizController extends Component {
       groupOptions.geoserver_layer &&
       groupOptions.geoserver_layer === "glc:GLC"
     ) {
-      console.warn("GLC");
-      const glcLayer = variableName === "firstVariable" ? layer1Glc : layer2Glc;
+      this.handleMapChangeGlc({ variableName, fieldOptions });
+    }
+  };
 
-      // update state to use image layer
-      if (this.state[variableName].layers.CurrentLayer !== glcLayer) {
-        this.setState(
-          (state, props) => ({
-            [variableName]: {
-              ...state[variableName],
-              layers: {
-                CurrentLayer: glcLayer,
-                BasemapLayer: BasemapLayer,
-                BoundaryLayer: MnBoundaryLayer
-              },
-              legend: null,
-              prevEnumLayer: this.state[variableName].prevEnumLayer,
-              graphData: []
-            }
-          }),
-          () => this.forceUpdate()
-        );
-      }
-
-      if (fieldOptions.parameter.length === 0) {
-        glcLayer.showAllClasses();
-      } else {
-        glcLayer.showClasses(fieldOptions.parameter);
-      }
-
+  handleMapChangeGeog = ({ value, variableName }) => {
+    if (value === "County") {
+      this.setState(
+        (state, props) => ({
+          [variableName]: {
+            ...state[variableName],
+            layers: {
+              CurrentLayer:
+                variableName === "firstVariable" ? layer1County : layer2County,
+              BasemapLayer: BasemapLayer,
+              BoundaryLayer: MnBoundaryLayer
+            },
+            prevEnumLayer:
+              variableName === "firstVariable" ? layer1County : layer2County
+          }
+        }),
+        () => this.forceUpdate()
+      );
       return;
     }
+
+    if (value === "Census Tracts") {
+      this.setState(
+        (state, props) => ({
+          [variableName]: {
+            ...state[variableName],
+            layers: {
+              CurrentLayer:
+                variableName === "firstVariable" ? layer1Tract : layer2Tract,
+              BasemapLayer: BasemapLayer,
+              BoundaryLayer: MnBoundaryLayer
+            },
+            prevEnumLayer:
+              variableName === "firstVariable" ? layer1Tract : layer2Tract
+          }
+        }),
+        () => this.forceUpdate()
+      );
+      return;
+    }
+  };
+
+  handleMapChangePointsHeatmaps = async ({
+    variableName,
+    groupOptions,
+    fieldOptions
+  }) => {
+    const imageLayer =
+      variableName === "firstVariable" ? layer1Image : layer2Image;
+
+    if (groupOptions.name === "Points") {
+      imageLayer.getSource().updateParams({
+        LAYERS: "solap:" + fieldOptions.geoserver_layer,
+        STYLES: null
+      });
+    } else if (groupOptions.name === "HeatMap") {
+      imageLayer.getSource().updateParams({
+        LAYERS: "solap:" + fieldOptions.geoserver_layer,
+        STYLES: "heatmap"
+      });
+    }
+
+    // TODO no point if previously set?
+    // update state to use image layer
+    this.setState(
+      (state, props) => ({
+        [variableName]: {
+          ...state[variableName],
+          layers: {
+            CurrentLayer: imageLayer,
+            BasemapLayer: BasemapLayer,
+            BoundaryLayer: MnBoundaryLayer
+          },
+          legend: null,
+          prevEnumLayer: this.state[variableName].prevEnumLayer,
+          graphData: []
+        }
+      }),
+      () => this.forceUpdate()
+    );
+    return;
+  };
+
+  handleMapChangeMeris = async ({ variableName, fieldOptions }) => {
+    console.warn("MERIS");
+    const merisLayer =
+      variableName === "firstVariable" ? layer1Meris : layer2Meris;
+
+    // update state to use image layer
+    if (this.state[variableName].layers.CurrentLayer !== merisLayer) {
+      this.setState(
+        (state, props) => ({
+          [variableName]: {
+            ...state[variableName],
+            layers: {
+              CurrentLayer: merisLayer,
+              BasemapLayer: BasemapLayer,
+              BoundaryLayer: MnBoundaryLayer
+            },
+            legend: null,
+            prevEnumLayer: this.state[variableName].prevEnumLayer,
+            graphData: []
+          }
+        }),
+        () => this.forceUpdate()
+      );
+    }
+
+    if (fieldOptions.parameter.length === 0) {
+      merisLayer.showAllClasses();
+    } else {
+      merisLayer.showClasses(fieldOptions.parameter);
+    }
+
+    return;
+  };
+  handleMapChangeGlc = async ({ variableName, fieldOptions }) => {
+    console.warn("GLC");
+    const glcLayer = variableName === "firstVariable" ? layer1Glc : layer2Glc;
+
+    // update state to use image layer
+    if (this.state[variableName].layers.CurrentLayer !== glcLayer) {
+      this.setState(
+        (state, props) => ({
+          [variableName]: {
+            ...state[variableName],
+            layers: {
+              CurrentLayer: glcLayer,
+              BasemapLayer: BasemapLayer,
+              BoundaryLayer: MnBoundaryLayer
+            },
+            legend: null,
+            prevEnumLayer: this.state[variableName].prevEnumLayer,
+            graphData: []
+          }
+        }),
+        () => this.forceUpdate()
+      );
+    }
+
+    if (fieldOptions.parameter.length === 0) {
+      glcLayer.showAllClasses();
+    } else {
+      glcLayer.showClasses(fieldOptions.parameter);
+    }
+
+    return;
+  };
+  handleMapChangeChoropleth = async ({
+    variableName,
+    groupOptions,
+    fieldOptions
+  }) => {
+    const currentLayerUnit =
+      this.state[this.props.variableName].layers.CurrentLayer ===
+        layer1County ||
+      this.state[this.props.variableName].layers.CurrentLayer === layer2County
+        ? "county"
+        : "tract";
+
+    // build up view parameters
+    const fieldViewParams = {};
+    // if there's a >length-one array of years, parameterize it
+    if ("year" in fieldOptions && fieldOptions.year.length > 1) {
+      fieldViewParams.year = fieldOptions.year[fieldOptions.year.length - 1];
+    }
+
+    // TODO filterfields/WFS consistency can make this easier
+    // filterfields sometimes parameter, sometimes not, even when
+    // needs to be parameterized; assume the field's value is the param value
+    if ("parameterKey" in groupOptions) {
+      if ("parameter" in fieldOptions) {
+        fieldViewParams[groupOptions.parameterKey] = fieldOptions.parameter[0];
+      } else {
+        fieldViewParams[groupOptions.parameterKey] = fieldOptions.value;
+      }
+    }
+
+    const isParameterized =
+      ("parameter" in fieldOptions && fieldOptions.parameter.length) ||
+      "parameterKey" in groupOptions;
+
+    // TODO doesn't render properly going back to enum units; await something?
+    // if the current layer isn't the enum unit layer switch it back
+    if (
+      this.state[variableName].prevEnumLayer !==
+      this.state[variableName].CurrentLayer
+    ) {
+      this.setState(
+        (state, props) => ({
+          [variableName]: {
+            ...state[variableName],
+            layers: {
+              CurrentLayer:
+                variableName === "firstVariable"
+                  ? this.state.firstVariable.prevEnumLayer
+                  : this.state.secondVariable.prevEnumLayer,
+              BasemapLayer: BasemapLayer,
+              BoundaryLayer: MnBoundaryLayer
+            }
+          }
+        }),
+        () => this.forceUpdate()
+      );
+    }
+
+    await this.state.dataManager.updateViz({
+      level: currentLayerUnit,
+      toLayer: this.state[variableName].prevEnumLayer,
+      groupOptions: {
+        geoserverLayer: groupOptions.geoserver_layer,
+        parameterKey: groupOptions.parameterKey
+      },
+      fieldOptions: [
+        {
+          propertyName: isParameterized ? "data_value" : fieldOptions.value,
+
+          // TODO filterfields/WFS consistency can make this easier
+          propertyIsViewParam: isParameterized ? true : false,
+          viewParams: fieldViewParams,
+          label: fieldOptions.label
+        }
+      ]
+    });
+
+    const lastBreaks = this.state.dataManager.lastBreaks; // array for future bivariate support
+    const graphData = this.state.dataManager.graphData;
+
+    // copy graph data into state
+    var newGraphData = {
+      ...graphData
+    };
+
+    this.setState({
+      [variableName]: {
+        ...this.state[variableName],
+        graphData: newGraphData
+      }
+    });
+
+    this.generateStyleForLegend({
+      title: fieldOptions.label,
+      styleData: lastBreaks
+    });
+
+    return;
   };
 
   render() {
