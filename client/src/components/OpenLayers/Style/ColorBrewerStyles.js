@@ -1,5 +1,6 @@
 import colorbrewer from "colorbrewer";
 import { Stroke, Fill, Style } from "ol/style";
+import { asArray as colorAsArray, asString as colorAsString } from "ol/color";
 
 const ColorBrewerStyles = {};
 for (const rampId in colorbrewer) {
@@ -19,7 +20,11 @@ for (const rampId in colorbrewer) {
             width: 2
           }),
           fill: new Fill({
-            color: colorbrewer[rampId][rampSize][i]
+            color: colorAsString(
+              colorAsArray(colorbrewer[rampId][rampSize][i])
+                .slice(0, 3)
+                .concat(0.7) // adjust opacity
+            ) // colarAsString gets rgba for legend
           })
         })
       );
