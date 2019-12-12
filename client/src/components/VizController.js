@@ -88,13 +88,13 @@ export default class VizController extends Component {
     fieldOptions,
     clearMap
   }) => {
-    console.warn("<<<< HMC <<<<<<<<<<<<<<<<<<<<<<");
-    console.log("name :", name);
-    console.log("value :", value);
-    console.log("yearOptions :", yearOptions);
-    console.log("groupOptions :", groupOptions);
-    console.log("fieldOptions :", fieldOptions);
-    console.log("this.state :", this.state);
+    // console.warn("<<<< HMC <<<<<<<<<<<<<<<<<<<<<<");
+    // console.log("name :", name);
+    // console.log("value :", value);
+    // console.log("yearOptions :", yearOptions);
+    // console.log("groupOptions :", groupOptions);
+    // console.log("fieldOptions :", fieldOptions);
+    // console.log("this.state :", this.state);
     const { variableName } = this.props;
 
     // reset the current variable to county map, set basic style, remove legend
@@ -149,9 +149,27 @@ export default class VizController extends Component {
           fieldOptions,
           showYear: value
         });
+        return;
       }
 
-      return;
+      if (
+        groupOptions &&
+        groupOptions.name &&
+        groupOptions.name === "Landcover Types" &&
+        groupOptions.geoserver_layer &&
+        groupOptions.geoserver_layer ===
+          "meris_YYYY:landcover.meris_YYYY_mosaic"
+      ) {
+        this.handleMapChangeMeris({
+          variableName,
+          groupOptions,
+          fieldOptions,
+          showYear: value
+        });
+        return;
+      }
+
+      console.warn("unhandled year change");
     }
 
     // point features and heatmaps
