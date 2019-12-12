@@ -1,5 +1,8 @@
 const commonFields = [
   {
+    name: "MultiVarible Tab"
+  },
+  {
     name: "Chatbot",
     type: "textInput",
     placeholder: "Chatbot"
@@ -24,9 +27,6 @@ const commonFields = [
         value: "Census Tracts"
       }
     ]
-  },
-  {
-    name: "MultiVarible Tab"
   }
 ];
 
