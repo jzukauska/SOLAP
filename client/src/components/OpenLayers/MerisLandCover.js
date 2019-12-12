@@ -311,7 +311,8 @@ const layer1Meris = new MerisLandCoverLayer({
     },
     ratio: 1,
     serverType: "geoserver"
-  })
+  }),
+  opacity: 0.6
 });
 
 const layer2Meris = new MerisLandCoverLayer({
@@ -323,7 +324,8 @@ const layer2Meris = new MerisLandCoverLayer({
     },
     ratio: 1,
     serverType: "geoserver"
-  })
+  }),
+  opacity: 0.6
 });
 
 export { layer1Meris, layer2Meris };

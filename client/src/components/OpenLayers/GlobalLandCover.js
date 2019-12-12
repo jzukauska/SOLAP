@@ -147,7 +147,8 @@ const layer1Glc = new GlcLayer({
     },
     ratio: 1,
     serverType: "geoserver"
-  })
+  }),
+  opacity: 0.6
 });
 
 const layer2Glc = new GlcLayer({
@@ -159,7 +160,8 @@ const layer2Glc = new GlcLayer({
     },
     ratio: 1,
     serverType: "geoserver"
-  })
+  }),
+  opacity: 0.6
 });
 
 export { layer1Glc, layer2Glc };
