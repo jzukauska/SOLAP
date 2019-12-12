@@ -152,7 +152,8 @@ export default class VizController extends Component {
 
     // point features and heatmaps
     if (
-      "dataType" in groupOptions &&
+      groupOptions &&
+      groupOptions.dataType &&
       groupOptions.dataType === "point" &&
       (groupOptions.name === "Points" || groupOptions.name === "HeatMap")
     ) {
@@ -202,10 +203,12 @@ export default class VizController extends Component {
 
     // all other choropleth
     if (
-      ("functions" in groupOptions &&
+      (groupOptions &&
+        groupOptions.functions &&
         (groupOptions.functions === "choropleth" ||
           groupOptions.functions[0] === "choropleth")) ||
-      ("dataType" in groupOptions &&
+      (groupOptions &&
+        groupOptions.dataType &&
         groupOptions.dataType === "point" &&
         groupOptions.name === "Count Features")
     ) {
