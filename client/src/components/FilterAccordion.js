@@ -22,7 +22,7 @@ import { ageGroups } from "../constants/sliderValues";
 
 import BarGraph from "./BarGraph";
 
-const renderFieldBasedOnType = (field, value, onChange) => {
+const renderFieldBasedOnType = (field, value, onChange, filterValues) => {
   switch (field.type) {
     case "textInput":
       return (
@@ -93,6 +93,16 @@ const renderFieldBasedOnType = (field, value, onChange) => {
           </Stack>
         </Box>
       );
+    case "slider":
+      return (
+        <YearFilter
+          key={"slider-time-period"}
+          field={field}
+          value={value}
+          onChange={onChange}
+          filterValues={filterValues}
+        />
+      );
     case "checkBox":
       return (
         <CheckBox
@@ -108,14 +118,24 @@ const renderFieldBasedOnType = (field, value, onChange) => {
   }
 };
 
-const Filter = ({ field, value, onChange }) => {
+const Filter = ({ field, value, onChange, filterValues }) => {
   return (
     <div style={{ padding: "0.5rem" }}>
       <React.Fragment key={field.name}>
         <div>
           {capitalize(field.name)}: {value === 0 ? "Pick a year" : value}
         </div>
-        {renderFieldBasedOnType(field, value, onChange)}
+        {field.name === "Chatbot" ||
+        field.name === "Time Period" ||
+        field.name === "Geographic Unit" ? (
+          <div>
+            {renderFieldBasedOnType(field, value, onChange, filterValues)}
+          </div>
+        ) : (
+          <div>
+            {renderFieldBasedOnType(field, value, onChange, filterValues)}
+          </div>
+        )}
       </React.Fragment>
     </div>
   );
@@ -176,17 +196,7 @@ const FilterAccordion = ({
     if (!field.options) {
       // Doesn't evaluate to boolean
       const value = filterValues[field.name] && filterValues[field.name].value;
-      if (field.name === "Time Period") {
-        return (
-          <YearFilter
-            key={field.name}
-            field={field}
-            value={value}
-            onChange={handleInputChange}
-            filterValues={filterValues}
-          />
-        );
-      }
+
       if (field.name === "MultiVarible Tab") {
         return (
           <Tabs
@@ -212,15 +222,17 @@ const FilterAccordion = ({
             />
           </Tabs>
         );
+      } else {
+        return (
+          <Filter
+            key={field.name}
+            field={field}
+            value={value}
+            onChange={handleInputChange}
+            filterValues={filterValues}
+          />
+        );
       }
-      return (
-        <Filter
-          key={field.name}
-          field={field}
-          value={value}
-          onChange={handleInputChange}
-        />
-      );
     } else {
       // Add an accordion and recursively call this component again
       return (

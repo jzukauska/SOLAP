@@ -9,7 +9,7 @@ const commonFields = [
   },
   {
     name: "Time Period",
-    type: "select",
+    type: "slider",
     placeholder: "Select Available Time Period",
     fieldOptions: []
   },
@@ -304,56 +304,56 @@ const scopedFilterFields = [
                 value: "Alcohol Retailers",
                 year: [2019],
                 geoserver_layer: "alcohol_outlet",
-                parameter : ["alcohol_outlet"]
+                parameter: ["alcohol_outlet"]
               },
               {
                 label: "Tobacco Retailers",
                 value: "Tobacco Retailers",
                 year: [2019],
                 geoserver_layer: "tobacco_outlet",
-                parameter : ["tobacco_outlet"]
+                parameter: ["tobacco_outlet"]
               },
               {
                 label: "Religious Sites",
                 value: "Religious Sites",
                 year: [2019],
                 geoserver_layer: "religious",
-                parameter : ["religious"]
+                parameter: ["religious"]
               },
               {
                 label: "YMCA",
                 value: "YMCA",
                 year: [2019],
                 geoserver_layer: "ymca",
-                parameter : ["ymca"]
+                parameter: ["ymca"]
               },
               {
                 label: "Veterans Facilities (VFW)",
                 value: "Veterans Facilities (VFW)",
                 year: [2019],
                 geoserver_layer: "vfw",
-                parameter : ["vfw"]
+                parameter: ["vfw"]
               },
               {
                 label: "American Legions",
                 value: "American Legions",
                 year: [2019],
                 geoserver_layer: "american_legion",
-                parameter : ["american_legion"]
+                parameter: ["american_legion"]
               },
               {
                 label: "Libraries",
                 value: "Libraries",
                 geoserver_layer: "library",
                 year: [2019],
-                parameter : ["library"]
+                parameter: ["library"]
               },
               {
                 label: "Traffic Stops",
                 value: "Traffic Stops",
                 year: [2016, 2017, 2018, 2019],
                 geoserver_layer: "traffic_stops",
-                parameter : ["traffic_stops"]
+                parameter: ["traffic_stops"]
               }
             ]
           }
@@ -441,16 +441,20 @@ const scopedFilterFields = [
             aggregation_method: "average"
           },
           {
-            label: "Mental health not good for >=14 days among adults aged >=18 Years",
-            value: "Mental health not good for >=14 days among adults aged >=18 Years",
+            label:
+              "Mental health not good for >=14 days among adults aged >=18 Years",
+            value:
+              "Mental health not good for >=14 days among adults aged >=18 Years",
             table_name: "health_behaviors",
             year: [2014, 2015, 2016],
             parameter: ["Mental"],
             aggregation_method: "average"
           },
           {
-            label: "Visits to doctor for routine checkup within the past Year among adults aged >=18 Years",
-            value: "Visits to doctor for routine checkup within the past Year among adults aged >=18 Years",
+            label:
+              "Visits to doctor for routine checkup within the past Year among adults aged >=18 Years",
+            value:
+              "Visits to doctor for routine checkup within the past Year among adults aged >=18 Years",
             year: [2014, 2015, 2016],
             parameter: ["Checkup"],
             aggregation_method: "average"
@@ -470,8 +474,10 @@ const scopedFilterFields = [
             aggregation_method: "average"
           },
           {
-            label: "No leisure-time physical activity among adults aged >=18 Years",
-            value: "No leisure-time physical activity among adults aged >=18 Years",
+            label:
+              "No leisure-time physical activity among adults aged >=18 Years",
+            value:
+              "No leisure-time physical activity among adults aged >=18 Years",
             year: [2014, 2015, 2016],
             parameter: ["Inactivity"],
             aggregation_method: "average"
