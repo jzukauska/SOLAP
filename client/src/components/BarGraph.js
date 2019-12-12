@@ -3,8 +3,7 @@ import {
   FlexibleXYPlot,
   XAxis,
   YAxis,
-  VerticalBarSeries,
-  ChartLabel
+  VerticalBarSeries
 } from "react-vis";
 
 class BarGraph extends Component {
@@ -20,10 +19,9 @@ class BarGraph extends Component {
 
     return (
       <FlexibleXYPlot xType="ordinal" colorType="literal">
-        <XAxis tickLabelAngle={-10} />
+        <XAxis tickLabelAngle={-10}/>
         <YAxis />
         <VerticalBarSeries data={data} />
-        <ChartLabel text={xLabel} xPercent={0.5} />
       </FlexibleXYPlot>
     );
   }

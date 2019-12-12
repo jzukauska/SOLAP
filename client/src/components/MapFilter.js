@@ -13,9 +13,15 @@ const MapFilterContainer = styled.div`
   overflow: auto;
 `;
 
-const MapGraphContainer = styled.div`
-  height: 25%;
+const GraphContainer = styled.div`
+  height: 22%;
   overflow: auto;
+`;
+
+const TitleContainer = styled.div`
+  height: 3%;
+  overflow: auto;
+  text-align: center;
 `;
 
 const MapFilterGraphContainer = styled.div`
@@ -77,10 +83,12 @@ const MapFilter = ({ width, graphData }) => {
               ></Box>
             </FilterContainer>
           </MapFilterContainer>
-
-          <MapGraphContainer>
+          <TitleContainer>
+            {graphData.xLabel}
+          </TitleContainer>
+          <GraphContainer>
             <BarGraph graphData={graphData} />
-          </MapGraphContainer>
+          </GraphContainer>
         </MapFilterGraphContainer>
       )}
     </FilterConsumer>
