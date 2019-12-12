@@ -682,7 +682,7 @@ const scopedFilterFields = [
                     value: "Water",
                     opacity: 1,
                     year: [2000],
-                    parameter: ["lcnwater"]
+                    parameter: ["lcwater"]
                   },
                   {
                     label: "Built Environment",
