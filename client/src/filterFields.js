@@ -682,7 +682,7 @@ const scopedFilterFields = [
                     value: "Water",
                     opacity: 1,
                     year: [2000],
-                    parameter: ["lcnwater"]
+                    parameter: ["lcwater"]
                   },
                   {
                     label: "Built Environment",
@@ -691,13 +691,13 @@ const scopedFilterFields = [
                     year: [2000],
                     parameter: ["lcartif"]
                   },
-                  {
-                    label: "Bare Areas",
-                    value: "Bare Areas",
-                    opacity: 1,
-                    year: [2000],
-                    parameter: "lcbare"
-                  }
+                  // {
+                  //   label: "Bare Areas",
+                  //   value: "Bare Areas",
+                  //   opacity: 1,
+                  //   year: [2000],
+                  //   parameter: "lcbare"
+                  // }
                 ]
               }
             ]

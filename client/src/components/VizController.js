@@ -8,6 +8,7 @@ import ColorBrewerStyles from "./OpenLayers/Style/ColorBrewerStyles";
 import VizDataManager from "./VizDataManager";
 import BasicPolygon from "./OpenLayers/Style/BasicPolygon";
 import { layer1Meris, layer2Meris } from "./OpenLayers/MerisLandCover";
+import { layer1Glc, layer2Glc } from "./OpenLayers/GlobalLandCover";
 const VizContext = React.createContext();
 
 // TODO:
@@ -329,6 +330,44 @@ export default class VizController extends Component {
         merisLayer.showAllClasses();
       } else {
         merisLayer.showClasses(fieldOptions.parameter);
+      }
+
+      return;
+    }
+
+    // GLC
+    if (
+      groupOptions &&
+      groupOptions.name &&
+      groupOptions.name === "Landcover Types" &&
+      groupOptions.geoserver_layer &&
+      groupOptions.geoserver_layer === "glc:GLC"
+    ) {
+      console.warn("GLC");
+      const glcLayer = variableName === "firstVariable" ? layer1Glc : layer2Glc;
+
+      // update state to use image layer
+      if (this.state[variableName].layers.CurrentLayer !== glcLayer) {
+        this.setState(
+          (state, props) => ({
+            [variableName]: {
+              ...state[variableName],
+              layers: {
+                CurrentLayer: glcLayer,
+                BasemapLayer: BasemapLayer
+              },
+              legend: null,
+              prevEnumLayer: this.state[variableName].prevEnumLayer
+            }
+          }),
+          () => this.forceUpdate()
+        );
+      }
+
+      if (fieldOptions.parameter.length === 0) {
+        glcLayer.showAllClasses();
+      } else {
+        glcLayer.showClasses(fieldOptions.parameter);
       }
 
       return;
