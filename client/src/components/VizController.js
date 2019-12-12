@@ -9,6 +9,7 @@ import VizDataManager from "./VizDataManager";
 import BasicPolygon from "./OpenLayers/Style/BasicPolygon";
 import { layer1Meris, layer2Meris } from "./OpenLayers/MerisLandCover";
 import { layer1Glc, layer2Glc } from "./OpenLayers/GlobalLandCover";
+import MnBoundaryLayer from "./OpenLayers/MnBoundaryLayer";
 const VizContext = React.createContext();
 
 // TODO:
@@ -34,7 +35,8 @@ export default class VizController extends Component {
     firstVariable: {
       layers: {
         BasemapLayer: BasemapLayer,
-        CurrentLayer: layer1County
+        CurrentLayer: layer1County,
+        BoundaryLayer: MnBoundaryLayer
       },
       legend: null,
       prevEnumLayer: layer1County,
@@ -43,7 +45,8 @@ export default class VizController extends Component {
     secondVariable: {
       layers: {
         BasemapLayer: BasemapLayer,
-        CurrentLayer: layer2County
+        CurrentLayer: layer2County,
+        BoundaryLayer: MnBoundaryLayer
       },
       legend: null,
       prevEnumLayer: layer2County,
@@ -101,7 +104,8 @@ export default class VizController extends Component {
             layers: {
               CurrentLayer:
                 variableName === "firstVariable" ? layer1County : layer2County,
-              BasemapLayer: BasemapLayer
+              BasemapLayer: BasemapLayer,
+              BoundaryLayer: MnBoundaryLayer
             },
             legend: null,
             graphData: []
@@ -123,7 +127,8 @@ export default class VizController extends Component {
                   variableName === "firstVariable"
                     ? layer1County
                     : layer2County,
-                BasemapLayer: BasemapLayer
+                BasemapLayer: BasemapLayer,
+                BoundaryLayer: MnBoundaryLayer
               },
               prevEnumLayer:
                 variableName === "firstVariable" ? layer1County : layer2County
@@ -142,7 +147,8 @@ export default class VizController extends Component {
               layers: {
                 CurrentLayer:
                   variableName === "firstVariable" ? layer1Tract : layer2Tract,
-                BasemapLayer: BasemapLayer
+                BasemapLayer: BasemapLayer,
+                BoundaryLayer: MnBoundaryLayer
               },
               prevEnumLayer:
                 variableName === "firstVariable" ? layer1Tract : layer2Tract
@@ -184,7 +190,8 @@ export default class VizController extends Component {
             ...state[variableName],
             layers: {
               CurrentLayer: imageLayer,
-              BasemapLayer: BasemapLayer
+              BasemapLayer: BasemapLayer,
+              BoundaryLayer: MnBoundaryLayer
             },
             legend: null,
             prevEnumLayer: this.state[variableName].prevEnumLayer,
@@ -262,7 +269,8 @@ export default class VizController extends Component {
                   variableName === "firstVariable"
                     ? this.state.firstVariable.prevEnumLayer
                     : this.state.secondVariable.prevEnumLayer,
-                BasemapLayer: BasemapLayer
+                BasemapLayer: BasemapLayer,
+                BoundaryLayer: MnBoundaryLayer
               }
             }
           }),
@@ -332,7 +340,8 @@ export default class VizController extends Component {
               ...state[variableName],
               layers: {
                 CurrentLayer: merisLayer,
-                BasemapLayer: BasemapLayer
+                BasemapLayer: BasemapLayer,
+                BoundaryLayer: MnBoundaryLayer
               },
               legend: null,
               prevEnumLayer: this.state[variableName].prevEnumLayer,
@@ -371,7 +380,8 @@ export default class VizController extends Component {
               ...state[variableName],
               layers: {
                 CurrentLayer: glcLayer,
-                BasemapLayer: BasemapLayer
+                BasemapLayer: BasemapLayer,
+                BoundaryLayer: MnBoundaryLayer
               },
               legend: null,
               prevEnumLayer: this.state[variableName].prevEnumLayer,
