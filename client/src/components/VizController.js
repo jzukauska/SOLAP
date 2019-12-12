@@ -7,6 +7,7 @@ import { layer1Image, layer2Image } from "./OpenLayers/ImageLayers";
 import ColorBrewerStyles from "./OpenLayers/Style/ColorBrewerStyles";
 import VizDataManager from "./VizDataManager";
 import BasicPolygon from "./OpenLayers/Style/BasicPolygon";
+import { layer1Meris, layer2Meris } from "./OpenLayers/MerisLandCover";
 const VizContext = React.createContext();
 
 // TODO:
@@ -23,6 +24,8 @@ app.lc1 = layer1County;
 app.lc2 = layer2County;
 app.il1 = layer1Image;
 app.il2 = layer2Image;
+app.ml1 = layer1Meris;
+app.ml2 = layer2Meris;
 app.dm = VizDataManager;
 
 export default class VizController extends Component {
@@ -291,6 +294,45 @@ export default class VizController extends Component {
 
       return;
     } // end choropleth
+
+    // MERIS
+    if (
+      groupOptions &&
+      groupOptions.name &&
+      groupOptions.name === "Landcover Types" &&
+      groupOptions.geoserver_layer &&
+      groupOptions.geoserver_layer === "meris_YYYY:landcover.meris_YYYY_mosaic"
+    ) {
+      console.warn("MERIS");
+      const merisLayer =
+        variableName === "firstVariable" ? layer1Meris : layer2Meris;
+
+      // update state to use image layer
+      if (this.state[variableName].layers.CurrentLayer !== merisLayer) {
+        this.setState(
+          (state, props) => ({
+            [variableName]: {
+              ...state[variableName],
+              layers: {
+                CurrentLayer: merisLayer,
+                BasemapLayer: BasemapLayer
+              },
+              legend: null,
+              prevEnumLayer: this.state[variableName].prevEnumLayer
+            }
+          }),
+          () => this.forceUpdate()
+        );
+      }
+
+      if (fieldOptions.parameter.length === 0) {
+        merisLayer.showAllClasses();
+      } else {
+        merisLayer.showClasses(fieldOptions.parameter);
+      }
+
+      return;
+    }
   };
 
   render() {
