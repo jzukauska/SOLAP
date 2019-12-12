@@ -159,20 +159,6 @@ const MerisLandCoverClasses = {
   }
 };
 
-/**
- * WMS source for MERIS land cover, defaulting to 2015
- * with the nodata class at opacity=0.
- */
-const source = new ImageWMS({
-  url: "http://149.165.157.200:8080/geoserver/wms",
-  params: {
-    LAYERS: "meris_2015:landcover.meris_2015_mosaic",
-    env: "lcnodata:0"
-  },
-  ratio: 1,
-  serverType: "geoserver"
-});
-
 class MerisLandCoverLayer extends Image {
   constructor(opt_options) {
     super(opt_options);
