@@ -232,8 +232,9 @@ class MerisLandCoverLayer extends Image {
    *
    * @param {bool} show true to show classes, false to hide
    * @param {string[]} classes array of class names to show/hide
+   * @param {bool} reset if true remove other prefs
    */
-  updateClasses = function(show, classes) {
+  updateClasses = function(show, classes, reset = false) {
     if (typeof classes === "undefined") {
       return;
     }
@@ -263,6 +264,40 @@ class MerisLandCoverLayer extends Image {
       .map(key => `${key}:${newEnv[key]}`)
       .join(";");
     this.getSource().updateParams({ env: newEnvStr });
+  };
+
+  /**
+   * Show a set of classes, hide others
+   *
+   * @param {string[]} classes array of classes to display
+   * @param {number} opacity opacity of classes to display, 0-1
+   * @memberof MerisLandCoverLayer
+   */
+  showClasses = function(classes, opacity = 1) {
+    const classSettings = {};
+    let newEnvStr;
+
+    // set all known classes to hidden
+    for (let c in MerisLandCoverClasses) {
+      classSettings[c] = 0;
+    }
+
+    // override those requested
+    for (let c in classes) {
+      console.log("c :", c);
+      console.log("classes[c] :", classes[c]);
+      classSettings[classes[c]] = opacity;
+    }
+
+    newEnvStr = Object.keys(classSettings)
+      .map(key => `${key}:${classSettings[key]}`)
+      .join(";");
+
+    this.getSource().updateParams({ env: newEnvStr });
+    // console.log("classSettings :", classSettings);
+    // for (let c in classes) {
+    //   classSettings
+    // }
   };
 }
 
