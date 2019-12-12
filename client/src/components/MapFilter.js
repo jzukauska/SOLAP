@@ -1,6 +1,6 @@
 import React from "react";
 import { FilterConsumer } from "./FilterContextProvider";
-
+import { commonFields, scopedFilterFields } from "../filterFields";
 import { Box } from "grommet";
 
 import FilterTable from "./FilterTable";
@@ -9,7 +9,7 @@ import styled from "styled-components";
 import BarGraph from "./BarGraph";
 
 const MapFilterContainer = styled.div`
-  height: 75%;
+  height: 40%;
   overflow: auto;
 `;
 
@@ -20,6 +20,16 @@ const MapGraphContainer = styled.div`
 
 const MapFilterGraphContainer = styled.div`
   height: 100%;
+  overflow-y: hidden; // hide vertical
+`;
+
+const FilterContainer = styled.div`
+  height: 100%;
+  overflow: auto;
+`;
+
+const ControlPanelContainer = styled.div`
+  height: 35%;
   overflow: auto;
 `;
 
@@ -35,30 +45,41 @@ const MapFilter = ({ width, graphData }) => {
         tab
       }) => (
         <MapFilterGraphContainer>
-          <MapFilterContainer>
+          <ControlPanelContainer>
             <FilterAccordion
-              filterFields={filterFields}
+              filterFields={commonFields}
               filterValues={filterValues}
               handleInputChange={handleInputChange}
               tab={tab}
             />
+          </ControlPanelContainer>
+          <MapFilterContainer>
+            <FilterContainer>
+              <FilterAccordion
+                filterFields={scopedFilterFields}
+                filterValues={filterValues}
+                handleInputChange={handleInputChange}
+                tab={tab}
+              />
 
-            <FilterTable
-              filterValues={filterValues}
-              handleColorChange={handleColorChange}
-              clearFilter={clearFilter}
-            />
+              <FilterTable
+                filterValues={filterValues}
+                handleColorChange={handleColorChange}
+                clearFilter={clearFilter}
+              />
 
-            <Box
-              background="light"
-              pad="large"
-              justify="center"
-              align="center"
-              direction="row"
-            ></Box>
+              <Box
+                background="light"
+                pad="large"
+                justify="center"
+                align="center"
+                direction="row"
+              ></Box>
+            </FilterContainer>
           </MapFilterContainer>
+
           <MapGraphContainer>
-            <BarGraph graphData={graphData}/>
+            <BarGraph graphData={graphData} />
           </MapGraphContainer>
         </MapFilterGraphContainer>
       )}
