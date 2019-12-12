@@ -297,7 +297,10 @@ export default class VizController extends Component {
 
     // MERIS
     if (
+      groupOptions &&
+      groupOptions.name &&
       groupOptions.name === "Landcover Types" &&
+      groupOptions.geoserver_layer &&
       groupOptions.geoserver_layer === "meris_YYYY:landcover.meris_YYYY_mosaic"
     ) {
       console.warn("MERIS");
