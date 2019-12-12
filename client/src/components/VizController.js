@@ -40,6 +40,8 @@ export default class VizController extends Component {
       },
       legend: null,
       prevEnumLayer: layer1County,
+      prevGroupOptions: null,
+      prevFieldOptions: null,
       graphData: []
     },
     secondVariable: {
@@ -50,6 +52,8 @@ export default class VizController extends Component {
       },
       legend: null,
       prevEnumLayer: layer2County,
+      prevGroupOptions: null,
+      prevFieldOptions: null,
       graphData: []
     },
     dataManager: VizDataManager
@@ -90,6 +94,7 @@ export default class VizController extends Component {
     // console.log("yearOptions :", yearOptions);
     // console.log("groupOptions :", groupOptions);
     // console.log("fieldOptions :", fieldOptions);
+    // console.log("this.state :", this.state);
     const { variableName } = this.props;
 
     // reset the current variable to county map, set basic style, remove legend
@@ -108,6 +113,8 @@ export default class VizController extends Component {
               BoundaryLayer: MnBoundaryLayer
             },
             legend: null,
+            prevGroupOptions: null,
+            prevFieldOptions: null,
             graphData: []
           }
         }),
@@ -164,7 +171,11 @@ export default class VizController extends Component {
       groupOptions.geoserver_layer &&
       groupOptions.geoserver_layer === "meris_YYYY:landcover.meris_YYYY_mosaic"
     ) {
-      this.handleMapChangeMeris({ variableName, fieldOptions });
+      this.handleMapChangeMeris({
+        variableName,
+        groupOptions,
+        fieldOptions
+      });
     }
 
     // GLC
@@ -175,7 +186,11 @@ export default class VizController extends Component {
       groupOptions.geoserver_layer &&
       groupOptions.geoserver_layer === "glc:GLC"
     ) {
-      this.handleMapChangeGlc({ variableName, fieldOptions });
+      this.handleMapChangeGlc({
+        variableName,
+        groupOptions,
+        fieldOptions
+      });
     }
   };
 
@@ -254,6 +269,8 @@ export default class VizController extends Component {
           },
           legend: null,
           prevEnumLayer: this.state[variableName].prevEnumLayer,
+          prevGroupOptions: groupOptions,
+          prevFieldOptions: fieldOptions,
           graphData: []
         }
       }),
@@ -262,7 +279,11 @@ export default class VizController extends Component {
     return;
   };
 
-  handleMapChangeMeris = async ({ variableName, fieldOptions }) => {
+  handleMapChangeMeris = async ({
+    variableName,
+    groupOptions,
+    fieldOptions
+  }) => {
     console.warn("MERIS");
     const merisLayer =
       variableName === "firstVariable" ? layer1Meris : layer2Meris;
@@ -280,6 +301,8 @@ export default class VizController extends Component {
             },
             legend: null,
             prevEnumLayer: this.state[variableName].prevEnumLayer,
+            prevGroupOptions: groupOptions,
+            prevFieldOptions: fieldOptions,
             graphData: []
           }
         }),
@@ -295,7 +318,7 @@ export default class VizController extends Component {
 
     return;
   };
-  handleMapChangeGlc = async ({ variableName, fieldOptions }) => {
+  handleMapChangeGlc = async ({ variableName, groupOptions, fieldOptions }) => {
     console.warn("GLC");
     const glcLayer = variableName === "firstVariable" ? layer1Glc : layer2Glc;
 
@@ -312,6 +335,8 @@ export default class VizController extends Component {
             },
             legend: null,
             prevEnumLayer: this.state[variableName].prevEnumLayer,
+            prevGroupOptions: groupOptions,
+            prevFieldOptions: fieldOptions,
             graphData: []
           }
         }),
@@ -378,7 +403,9 @@ export default class VizController extends Component {
                   : this.state.secondVariable.prevEnumLayer,
               BasemapLayer: BasemapLayer,
               BoundaryLayer: MnBoundaryLayer
-            }
+            },
+            prevGroupOptions: groupOptions,
+            prevFieldOptions: fieldOptions
           }
         }),
         () => this.forceUpdate()
