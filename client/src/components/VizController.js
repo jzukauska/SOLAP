@@ -88,13 +88,13 @@ export default class VizController extends Component {
     fieldOptions,
     clearMap
   }) => {
-    // console.warn("<<<< HMC <<<<<<<<<<<<<<<<<<<<<<");
-    // console.log("name :", name);
-    // console.log("value :", value);
-    // console.log("yearOptions :", yearOptions);
-    // console.log("groupOptions :", groupOptions);
-    // console.log("fieldOptions :", fieldOptions);
-    // console.log("this.state :", this.state);
+    console.warn("<<<< HMC <<<<<<<<<<<<<<<<<<<<<<");
+    console.log("name :", name);
+    console.log("value :", value);
+    console.log("yearOptions :", yearOptions);
+    console.log("groupOptions :", groupOptions);
+    console.log("fieldOptions :", fieldOptions);
+    console.log("this.state :", this.state);
     const { variableName } = this.props;
 
     // reset the current variable to county map, set basic style, remove legend
@@ -128,6 +128,29 @@ export default class VizController extends Component {
         value,
         variableName
       });
+      return;
+    }
+
+    // year changes
+    if (name && name === "Time Period") {
+      groupOptions = this.state[variableName].prevGroupOptions;
+      fieldOptions = this.state[variableName].prevFieldOptions;
+
+      console.log("year change to value :", value);
+      if (
+        groupOptions &&
+        groupOptions.dataType &&
+        groupOptions.dataType === "point" &&
+        (groupOptions.name === "Points" || groupOptions.name === "HeatMap")
+      ) {
+        this.handleMapChangePointsHeatmaps({
+          variableName,
+          groupOptions,
+          fieldOptions,
+          showYear: value
+        });
+      }
+
       return;
     }
 
@@ -239,20 +262,31 @@ export default class VizController extends Component {
   handleMapChangePointsHeatmaps = async ({
     variableName,
     groupOptions,
-    fieldOptions
+    fieldOptions,
+    showYear
   }) => {
+    console.warn("handleMapChangePointsHeatmaps showYear : ", showYear);
     const imageLayer =
       variableName === "firstVariable" ? layer1Image : layer2Image;
+
+    // year change only
+    if (typeof showYear !== "undefined") {
+      console.log("changing showYear :", showYear);
+      imageLayer.getSource().updateParams({ viewparams: "year:" + showYear });
+      return;
+    }
 
     if (groupOptions.name === "Points") {
       imageLayer.getSource().updateParams({
         LAYERS: "solap:" + fieldOptions.geoserver_layer,
-        STYLES: null
+        STYLES: null,
+        viewparams: ""
       });
     } else if (groupOptions.name === "HeatMap") {
       imageLayer.getSource().updateParams({
         LAYERS: "solap:" + fieldOptions.geoserver_layer,
-        STYLES: "heatmap"
+        STYLES: "heatmap",
+        viewparams: ""
       });
     }
 
@@ -282,7 +316,8 @@ export default class VizController extends Component {
   handleMapChangeMeris = async ({
     variableName,
     groupOptions,
-    fieldOptions
+    fieldOptions,
+    showYear
   }) => {
     console.warn("MERIS");
     const merisLayer =
@@ -308,6 +343,11 @@ export default class VizController extends Component {
         }),
         () => this.forceUpdate()
       );
+    }
+
+    if (typeof showYear !== "undefined") {
+      merisLayer.setYear(showYear);
+      return;
     }
 
     if (fieldOptions.parameter.length === 0) {
