@@ -97,13 +97,13 @@ export default class VizController extends Component {
     fieldOptions,
     clearMap
   }) => {
-    // console.warn("<<<< HMC <<<<<<<<<<<<<<<<<<<<<<");
-    // console.log("name :", name);
-    // console.log("value :", value);
-    // console.log("yearOptions :", yearOptions);
-    // console.log("groupOptions :", groupOptions);
-    // console.log("fieldOptions :", fieldOptions);
-    // console.log("this.state :", this.state);
+    console.warn("<<<< HMC <<<<<<<<<<<<<<<<<<<<<<");
+    console.log("name :", name);
+    console.log("value :", value);
+    console.log("yearOptions :", yearOptions);
+    console.log("groupOptions :", groupOptions);
+    console.log("fieldOptions :", fieldOptions);
+    console.log("this.state :", this.state);
     const { variableName } = this.props;
 
     // reset the current variable to county map, set basic style, remove legend
@@ -335,6 +335,17 @@ export default class VizController extends Component {
       });
     }
 
+    const legendData = {
+      title: "Legend",
+      pointData: [
+        {
+          text: fieldOptions.label,
+          stroke: "rgb(51, 51, 51, 0.6)",
+          fill: "rgb(193, 184, 182, 0.6)"
+        }
+      ]
+    };
+
     // TODO no point if previously set?
     // update state to use image layer
     this.setState(
@@ -346,7 +357,7 @@ export default class VizController extends Component {
             BasemapLayer: BasemapLayer,
             BoundaryLayer: MnBoundaryLayer
           },
-          legend: null,
+          legend: legendData,
           prevEnumLayer: this.state[variableName].prevEnumLayer,
           prevGroupOptions: groupOptions,
           prevFieldOptions: fieldOptions,
