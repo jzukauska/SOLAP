@@ -335,16 +335,22 @@ export default class VizController extends Component {
       });
     }
 
-    const legendData = {
-      title: "Legend",
-      pointData: [
-        {
-          text: fieldOptions.label,
-          stroke: "rgb(51, 51, 51, 0.6)",
-          fill: "rgb(193, 184, 182, 0.6)"
-        }
-      ]
-    };
+    const legendData =
+      groupOptions.name === "Points"
+        ? {
+            title: "Legend",
+            pointData: [
+              {
+                text: fieldOptions.label,
+                stroke: "rgb(51, 51, 51, 0.6)",
+                fill: "rgb(193, 184, 182, 0.6)"
+              }
+            ]
+          }
+        : {
+            title: fieldOptions.label,
+            heatmap: true
+          };
 
     // TODO no point if previously set?
     // update state to use image layer

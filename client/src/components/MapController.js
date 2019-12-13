@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
-
 import OLMap from "./OpenLayers/OLMap";
+import heatmapLegend from "./heatmap_legend_34x150.png";
 
 const MapController = ({ view, layers, legend }) => {
   const [mapInstance, setMapInstance] = useState(null);
@@ -30,8 +30,59 @@ const MapController = ({ view, layers, legend }) => {
   // data-nodrag is used to disable dragging on the grid
 
   // TODO better handling for rectangle swatches vs circle swatches, very undry
-  // point symbol custom
-  if (legend && legend.pointData) {
+  if (legend && legend.heatmap) {
+    // heatmap is a static image with low and high
+    return (
+      <>
+        <div ref={mapRef} data-nodrag="true" style={{ height: "100%" }} />
+        {legend && (
+          <div
+            style={{
+              top: "0.5em",
+              right: "0.5em",
+              padding: "0.5em 1em",
+              maxWidth: "250px",
+              maxHeight: "80vh",
+              backgroundColor: "#ffffff",
+              border: "medium solid #dddbe0",
+              position: "fixed"
+            }}
+          >
+            <p
+              style={{
+                margin: "0",
+                fontWeight: "bold"
+              }}
+            >
+              {legend.title.charAt(0).toUpperCase() + legend.title.slice(1)}
+            </p>
+            <div style={{ marginTop: "0.5em" }}>
+              <img
+                src={heatmapLegend}
+                alt="heatmap legend: blue is low, red medium, yellow high"
+                style={{ float: "left" }}
+              />
+              <div
+                class="legend-marks"
+                style={{
+                  float: "left",
+                  marginLeft: "0.25em",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                  height: "150px"
+                }}
+              >
+                <span style={{ display: "flex" }}>high concentration</span>
+                <span style={{ display: "flex" }}>low concentration</span>
+              </div>
+            </div>
+          </div>
+        )}
+      </>
+    );
+  } else if (legend && legend.pointData) {
+    // circular points with fill/stroke
     return (
       <>
         <div ref={mapRef} data-nodrag="true" style={{ height: "100%" }} />
