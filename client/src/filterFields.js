@@ -715,7 +715,7 @@ const scopedFilterFields = [
                 name: "Landcover Types",
                 type: "radio",
                 dataType: "raster",
-                geoserver_layer: "meris_YYYY:landcover.meris_YYYY_mosaic",
+                geoserver_layer: "minnesota:MN_MERIS_YYYY",
                 functions: ["summary", "raster_sld"],
                 fieldOptions: [
                   {

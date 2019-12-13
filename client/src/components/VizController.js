@@ -157,8 +157,7 @@ export default class VizController extends Component {
         groupOptions.name &&
         groupOptions.name === "Landcover Types" &&
         groupOptions.geoserver_layer &&
-        groupOptions.geoserver_layer ===
-          "meris_YYYY:landcover.meris_YYYY_mosaic"
+        groupOptions.geoserver_layer === "minnesota:MN_MERIS_YYYY"
       ) {
         this.handleMapChangeMeris({
           variableName,
@@ -210,7 +209,7 @@ export default class VizController extends Component {
       groupOptions.name &&
       groupOptions.name === "Landcover Types" &&
       groupOptions.geoserver_layer &&
-      groupOptions.geoserver_layer === "meris_YYYY:landcover.meris_YYYY_mosaic"
+      groupOptions.geoserver_layer === "minnesota:MN_MERIS_YYYY"
     ) {
       this.handleMapChangeMeris({
         variableName,
