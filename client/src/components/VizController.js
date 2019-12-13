@@ -11,6 +11,7 @@ import BasicPolygon from "./OpenLayers/Style/BasicPolygon";
 import { layer1Meris, layer2Meris } from "./OpenLayers/MerisLandCover";
 import { layer1Glc, layer2Glc } from "./OpenLayers/GlobalLandCover";
 import MnBoundaryLayer from "./OpenLayers/MnBoundaryLayer";
+import { MerisLandCoverClasses } from "./OpenLayers/MerisLandCover";
 const VizContext = React.createContext();
 
 // TODO:
@@ -63,16 +64,23 @@ export default class VizController extends Component {
   generateStyleForLegend({ title, styleData }) {
     const { variableName } = this.props;
     const legend = [];
+
     for (let i = 0; i < styleData[0].breaks.length; i++) {
       const data = {
         stroke:
           ColorBrewerStyles["YlGnBu"][styleData[0].breaks.length][i].fill_
             .color_,
-        lowerBound: i === 0 ? styleData[0].minVal : styleData[0].breaks[i - 1],
-        upperBound: styleData[0].breaks[i]
+        text:
+          (i === 0
+            ? styleData[0].minVal
+            : styleData[0].breaks[i - 1]
+          ).toLocaleString() +
+          " \u2013 " +
+          styleData[0].breaks[i].toLocaleString()
       };
       legend.push(data);
     }
+
     this.setState({
       [variableName]: {
         ...this.state[variableName],
@@ -89,13 +97,13 @@ export default class VizController extends Component {
     fieldOptions,
     clearMap
   }) => {
-    // console.warn("<<<< HMC <<<<<<<<<<<<<<<<<<<<<<");
-    // console.log("name :", name);
-    // console.log("value :", value);
-    // console.log("yearOptions :", yearOptions);
-    // console.log("groupOptions :", groupOptions);
-    // console.log("fieldOptions :", fieldOptions);
-    // console.log("this.state :", this.state);
+    console.warn("<<<< HMC <<<<<<<<<<<<<<<<<<<<<<");
+    console.log("name :", name);
+    console.log("value :", value);
+    console.log("yearOptions :", yearOptions);
+    console.log("groupOptions :", groupOptions);
+    console.log("fieldOptions :", fieldOptions);
+    console.log("this.state :", this.state);
     const { variableName } = this.props;
 
     // reset the current variable to county map, set basic style, remove legend
@@ -327,6 +335,23 @@ export default class VizController extends Component {
       });
     }
 
+    const legendData =
+      groupOptions.name === "Points"
+        ? {
+            title: "Legend",
+            pointData: [
+              {
+                text: fieldOptions.label,
+                stroke: "rgb(51, 51, 51, 0.6)",
+                fill: "rgb(193, 184, 182, 0.6)"
+              }
+            ]
+          }
+        : {
+            title: fieldOptions.label,
+            heatmap: true
+          };
+
     // TODO no point if previously set?
     // update state to use image layer
     this.setState(
@@ -338,7 +363,7 @@ export default class VizController extends Component {
             BasemapLayer: BasemapLayer,
             BoundaryLayer: MnBoundaryLayer
           },
-          legend: null,
+          legend: legendData,
           prevEnumLayer: this.state[variableName].prevEnumLayer,
           prevGroupOptions: groupOptions,
           prevFieldOptions: fieldOptions,
@@ -387,11 +412,38 @@ export default class VizController extends Component {
       return;
     }
 
+    let lcStyleData = [];
     if (fieldOptions.parameter.length === 0) {
       merisLayer.showAllClasses();
+
+      for (let c in MerisLandCoverClasses) {
+        lcStyleData.push({
+          stroke: MerisLandCoverClasses[c].colorRgba,
+          text: MerisLandCoverClasses[c].desc
+        });
+      }
     } else {
       merisLayer.showClasses(fieldOptions.parameter);
+      for (let i = 0; i < fieldOptions.parameter.length; i++) {
+        if (
+          Object.keys(MerisLandCoverClasses).indexOf(
+            fieldOptions.parameter[i]
+          ) !== -1
+        ) {
+          lcStyleData.push({
+            stroke: MerisLandCoverClasses[fieldOptions.parameter[i]].colorRgba,
+            text: MerisLandCoverClasses[fieldOptions.parameter[i]].desc
+          });
+        }
+      }
     }
+
+    this.setState({
+      [variableName]: {
+        ...this.state[variableName],
+        legend: { title: "Meris Land Cover", data: lcStyleData }
+      }
+    });
 
     return;
   };
