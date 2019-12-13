@@ -11,6 +11,7 @@ import BasicPolygon from "./OpenLayers/Style/BasicPolygon";
 import { layer1Meris, layer2Meris } from "./OpenLayers/MerisLandCover";
 import { layer1Glc, layer2Glc } from "./OpenLayers/GlobalLandCover";
 import MnBoundaryLayer from "./OpenLayers/MnBoundaryLayer";
+import { MerisLandCoverClasses } from "./OpenLayers/MerisLandCover";
 const VizContext = React.createContext();
 
 // TODO:
@@ -63,6 +64,7 @@ export default class VizController extends Component {
   generateStyleForLegend({ title, styleData }) {
     const { variableName } = this.props;
     const legend = [];
+
     for (let i = 0; i < styleData[0].breaks.length; i++) {
       const data = {
         stroke:
@@ -78,6 +80,7 @@ export default class VizController extends Component {
       };
       legend.push(data);
     }
+
     this.setState({
       [variableName]: {
         ...this.state[variableName],
@@ -392,11 +395,38 @@ export default class VizController extends Component {
       return;
     }
 
+    let lcStyleData = [];
     if (fieldOptions.parameter.length === 0) {
       merisLayer.showAllClasses();
+
+      for (let c in MerisLandCoverClasses) {
+        lcStyleData.push({
+          stroke: MerisLandCoverClasses[c].colorRgba,
+          text: MerisLandCoverClasses[c].desc
+        });
+      }
     } else {
       merisLayer.showClasses(fieldOptions.parameter);
+      for (let i = 0; i < fieldOptions.parameter.length; i++) {
+        if (
+          Object.keys(MerisLandCoverClasses).indexOf(
+            fieldOptions.parameter[i]
+          ) !== -1
+        ) {
+          lcStyleData.push({
+            stroke: MerisLandCoverClasses[fieldOptions.parameter[i]].colorRgba,
+            text: MerisLandCoverClasses[fieldOptions.parameter[i]].desc
+          });
+        }
+      }
     }
+
+    this.setState({
+      [variableName]: {
+        ...this.state[variableName],
+        legend: { title: "Meris Land Cover", data: lcStyleData }
+      }
+    });
 
     return;
   };

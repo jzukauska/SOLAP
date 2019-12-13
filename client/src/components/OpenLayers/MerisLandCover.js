@@ -199,8 +199,6 @@ const MerisLandCoverClasses = {
 };
 
 for (let c in MerisLandCoverClasses) {
-  console.log("c :", c);
-  console.log("c.color :", MerisLandCoverClasses[c].color);
   MerisLandCoverClasses[c].colorRgba = colorAsString(
     colorAsArray(MerisLandCoverClasses[c].color)
       .slice(0, 3)
@@ -319,8 +317,6 @@ class MerisLandCoverLayer extends Image {
 
     // override those requested
     for (let c in classes) {
-      console.log("c :", c);
-      console.log("classes[c] :", classes[c]);
       classSettings[classes[c]] = opacity;
     }
 
@@ -363,4 +359,4 @@ const layer2Meris = new MerisLandCoverLayer({
   opacity: 0.6
 });
 
-export { layer1Meris, layer2Meris };
+export { layer1Meris, layer2Meris, MerisLandCoverClasses };
