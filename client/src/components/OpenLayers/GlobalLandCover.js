@@ -120,8 +120,6 @@ class GlcLayer extends Image {
 
     // override those requested
     for (let c in classes) {
-      console.log("c :", c);
-      console.log("classes[c] :", classes[c]);
       classSettings[classes[c]] = opacity;
     }
 
@@ -130,10 +128,6 @@ class GlcLayer extends Image {
       .join(";");
 
     this.getSource().updateParams({ env: newEnvStr });
-    // console.log("classSettings :", classSettings);
-    // for (let c in classes) {
-    //   classSettings
-    // }
   };
 }
 
