@@ -351,7 +351,7 @@ const scopedFilterFields = [
               {
                 label: "Traffic Stops",
                 value: "Traffic Stops",
-                year: [2016, 2017, 2018, 2019],
+                year: [2019],
                 geoserver_layer: "traffic_stops",
                 parameter: ["traffic_stops"]
               }
