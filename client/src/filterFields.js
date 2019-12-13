@@ -3,11 +3,6 @@ const commonFields = [
     name: "MultiVarible Tab"
   },
   {
-    name: "Chatbot",
-    type: "textInput",
-    placeholder: "Chatbot"
-  },
-  {
     name: "Time Period",
     type: "slider",
     placeholder: "Select Available Time Period",
@@ -93,70 +88,6 @@ const scopedFilterFields = [
                 value: "asian_alone",
                 year: [2000, 2010]
               }
-            ]
-          }
-        ]
-      },
-      {
-        name: "Population By Age",
-        options: [
-          {
-            name: "Population By Age",
-            type: "rangeSelector",
-            dataType: "polygon",
-            aggregation_method: "sum",
-            geoserver_layer: "demographics",
-            functions: ["choropleth"],
-            min: 0,
-            max: 80,
-            step: 5,
-            "Population By Age": [
-              "Male_Under_5_years",
-              "Male_5_to_9_years",
-              "Male_10_to_14_years",
-              "Male_15_to_17_years",
-              "Male_18_and_19_years",
-              "Male_20_years",
-              "Male_21_years",
-              "Male_22_to_24_years",
-              "Male_25_to_29_years",
-              "Male_30_to_34_years",
-              "Male_35_to_39_years",
-              "Male_40_to_44_years",
-              "Male_45_to_49_years",
-              "Male_50_to_54_years",
-              "Male_55_to_59_years",
-              "Male_60_and_61_years",
-              "Male_62_to_64_years",
-              "Male_65_and_66_years",
-              "Male_67_to_69_years",
-              "Male_70_to_74_years",
-              "Male_75_to_79_years",
-              "Male_80_to_84_years",
-              "Male_85_years_and_over",
-              "Male_Under_5_years",
-              "Male_5_to_9_years",
-              "Male_10_to_14_years",
-              "Male_15_to_17_years",
-              "Male_18_and_19_years",
-              "Male_20_years",
-              "Male_21_years",
-              "Male_22_to_24_years",
-              "Male_25_to_29_years",
-              "Male_30_to_34_years",
-              "Male_35_to_39_years",
-              "Male_40_to_44_years",
-              "Male_45_to_49_years",
-              "Male_50_to_54_years",
-              "Male_55_to_59_years",
-              "Male_60_and_61_years",
-              "Male_62_to_64_years",
-              "Male_65_and_66_years",
-              "Male_67_to_69_years",
-              "Male_70_to_74_years",
-              "female_75_to_79_years",
-              "female_80_to_84_years",
-              "female_85_years_and_over"
             ]
           }
         ]
@@ -417,7 +348,7 @@ const scopedFilterFields = [
         fieldOptions: [
           {
             label:
-              "Physical health not good for >=14 days among adults aged >=18 Years",
+              "Percent adults (18+) who reported not good health (14 days)",
             value:
               "Physical health not good for >=14 days among adults aged >=18 Years",
             year: [2014, 2015, 2016],
@@ -426,7 +357,7 @@ const scopedFilterFields = [
           },
           {
             label:
-              "Current lack of health insurance among adults aged 18-64 Years",
+              "Percent adults (18+) without health insurance",
             value:
               "Current lack of health insurance among adults aged 18-64 Years",
             year: [2014, 2015, 2016],
@@ -434,7 +365,7 @@ const scopedFilterFields = [
             aggregation_method: "average"
           },
           {
-            label: "Obesity among adults aged >=18 Years",
+            label: "Percent obese adults (18+) ",
             value: "Obesity among adults aged >=18 Years",
             year: [2014, 2015, 2016],
             parameter: ["Obesity"],
@@ -442,7 +373,7 @@ const scopedFilterFields = [
           },
           {
             label:
-              "Mental health not good for >=14 days among adults aged >=18 Years",
+              "Percent adults (18+) who reported not good mental health (14 days)",
             value:
               "Mental health not good for >=14 days among adults aged >=18 Years",
             table_name: "health_behaviors",
@@ -452,7 +383,7 @@ const scopedFilterFields = [
           },
           {
             label:
-              "Visits to doctor for routine checkup within the past Year among adults aged >=18 Years",
+              "Percent adults (18+) reported annual doctor visit",
             value:
               "Visits to doctor for routine checkup within the past Year among adults aged >=18 Years",
             year: [2014, 2015, 2016],
@@ -460,14 +391,14 @@ const scopedFilterFields = [
             aggregation_method: "average"
           },
           {
-            label: "Binge drinking among adults aged >=18 Years",
+            label: "Percent binge drinking adults (18+)",
             value: "Binge drinking among adults aged >=18 Years",
             year: [2014, 2015, 2016],
             parameter: ["Drinking"],
             aggregation_method: "average"
           },
           {
-            label: "Current smoking among adults aged >=18 Years",
+            label: "Percent current smoking adults (18+) ",
             value: "Current smoking among adults aged >=18 Years",
             year: [2014, 2015, 2016],
             parameter: ["Smoking"],
@@ -475,7 +406,7 @@ const scopedFilterFields = [
           },
           {
             label:
-              "No leisure-time physical activity among adults aged >=18 Years",
+              "Percent adults (18+) not engaged in physical activity",
             value:
               "No leisure-time physical activity among adults aged >=18 Years",
             year: [2014, 2015, 2016],
