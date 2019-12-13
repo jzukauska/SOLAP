@@ -243,8 +243,13 @@ class EnumUnitData {
 
     // is there enough data for the number of requested classes?
     // if low, go with three classes
+    // TODO need a better way to handle few enum units and classification
     const condClassCount =
-      Object.values(symbolizePairs).length > 10 ? classCount : 3;
+      Object.values(symbolizePairs).length > 10
+        ? classCount
+        : Object.values(symbolizePairs).length < 4
+        ? 2
+        : 3;
 
     // get class breaks
     const breaks = this.getClassBreaks(
@@ -252,6 +257,13 @@ class EnumUnitData {
       classMethod,
       Object.values(symbolizePairs)
     );
+
+    console.log(
+      "Object.values(symbolizePairs).length :",
+      Object.values(symbolizePairs).length
+    );
+    console.log("condClassCount :", condClassCount);
+    console.log("breaks :", breaks);
 
     this.lastBreaks = breaks;
     this.graphData.xLabel = fieldOptions[0].label; // TODO assumes multiple field options passed
@@ -273,6 +285,7 @@ class EnumUnitData {
     let groupLabel;
     this.graphData.data = [];
     for (let i = 0; i < classGroups.length; i++) {
+      console.log("i :", i);
       if (i === 0) {
         groupLabel = `${breaks[0].minVal.toLocaleString()} &ndash; ${breaks[0].breaks[
           i
@@ -286,7 +299,10 @@ class EnumUnitData {
       this.graphData.data.push({
         x: groupLabel,
         y: classGroups[i],
-        color: colorbrewer.YlGnBu[condClassCount][i] // TODO doesn't support varying ColorBrewer schemes
+        color:
+          condClassCount === 2
+            ? colorbrewer.YlGnBu[3][i]
+            : colorbrewer.YlGnBu[condClassCount][i] // TODO doesn't support varying ColorBrewer schemes
       });
     }
 
