@@ -32,7 +32,7 @@ for (const rampId in colorbrewer) {
   }
 }
 
+// TODO hack to handle too-few enum units and classes, i.e. traffic stops counties
 ColorBrewerStyles["YlGnBu"][2] = ColorBrewerStyles["YlGnBu"][3].slice(0, 2);
 
-console.log("ColorBrewerStyles :", ColorBrewerStyles);
 export default ColorBrewerStyles;
