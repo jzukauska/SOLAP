@@ -21,7 +21,6 @@ export default class FilterContextProvider extends Component {
     fieldOptions
   }) => {
     const { variableName } = this.props;
-
     if (
       name === "Time Period" ||
       name === "Geographic Unit" ||
@@ -38,7 +37,8 @@ export default class FilterContextProvider extends Component {
               colors: ""
             }
           }
-        }
+        },
+        navbarTextDefault: false
       });
     } else {
       await this.setState({
@@ -52,8 +52,11 @@ export default class FilterContextProvider extends Component {
               yearOptions,
               colors: ""
             }
-          }
-        }
+          },
+          prefLabel:
+            fieldOptions && fieldOptions.label ? fieldOptions.label : null
+        },
+        navbarTextDefault: false
       });
     }
     this.props.handleMapChange({
@@ -75,7 +78,8 @@ export default class FilterContextProvider extends Component {
       [variableName]: {
         ...this.state[variableName],
         filterValues
-      }
+      },
+      navbarTextDefault: true
     });
 
     this.props.handleMapChange({ clearMap: true });
@@ -118,6 +122,8 @@ export default class FilterContextProvider extends Component {
             ...this.state.commonFilterValues[this.props.variableName],
             ...this.state[this.props.variableName].filterValues
           },
+          prefLabel: this.state[this.props.variableName].prefLabel,
+          navbarTextDefault: this.state.navbarTextDefault,
           handleInputChange: this.handleInputChange,
           handleColorChange: this.handleColorChange,
           clearFilter: this.clearFilter,
