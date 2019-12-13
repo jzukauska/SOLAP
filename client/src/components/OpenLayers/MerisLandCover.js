@@ -1,5 +1,6 @@
 import ImageWMS from "ol/source/ImageWMS";
 import { Image } from "ol/layer";
+import { asArray as colorAsArray, asString as colorAsString } from "ol/color";
 
 //https://maps.elie.ucl.ac.be/CCI/viewer/download/CCI-LC_Maps_Legend.pdf
 const MerisLandCoverClasses = {
@@ -196,6 +197,16 @@ const MerisLandCoverClasses = {
     color: "#ffffff"
   }
 };
+
+for (let c in MerisLandCoverClasses) {
+  console.log("c :", c);
+  console.log("c.color :", MerisLandCoverClasses[c].color);
+  MerisLandCoverClasses[c].colorRgba = colorAsString(
+    colorAsArray(MerisLandCoverClasses[c].color)
+      .slice(0, 3)
+      .concat(0.6) // adjust opacity
+  );
+}
 
 class MerisLandCoverLayer extends Image {
   constructor(opt_options) {
