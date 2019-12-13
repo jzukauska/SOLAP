@@ -50,6 +50,8 @@ const Navbar = ({ tab }) => {
               setArea(obj.value);
             } else if (obj !== null && name === "Time Period") {
               setYear(obj.value);
+            } else if (obj !== null && name) {
+              setVariable(obj.value);
             }
           })
         }
