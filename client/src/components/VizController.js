@@ -136,7 +136,6 @@ export default class VizController extends Component {
       groupOptions = this.state[variableName].prevGroupOptions;
       fieldOptions = this.state[variableName].prevFieldOptions;
 
-      console.log("year change to value :", value);
       if (
         groupOptions &&
         groupOptions.dataType &&
@@ -167,6 +166,26 @@ export default class VizController extends Component {
         });
         return;
       }
+
+      // all other choropleth
+      if (
+        (groupOptions &&
+          groupOptions.functions &&
+          (groupOptions.functions === "choropleth" ||
+            groupOptions.functions[0] === "choropleth")) ||
+        (groupOptions &&
+          groupOptions.dataType &&
+          groupOptions.dataType === "point" &&
+          groupOptions.name === "Count Features")
+      ) {
+        this.handleMapChangeChoropleth({
+          variableName,
+          groupOptions,
+          fieldOptions,
+          showYear: value
+        });
+        return;
+      } // end choropleth
 
       console.warn("unhandled year change");
     }
@@ -412,7 +431,8 @@ export default class VizController extends Component {
   handleMapChangeChoropleth = async ({
     variableName,
     groupOptions,
-    fieldOptions
+    fieldOptions,
+    showYear
   }) => {
     const currentLayerUnit =
       this.state[this.props.variableName].layers.CurrentLayer ===
@@ -424,7 +444,9 @@ export default class VizController extends Component {
     // build up view parameters
     const fieldViewParams = {};
     // if there's a >length-one array of years, parameterize it
-    if ("year" in fieldOptions && fieldOptions.year.length > 1) {
+    if (typeof showYear !== "undefined") {
+      fieldViewParams.year = showYear;
+    } else if ("year" in fieldOptions && fieldOptions.year.length > 1) {
       fieldViewParams.year = fieldOptions.year[fieldOptions.year.length - 1];
     }
 
