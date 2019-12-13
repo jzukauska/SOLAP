@@ -81,8 +81,7 @@ const MapController = ({ view, layers, legend }) => {
                       height: "1.5em"
                     }}
                   ></span>
-                  {d.lowerBound.toLocaleString()}&nbsp;&ndash;&nbsp;
-                  {d.upperBound.toLocaleString()}
+                  {d.text}
                 </li>
               );
             })}

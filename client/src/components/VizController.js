@@ -68,8 +68,13 @@ export default class VizController extends Component {
         stroke:
           ColorBrewerStyles["YlGnBu"][styleData[0].breaks.length][i].fill_
             .color_,
-        lowerBound: i === 0 ? styleData[0].minVal : styleData[0].breaks[i - 1],
-        upperBound: styleData[0].breaks[i]
+        text:
+          (i === 0
+            ? styleData[0].minVal
+            : styleData[0].breaks[i - 1]
+          ).toLocaleString() +
+          " \u2013 " +
+          styleData[0].breaks[i].toLocaleString()
       };
       legend.push(data);
     }
