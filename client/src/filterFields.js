@@ -653,14 +653,14 @@ const scopedFilterFields = [
                     label: "All Categories",
                     value: "All Categories",
                     opacity: 1,
-                    year: [2000, 2005, 2010, 2015],
+                    year: [2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015],
                     parameter: []
                   },
                   {
                     label: "Cropland",
                     value: "Cropland",
                     opacity: 1,
-                    year: [2000, 2005, 2010, 2015],
+                    year: [2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015],
                     parameter: [
                       "lccroprain",
                       "lccropirripofld",
@@ -672,7 +672,7 @@ const scopedFilterFields = [
                     label: "Forest",
                     value: "Forest",
                     opacity: 1,
-                    year: [2000, 2005, 2010, 2015],
+                    year: [2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015],
                     parameter: [
                       "lcmonatvegecrop",
                       "lctreebrevgrncto",
@@ -689,21 +689,21 @@ const scopedFilterFields = [
                     label: "Water",
                     value: "Water",
                     opacity: 1,
-                    year: [2000, 2005, 2010, 2015],
+                    year: [2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015],
                     parameter: ["lcwater"]
                   },
                   {
                     label: "Built Environment",
                     value: "Built Environment",
                     opacity: 1,
-                    year: [2000, 2005, 2010, 2015],
+                    year: [2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015],
                     parameter: ["lcurban"]
                   },
                   {
                     label: "Bare Areas",
                     value: "Bare Areas",
                     opacity: 1,
-                    year: [2000, 2005, 2010, 2015],
+                    year: [2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015],
                     parameter: ["lcbare"]
                   }
                 ]
