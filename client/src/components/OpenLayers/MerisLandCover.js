@@ -1,163 +1,210 @@
 import ImageWMS from "ol/source/ImageWMS";
 import { Image } from "ol/layer";
+import { asArray as colorAsArray, asString as colorAsString } from "ol/color";
 
 //https://maps.elie.ucl.ac.be/CCI/viewer/download/CCI-LC_Maps_Legend.pdf
 const MerisLandCoverClasses = {
   lcnodata: {
     desc: "No Data",
-    val: 0
+    val: 0,
+    color: "#000000"
   },
   lccroprain: {
     desc: "Cropland, rainfed",
-    val: 10
+    val: 10,
+    color: "#ffff64"
   },
   lcherbac: {
     desc: "Herbaceous cover",
-    val: 11
+    val: 11,
+    color: "#ffff64"
   },
   lctreeshrb: {
     desc: "Tree or shrub cover",
-    val: 12
+    val: 12,
+    color: "#ffff64"
   },
   lccropirripofld: {
     desc: "Cropland, irrigated or post‐flooding",
-    val: 20
+    val: 20,
+    color: "#aaf2ef"
   },
   lcmocropnatvege: {
     desc:
       "Mosaic cropland (>50%) / natural vegetation (tree, shrub, herbaceous cover) (<50%)",
-    val: 30
+    val: 30,
+    color: "#ddf063"
   },
   lcmonatvegecrop: {
     desc:
       "Mosaic natural vegetation (tree, shrub, herbaceous cover) (>50%) / cropland (<50%)  ",
-    val: 40
+    val: 40,
+    color: "#c8c864"
   },
   lctreebrevgrncto: {
     desc: "Tree cover, broadleaved, evergreen, closed to open (>15%)",
-    val: 50
+    val: 50,
+    color: "#52dd30"
   },
   lctreebrdecicto: {
     desc: "Tree cover, broadleaved, deciduous, closed to open (>15%)",
-    val: 60
+    val: 60,
+    color: "#00a100"
   },
   lctreebrdecic: {
     desc: "Tree cover, broadleaved, deciduous, closed (>40%)",
-    val: 61
+    val: 61,
+    color: "#00a100"
   },
   lctreebrdecio: {
     desc: "Tree cover, broadleaved, deciduous, open (15‐40%)",
-    val: 62
+    val: 62,
+    color: "#aec802"
   },
   lctreeneedevgrncto: {
     desc: "Tree cover, needleleaved, evergreen, closed to open (>15%)",
-    val: 70
+    val: 70,
+    color: "#013b00"
   },
   lctreeneedevgrnc: {
     desc: "Tree cover, needleleaved, evergreen, closed (>40%)",
-    val: 71
+    val: 71,
+    color: "#013b01"
   },
   lctreeneedevgrno: {
     desc: "Tree cover, needleleaved, evergreen, open (15‐40%)",
-    val: 72
+    val: 72,
+    color: "#034f00"
   },
   lctreeneeddecicto: {
     desc: "Tree cover, needleleaved, deciduous, closed to open (>15%)",
-    val: 80
+    val: 80,
+    color: "#294f02"
   },
   lctreeneeddecic: {
     desc: "Tree cover, needleleaved, deciduous, closed (>40%)",
-    val: 81
+    val: 81,
+    color: "#294f02"
   },
   lctreeneeddecio: {
     desc: "Tree cover, needleleaved, deciduous, open (15‐40%)",
-    val: 82
+    val: 82,
+    color: "#256602"
   },
   lctreemix: {
     desc: "Tree cover, mixed leaf type (broadleaved and needleleaved)",
-    val: 90
+    val: 90,
+    color: "#788301"
   },
   lcmotreeshrbherbac: {
     desc: "Mosaic tree and shrub (>50%) / herbaceous cover (<50%)",
-    val: 100
+    val: 100,
+    color: "#8ba001"
   },
   lcmoherbactreeshrb: {
     desc: "Mosaic herbaceous cover (>50%) / tree and shrub (<50%)",
-    val: 110
+    val: 110,
+    color: "#bc9800"
   },
   lcshrb: {
     desc: "Shrubland",
-    val: 120
+    val: 120,
+    color: "#966401"
   },
   lcevshrb: {
     desc: "Evergreen shrubland",
-    val: 121
+    val: 121,
+    color: "#794b00"
   },
   lcdecishrb: {
     desc: "Deciduous shrubland",
-    val: 122
+    val: 122,
+    color: "#966401"
   },
   lcgrass: {
     desc: "Grassland",
-    val: 130
+    val: 130,
+    color: "#ffb432"
   },
   lclichnmos: {
     desc: "Lichens and mosses",
-    val: 140
+    val: 140,
+    color: "#fddbd1"
   },
   lcsparvege: {
     desc: "Sparse vegetation (tree, shrub, herbaceous cover) (<15%)",
-    val: 150
+    val: 150,
+    color: "#ffecb1"
   },
   lcsparstree: {
     desc: "Sparse tree (<15%)",
-    val: 151
+    val: 151,
+    color: "#ffc766"
   },
   lcsparsshrb: {
     desc: "Sparse shrub (<15%)",
-    val: 152
+    val: 152,
+    color: "#ffd476"
   },
   lcsparsherbac: {
     desc: "Sparse herbaceous cover (<15%)",
-    val: 153
+    val: 153,
+    color: "#ffeab4"
   },
   lcfldfrshbrak: {
     desc: "Tree cover, flooded, fresh or brakish water",
-    val: 160
+    val: 160,
+    color: "#017a5b"
   },
   lctreefldsal: {
     desc: "Tree cover, flooded, saline water",
-    val: 170
+    val: 170,
+    color: "#019879"
   },
   lcshrbherbacfldfrshbrak: {
     desc: "Shrub or herbaceous cover, flooded, fresh/saline/brakish water",
-    val: 180
+    val: 180,
+    color: "#02dc85"
   },
   lcurban: {
     desc: "Urban areas",
-    val: 190
+    val: 190,
+    color: "#c31500"
   },
   lcbare: {
     desc: "Bare areas",
-    val: 200
+    val: 200,
+    color: "#fff6d9"
   },
   lcconbare: {
     desc: "Consolidated bare areas",
-    val: 201
+    val: 201,
+    color: "#dcdcdc"
   },
   lcunconbare: {
     desc: "Unconsolidated bare areas",
-    val: 202
+    val: 202,
+    color: "#fff6d9"
   },
   lcwater: {
     desc: "Water bodies",
-    val: 210
+    val: 210,
+    color: "#0045c6"
   },
   lcsnowice: {
     desc: "Permanent snow and ice",
-    val: 220
+    val: 220,
+    color: "#ffffff"
   }
 };
+
+for (let c in MerisLandCoverClasses) {
+  MerisLandCoverClasses[c].colorRgba = colorAsString(
+    colorAsArray(MerisLandCoverClasses[c].color)
+      .slice(0, 3)
+      .concat(0.6) // adjust opacity
+  );
+}
 
 class MerisLandCoverLayer extends Image {
   constructor(opt_options) {
@@ -270,8 +317,6 @@ class MerisLandCoverLayer extends Image {
 
     // override those requested
     for (let c in classes) {
-      console.log("c :", c);
-      console.log("classes[c] :", classes[c]);
       classSettings[classes[c]] = opacity;
     }
 
@@ -314,4 +359,4 @@ const layer2Meris = new MerisLandCoverLayer({
   opacity: 0.6
 });
 
-export { layer1Meris, layer2Meris };
+export { layer1Meris, layer2Meris, MerisLandCoverClasses };
