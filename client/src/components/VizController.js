@@ -1,3 +1,4 @@
+// TODO significant -- simplify logic in handleMapChange
 import React, { Component } from "react";
 
 import BasemapLayer from "./OpenLayers/BasemapLayer";
