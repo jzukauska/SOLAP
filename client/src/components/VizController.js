@@ -280,7 +280,6 @@ export default class VizController extends Component {
         }),
         () => this.forceUpdate()
       );
-      return;
     }
 
     if (value === "Census Tracts") {
@@ -300,7 +299,28 @@ export default class VizController extends Component {
         }),
         () => this.forceUpdate()
       );
-      return;
+    }
+
+    // if the previous group and field options indicate
+    // a choropleth was used we need to handle changes
+    // between counties and tracts
+    // TODO ugly calling of the caller
+    if (
+      (this.state[variableName].prevGroupOptions &&
+        this.state[variableName].prevGroupOptions.functions &&
+        (this.state[variableName].prevGroupOptions.functions === "choropleth" ||
+          this.state[variableName].prevGroupOptions.functions[0] ===
+            "choropleth")) ||
+      (this.state[variableName].prevGroupOptions &&
+        this.state[variableName].prevGroupOptions.dataType &&
+        this.state[variableName].prevGroupOptions.dataType === "point" &&
+        this.state[variableName].prevGroupOptions.name === "Count Features")
+    ) {
+      this.handleMapChange({
+        variableName,
+        groupOptions: this.state[variableName].prevGroupOptions,
+        fieldOptions: this.state[variableName].prevFieldOptions
+      });
     }
   };
 
@@ -482,6 +502,8 @@ export default class VizController extends Component {
     return;
   };
   handleMapChangeChoropleth = async ({
+    name,
+    value,
     variableName,
     groupOptions,
     fieldOptions,
