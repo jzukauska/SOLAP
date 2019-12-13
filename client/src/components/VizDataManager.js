@@ -258,13 +258,6 @@ class EnumUnitData {
       Object.values(symbolizePairs)
     );
 
-    console.log(
-      "Object.values(symbolizePairs).length :",
-      Object.values(symbolizePairs).length
-    );
-    console.log("condClassCount :", condClassCount);
-    console.log("breaks :", breaks);
-
     this.lastBreaks = breaks;
     this.graphData.xLabel = fieldOptions[0].label; // TODO assumes multiple field options passed
     const classGroups = new Array(condClassCount).fill(0);
@@ -285,7 +278,6 @@ class EnumUnitData {
     let groupLabel;
     this.graphData.data = [];
     for (let i = 0; i < classGroups.length; i++) {
-      console.log("i :", i);
       if (i === 0) {
         groupLabel = `${breaks[0].minVal.toLocaleString()} &ndash; ${breaks[0].breaks[
           i
