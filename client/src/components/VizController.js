@@ -97,13 +97,13 @@ export default class VizController extends Component {
     fieldOptions,
     clearMap
   }) => {
-    console.warn("<<<< HMC <<<<<<<<<<<<<<<<<<<<<<");
-    console.log("name :", name);
-    console.log("value :", value);
-    console.log("yearOptions :", yearOptions);
-    console.log("groupOptions :", groupOptions);
-    console.log("fieldOptions :", fieldOptions);
-    console.log("this.state :", this.state);
+    // console.warn("<<<< HMC <<<<<<<<<<<<<<<<<<<<<<");
+    // console.log("name :", name);
+    // console.log("value :", value);
+    // console.log("yearOptions :", yearOptions);
+    // console.log("groupOptions :", groupOptions);
+    // console.log("fieldOptions :", fieldOptions);
+    // console.log("this.state :", this.state);
     const { variableName } = this.props;
 
     // reset the current variable to county map, set basic style, remove legend

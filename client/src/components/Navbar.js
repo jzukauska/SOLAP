@@ -41,10 +41,11 @@ const Navbar = ({ tab }) => {
         {({
           filterFields,
           filterValues,
+          prefLabel,
           handleInputChange,
           handleColorChange,
           clearFilter
-        }) =>
+        }) => {
           Object.entries(filterValues).map(([name, obj]) => {
             if (obj !== null && name === "Geographic Unit") {
               setArea(obj.value);
@@ -53,8 +54,11 @@ const Navbar = ({ tab }) => {
             } else if (obj !== null && name) {
               setVariable(obj.value);
             }
-          })
-        }
+          });
+          if (prefLabel) {
+            setVariable(prefLabel);
+          }
+        }}
       </FilterConsumer>
     </NavbarContainer>
   );
