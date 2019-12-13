@@ -73,6 +73,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const App = () => {
+  document.title = "Community Health Explorer";
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
   const [currentVariable, setCurrentVariable] = React.useState("firstVariable");
