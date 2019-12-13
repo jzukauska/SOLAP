@@ -38,6 +38,7 @@ const MapController = ({ view, layers, legend }) => {
             right: "0.5em",
             padding: "0.5em 1em",
             maxWidth: "250px",
+            maxHeight: "80vh",
             backgroundColor: "#ffffff",
             border: "medium solid #dddbe0",
             position: "fixed"
@@ -53,18 +54,20 @@ const MapController = ({ view, layers, legend }) => {
           </p>
           <ul
             style={{
-              float: "left",
               margin: "0",
               padding: "0",
               listStyle: "none",
-              listStylePosition: "inside"
+              fontSize: legend.data.length > 8 ? "0.8em" : "1em",
+              listStylePosition: "inside",
+              maxHeight: "calc(80vh - 3em)",
+              overflow: "auto"
             }}
           >
             {legend.data.map(d => {
               return (
                 <li
                   style={{
-                    lineHeight: "1.5em",
+                    display: "block",
                     listStyle: "none",
                     margin: "0.5em 0",
                     padding: "0"
@@ -72,8 +75,8 @@ const MapController = ({ view, layers, legend }) => {
                 >
                   <span
                     style={{
-                      display: "block",
-                      float: "left",
+                      verticalAlign: "middle",
+                      display: "inline-block",
                       marginRight: "0.5em",
                       border: "thin solid rgba(0, 0, 0, 0.2)",
                       backgroundColor: d.stroke,
