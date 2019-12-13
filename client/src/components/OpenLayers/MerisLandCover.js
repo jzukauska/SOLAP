@@ -210,10 +210,28 @@ class MerisLandCoverLayer extends Image {
   constructor(opt_options) {
     super(opt_options);
     this.yearLayers = {
-      2000: "minnesota:MN_MERIS_2000",
-      2005: "minnesota:MN_MERIS_2005",
-      2010: "minnesota:MN_MERIS_2010",
-      2015: "minnesota:MN_MERIS_2015"
+      1994: "minnesota:MN_MERIS_ANNUAL_1994",
+      1995: "minnesota:MN_MERIS_ANNUAL_1995",
+      1996: "minnesota:MN_MERIS_ANNUAL_1996",
+      1997: "minnesota:MN_MERIS_ANNUAL_1997",
+      1998: "minnesota:MN_MERIS_ANNUAL_1998",
+      1999: "minnesota:MN_MERIS_ANNUAL_1999",
+      2000: "minnesota:MN_MERIS_ANNUAL_2000",
+      2001: "minnesota:MN_MERIS_ANNUAL_2001",
+      2002: "minnesota:MN_MERIS_ANNUAL_2002",
+      2003: "minnesota:MN_MERIS_ANNUAL_2003",
+      2004: "minnesota:MN_MERIS_ANNUAL_2004",
+      2005: "minnesota:MN_MERIS_ANNUAL_2005",
+      2006: "minnesota:MN_MERIS_ANNUAL_2006",
+      2007: "minnesota:MN_MERIS_ANNUAL_2007",
+      2008: "minnesota:MN_MERIS_ANNUAL_2008",
+      2009: "minnesota:MN_MERIS_ANNUAL_2009",
+      2010: "minnesota:MN_MERIS_ANNUAL_2010",
+      2011: "minnesota:MN_MERIS_ANNUAL_2011",
+      2012: "minnesota:MN_MERIS_ANNUAL_2012",
+      2013: "minnesota:MN_MERIS_ANNUAL_2013",
+      2014: "minnesota:MN_MERIS_ANNUAL_2014",
+      2015: "minnesota:MN_MERIS_ANNUAL_2015"
     };
   }
 
@@ -337,7 +355,7 @@ const layer1Meris = new MerisLandCoverLayer({
   source: new ImageWMS({
     url: "http://149.165.157.200:8080/geoserver/wms",
     params: {
-      LAYERS: "minnesota:MN_MERIS_2015",
+      LAYERS: "minnesota:MN_MERIS_ANNUAL_2015",
       env: "lcnodata:0"
     },
     ratio: 1,
@@ -350,7 +368,7 @@ const layer2Meris = new MerisLandCoverLayer({
   source: new ImageWMS({
     url: "http://149.165.157.200:8080/geoserver/wms",
     params: {
-      LAYERS: "minnesota:MN_MERIS_2015",
+      LAYERS: "minnesota:MN_MERIS_ANNUAL_2015",
       env: "lcnodata:0"
     },
     ratio: 1,
