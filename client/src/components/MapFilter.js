@@ -15,7 +15,7 @@ const MapFilterContainer = styled.div`
 `;
 
 const GraphContainer = styled.div`
-  height: 19%;
+  height: 20%;
   overflow: auto;
 `;
 
@@ -42,7 +42,7 @@ const FilterContainer = styled.div`
 `;
 
 const ControlPanelContainer = styled.div`
-  height: 35%;
+  height: 30%;
   overflow: auto;
 `;
 
@@ -90,9 +90,6 @@ const MapFilter = ({ width, graphData }) => {
               ></Box>
             </FilterContainer>
           </MapFilterContainer>
-          <SettingsContainer>
-            {(graphData.data != null) ? (<Settings />) : (null)}
-          </SettingsContainer>
           <TitleContainer>
             {graphData.xLabel}
           </TitleContainer>
