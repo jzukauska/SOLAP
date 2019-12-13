@@ -7,7 +7,7 @@ import Grid from "@material-ui/core/Grid";
 import styled from "styled-components";
 
 const Navbar = ({ tab }) => {
-  const [variable, setVariable ] = useState("Nothing");
+  const [variable, setVariable] = useState("Nothing");
   const [year, setYear] = useState("2010");
   const [area, setArea] = useState("Minnesota");
   const [NavbarContainer] = useState(
@@ -23,7 +23,7 @@ const Navbar = ({ tab }) => {
       background={parseInt(tab.currentTab) === 1 ? "#FFE7C7" : "#ACDDDE"}
     >
       <Grid container justify="space_evenly" alignContent="center">
-        <Grid item xs={6} >
+        <Grid item xs={6}>
           <div>
             <img
               src={logo}
@@ -33,7 +33,7 @@ const Navbar = ({ tab }) => {
           </div>
         </Grid>
         <Grid item xs={6}>
-  Mapping: {variable} for {year} for {area}
+          Mapping: {variable} for {year} for {area}
         </Grid>
       </Grid>
 
@@ -50,7 +50,7 @@ const Navbar = ({ tab }) => {
               setArea(obj.value);
             } else if (obj !== null && name === "Time Period") {
               setYear(obj.value);
-            } 
+            }
           })
         }
       </FilterConsumer>
